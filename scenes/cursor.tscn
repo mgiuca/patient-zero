@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://mclt0vsajrjb"]
+
+[ext_resource type="Script" path="res://scenes/cursor.gd" id="1_vg3ar"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2bd18"]
+radius = 179.025
+
+[node name="Cursor" type="Area2D"]
+modulate = Color(1, 1, 1, 0.25098)
+collision_mask = 4
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
+gravity = 1.0
+script = ExtResource("1_vg3ar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2bd18")
