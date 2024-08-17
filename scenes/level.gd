@@ -7,7 +7,7 @@ var zoom_margin : float = 150
 
 func _ready():
   # TODO: Dynamic bots.
-  bots = [$Bot1, $Bot2, $Bot3]
+  bots = [$Bot1, $Bot2, $Bot3, $Bot4, $Bot5, $Bot6]
 
 func _process(delta):
   # Gets the mouse position in global coordinates, based on the location

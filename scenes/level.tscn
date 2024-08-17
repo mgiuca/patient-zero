@@ -21,3 +21,12 @@ position = Vector2(223, 131)
 
 [node name="Bot3" parent="." instance=ExtResource("1_g5p31")]
 position = Vector2(-38, -180)
+
+[node name="Bot4" parent="." instance=ExtResource("1_g5p31")]
+position = Vector2(315, -180)
+
+[node name="Bot5" parent="." instance=ExtResource("1_g5p31")]
+position = Vector2(463, -116)
+
+[node name="Bot6" parent="." instance=ExtResource("1_g5p31")]
+position = Vector2(476, -237)
