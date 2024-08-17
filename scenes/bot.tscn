@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dieb3dfblspao"]
+[gd_scene load_steps=4 format=3 uid="uid://dieb3dfblspao"]
 
 [ext_resource type="Texture2D" uid="uid://dowbgne2cpdiw" path="res://images/bot_1.png" id="1_3fe4t"]
+[ext_resource type="Script" path="res://scenes/bot.gd" id="1_aqmbd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vxskf"]
 radius = 63.0317
@@ -12,6 +13,7 @@ z_index = 50
 collision_layer = 4
 collision_mask = 10
 can_sleep = false
+script = ExtResource("1_aqmbd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_3fe4t")

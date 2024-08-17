@@ -23,6 +23,8 @@ func _draw():
 
 func _input(event):
   if event is InputEventMouseMotion and active:
+    # TODO: This is in screen space, not global coordinates. (Which means
+    # when the camera is zoomed out, the force is much lower.)
     var velocity : Vector2 = event.velocity
     gravity_direction = velocity
 
