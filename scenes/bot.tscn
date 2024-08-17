@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dieb3dfblspao"]
+[gd_scene load_steps=5 format=3 uid="uid://dieb3dfblspao"]
 
 [ext_resource type="Texture2D" uid="uid://dowbgne2cpdiw" path="res://images/bot_1.png" id="1_3fe4t"]
 [ext_resource type="Script" path="res://scenes/bot.gd" id="1_aqmbd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vxskf"]
 radius = 63.0317
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0b7jm"]
+radius = 1122.01
 
 [node name="Bot" type="RigidBody2D"]
 light_mask = 4
@@ -24,3 +27,12 @@ texture = ExtResource("1_3fe4t")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_vxskf")
+
+[node name="TensorCollider" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TensorCollider"]
+visible = false
+shape = SubResource("CircleShape2D_0b7jm")
+debug_color = Color(0.591893, 0.687014, 0.0373291, 0.42)
