@@ -13,6 +13,9 @@ z_index = 50
 collision_layer = 4
 collision_mask = 10
 can_sleep = false
+lock_rotation = true
+angular_velocity = 3.14159
+angular_damp_mode = 1
 script = ExtResource("1_aqmbd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
