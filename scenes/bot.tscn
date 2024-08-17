@@ -6,9 +6,16 @@
 radius = 63.0317
 
 [node name="Bot" type="RigidBody2D"]
+light_mask = 4
+visibility_layer = 4
+z_index = 50
+collision_layer = 4
+collision_mask = 10
+can_sleep = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_3fe4t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_vxskf")

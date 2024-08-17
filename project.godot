@@ -18,6 +18,17 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Swarm"
 
+[layer_names]
+
+2d_render/layer_1="cursor"
+2d_render/layer_2="walls"
+2d_render/layer_3="bots"
+2d_render/layer_4="enemies"
+2d_physics/layer_1="cursor"
+2d_physics/layer_2="walls"
+2d_physics/layer_3="bots"
+2d_physics/layer_4="enemies"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
