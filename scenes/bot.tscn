@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dieb3dfblspao"]
+
+[ext_resource type="Texture2D" uid="uid://dowbgne2cpdiw" path="res://images/bot_1.png" id="1_3fe4t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vxskf"]
+radius = 63.0317
+
+[node name="Bot" type="RigidBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3fe4t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vxskf")
