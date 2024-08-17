@@ -6,7 +6,7 @@ extends Area2D
 @export var inactive_draw_thickness : float = 5
 
 ## Multiplier for the amount of force to exert on bots.
-@export var force_multiplier : float = 0.7
+@export var force_multiplier : float = 1
 
 var active : bool = false
 
@@ -28,7 +28,7 @@ func _input(event):
     # camera is zoomed out, the force is much lower.)
     # Bit of a hack, but fix it by dividing by camera zoom.
     velocity = velocity / get_viewport().get_camera_2d().zoom.x
-    gravity_direction = velocity
+    gravity_direction = velocity * force_multiplier
 
 func _process(delta):
   var was_active : bool = active
