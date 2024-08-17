@@ -7,14 +7,17 @@
 [node name="Level" type="Node"]
 script = ExtResource("1_m0dy6")
 
+[node name="Camera" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
 [node name="Cursor" parent="." instance=ExtResource("3_qt3ji")]
 z_index = 100
 
 [node name="Bot1" parent="." instance=ExtResource("1_g5p31")]
-position = Vector2(300, 347)
+position = Vector2(-319, -12)
 
 [node name="Bot2" parent="." instance=ExtResource("1_g5p31")]
-position = Vector2(842, 490)
+position = Vector2(223, 131)
 
 [node name="Bot3" parent="." instance=ExtResource("1_g5p31")]
-position = Vector2(581, 179)
+position = Vector2(-38, -180)
