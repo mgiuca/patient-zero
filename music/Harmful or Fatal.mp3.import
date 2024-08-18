@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://denk3vfy2jatt"
+path="res://.godot/imported/Harmful or Fatal.mp3-e78f790c53af6cfaefdbe27f9b4de9c5.mp3str"
+
+[deps]
+
+source_file="res://music/Harmful or Fatal.mp3"
+dest_files=["res://.godot/imported/Harmful or Fatal.mp3-e78f790c53af6cfaefdbe27f9b4de9c5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
