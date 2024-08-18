@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=18 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
@@ -9,6 +9,30 @@
 [ext_resource type="Texture2D" uid="uid://3g4nc41agqbt" path="res://images/human-cardio.png" id="5_bmjak"]
 [ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
 [ext_resource type="Texture2D" uid="uid://b30i85d0ykdc4" path="res://images/heart.png" id="7_uyj3q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5i3e8"]
+size = Vector2(3213, 4842)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhyfm"]
+size = Vector2(2806, 5475)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6q7ev"]
+size = Vector2(5612, 11043)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hcnq1"]
+size = Vector2(1493, 11540)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gy4a"]
+size = Vector2(1563.5, 11585)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ts1bg"]
+size = Vector2(950, 3213)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6dgm3"]
+size = Vector2(1132, 1765)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g8doi"]
+size = Vector2(1695, 8544)
 
 [node name="LvlBody" type="Node"]
 script = ExtResource("1_n3cbr")
@@ -23,6 +47,40 @@ position_smoothing_enabled = true
 
 [node name="Cursor" parent="." instance=ExtResource("3_5i8s6")]
 z_index = 100
+
+[node name="SpawnAreas" type="Area2D" parent="."]
+
+[node name="RectShape" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(-2755.5, -5711)
+shape = SubResource("RectangleShape2D_5i3e8")
+
+[node name="RectShape2" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(3467, -5439.5)
+shape = SubResource("RectangleShape2D_dhyfm")
+
+[node name="RectShape3" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(254, 2095.5)
+shape = SubResource("RectangleShape2D_6q7ev")
+
+[node name="RectShape4" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(-900.5, 13884)
+shape = SubResource("RectangleShape2D_hcnq1")
+
+[node name="RectShape5" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(1734.25, 13952.5)
+shape = SubResource("RectangleShape2D_6gy4a")
+
+[node name="RectShape6" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(6205, 2163.5)
+shape = SubResource("RectangleShape2D_ts1bg")
+
+[node name="RectShape7" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(-5788, 1665.5)
+shape = SubResource("RectangleShape2D_6dgm3")
+
+[node name="RectShape8" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(104.5, -11156)
+shape = SubResource("RectangleShape2D_g8doi")
 
 [node name="Background" type="TextureRect" parent="."]
 texture_repeat = 2

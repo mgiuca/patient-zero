@@ -36,9 +36,18 @@ func _ready():
 
   # Spawn a bunch of viruses.
   for i in initial_viruses:
-    var pos = Vector2(randf_range(-750, 750), randf_range(-3000, -2000))
+    var pos = pick_random_location()
     var rot = randf_range(0, TAU)
     spawn_agent(virus_scene, pos, rot)
+
+## Picks a random valid location somewhere in the level.
+func pick_random_location() -> Vector2:
+  var shapes = $SpawnAreas.get_children()
+  var shape = (shapes.pick_random().shape) as RectangleShape2D
+  var rect = shape.get_rect()
+  return \
+    Vector2(randf_range(rect.position.x, rect.position.x + rect.size.x),
+            randf_range(rect.position.y, rect.position.y + rect.size.y))
 
 func spawn_agent(scene: PackedScene, position: Vector2, rotation : float) -> Agent:
   var agent : Agent = scene.instantiate()
