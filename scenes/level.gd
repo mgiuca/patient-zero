@@ -1,3 +1,5 @@
+# Scene script shared by all levels.
+
 extends Node
 
 ## The scene to instantiate a bot.
