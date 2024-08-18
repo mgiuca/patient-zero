@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=8 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
 [ext_resource type="PackedScene" uid="uid://mclt0vsajrjb" path="res://scenes/cursor.tscn" id="3_5i8s6"]
 [ext_resource type="AudioStream" uid="uid://cu6bjqlaj4ng2" path="res://music/Spacial Harvest.mp3" id="4_1gsof"]
 [ext_resource type="Texture2D" uid="uid://bhj3v5cib030u" path="res://images/lavafull.jpg" id="4_kcf7m"]
+[ext_resource type="Texture2D" uid="uid://3g4nc41agqbt" path="res://images/human-cardio.png" id="5_bmjak"]
 [ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
 
 [node name="LvlBody" type="Node"]
@@ -28,12 +29,21 @@ offset_bottom = 26506.0
 texture = ExtResource("4_kcf7m")
 stretch_mode = 1
 
+[node name="Cardio" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.788235)
+z_index = 1
+offset_left = -10933.0
+offset_top = -17154.0
+offset_right = 11371.0
+offset_bottom = 26953.0
+texture = ExtResource("5_bmjak")
+
 [node name="Walls" type="StaticBody2D" parent="."]
+z_index = 2
 collision_layer = 2
 collision_mask = 0
 
 [node name="Outline" type="TextureRect" parent="Walls"]
-z_index = 1
 offset_left = -10933.0
 offset_top = -17154.0
 offset_right = 11371.0
