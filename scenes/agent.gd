@@ -79,6 +79,4 @@ func _on_body_entered(body: Node) -> void:
 
 ## Let self be killed (by an attack).
 func kill():
-  # This is crashing because it's still in the bots array.
-  pass
-  #queue_free()
+  queue_free()
