@@ -17,8 +17,6 @@ extends Node
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
 
-var bots : Array[Agent] = []
-
 # Add this much around the edge of the bots when framing the camera.
 var zoom_margin : float = 500
 
@@ -33,7 +31,8 @@ func _ready():
   for i in initial_bots:
     var pos = Vector2(randf_range(-750, 750), randf_range(-750, 750))
     var rot = randf_range(0, TAU)
-    bots.append(spawn_agent(bot_scene, pos, rot))
+    var bot = spawn_agent(bot_scene, pos, rot)
+    bot.add_to_group('bots')
 
   # Spawn a bunch of viruses.
   for i in initial_viruses:
@@ -61,6 +60,7 @@ func update_camera(delta: float):
   # Note that the camera position will auto-smooth, but zoom will not.
 
   # No bots; we can't update the camera so leave as-is.
+  var bots = get_tree().get_nodes_in_group('bots')
   if bots.is_empty():
     return
 
