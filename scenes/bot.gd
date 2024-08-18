@@ -56,7 +56,6 @@ func apply_tensor(other: Bot, delta: float):
     # it a reciprocal so it goes towards infinity as they get closer).
     #attraction = -resting_distance*resting_distance / (distance * distance) - 1
   var force : Vector2 = displacement.normalized() * attraction * delta
-  print(attraction, "; ", force.length())
   other.apply_central_force(force)
 
 func _process(_delta: float):
