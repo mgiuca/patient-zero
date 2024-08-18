@@ -60,6 +60,7 @@ push={
 2d_physics/layer_3="bots"
 2d_physics/layer_4="enemies"
 2d_physics/layer_5="tensors"
+2d_physics/layer_6="friends"
 2d_physics/defaults/default_clear_color=Color(0.3, 0.3, 0.3, 1)
 
 [physics]

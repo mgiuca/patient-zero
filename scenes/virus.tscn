@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dieb3dfblspao"]
+[gd_scene load_steps=6 format=3 uid="uid://s2rhqk2m50ey"]
 
-[ext_resource type="Texture2D" uid="uid://dowbgne2cpdiw" path="res://images/bot_1.png" id="1_3fe4t"]
-[ext_resource type="Script" path="res://scenes/agent.gd" id="1_h6h7t"]
+[ext_resource type="Script" path="res://scenes/agent.gd" id="1_b6s8l"]
+[ext_resource type="Texture2D" uid="uid://dasu1d4v5yvek" path="res://images/virus.png" id="2_6ai8j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dcxll"]
 bounce = 0.5
@@ -12,26 +12,23 @@ radius = 119.017
 [sub_resource type="CircleShape2D" id="CircleShape2D_0b7jm"]
 radius = 0.01
 
-[node name="Bot" type="RigidBody2D"]
+[node name="Virus" type="RigidBody2D"]
 light_mask = 4
 visibility_layer = 4
 z_index = 50
-collision_layer = 4
-collision_mask = 10
+collision_layer = 8
+collision_mask = 38
 physics_material_override = SubResource("PhysicsMaterial_dcxll")
 can_sleep = false
-lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 1
-angular_velocity = 6.28319
-angular_damp_mode = 1
-script = ExtResource("1_h6h7t")
+script = ExtResource("1_b6s8l")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_3fe4t")
+scale = Vector2(1.54688, 1.54688)
+texture = ExtResource("2_6ai8j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_vxskf")
 
 [node name="TensorCollider" type="Area2D" parent="."]

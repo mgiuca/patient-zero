@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-class_name Bot
+class_name Agent
 
 ## The maximum distance at which two bots can interact with each other (i.e.
 ## the distance at which the tensor "snaps").
@@ -14,6 +14,12 @@ class_name Bot
 
 ## Multiplier for the repulsion force bots exert on one another.
 @export var repulsion_multiplier : float = 80
+
+## Amount of time (s) in between being able to damage an enemy.
+@export var attack_cooldown : float = 0.5
+
+# Time of the last attack in ms (for cooldown).
+var last_attack_time_ms : float
 
 func _ready():
   $TensorCollider/CollisionShape2D.shape.radius = tensor_max_range
@@ -30,7 +36,7 @@ func _process(delta: float):
   # will be done by the other body on us.
 
   var collider : Area2D = $TensorCollider
-  for other : Bot in collider.get_overlapping_bodies():
+  for other : Agent in collider.get_overlapping_bodies():
     if other != self:
       apply_tensor(other, delta)
 
@@ -45,7 +51,7 @@ func _process(delta: float):
 ## applied; further away = greater force (like a rubber band).
 ## When bots are closer than the resting distance, a repulsion force is applied;
 ## closer = greater force (like a squashed material resisting).
-func apply_tensor(other: Bot, delta: float):
+func apply_tensor(other: Agent, delta: float):
   var displacement : Vector2 = position - other.position
   var distance : float = displacement.length()
   var attraction : float  # Negative attraction = repulsion
@@ -61,3 +67,18 @@ func apply_tensor(other: Bot, delta: float):
     #attraction = -resting_distance*resting_distance / (distance * distance) - 1
   var force : Vector2 = displacement.normalized() * attraction * delta
   other.apply_central_force(force)
+
+func _on_body_entered(body: Node) -> void:
+  # Damage the other body, if cooldown allows it.
+  if body is not Agent:
+    return
+
+  if last_attack_time_ms + (attack_cooldown * 1000) < Time.get_ticks_msec():
+    last_attack_time_ms = Time.get_ticks_msec()
+    body.kill()
+
+## Let self be killed (by an attack).
+func kill():
+  # This is crashing because it's still in the bots array.
+  pass
+  #queue_free()

@@ -5,13 +5,19 @@ extends Node
 ## The scene to instantiate a bot.
 @export var bot_scene : PackedScene
 
+## The scene to instantiate a virus.
+@export var virus_scene : PackedScene
+
 ## Number of bots to spawn at startup.
 @export var initial_bots : int
+
+## Number of viruses to spawn at startup.
+@export var initial_viruses : int
 
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
 
-var bots : Array[Bot] = []
+var bots : Array[Agent] = []
 
 # Add this much around the edge of the bots when framing the camera.
 var zoom_margin : float = 500
@@ -27,14 +33,20 @@ func _ready():
   for i in initial_bots:
     var pos = Vector2(randf_range(-750, 750), randf_range(-750, 750))
     var rot = randf_range(0, TAU)
-    spawn_bot(pos, rot)
+    bots.append(spawn_agent(bot_scene, pos, rot))
 
-func spawn_bot(position: Vector2, rotation : float):
-  var bot : Bot = bot_scene.instantiate()
-  bot.rotation = rotation
-  bot.position = position
-  bots.append(bot)
-  add_child(bot)
+  # Spawn a bunch of viruses.
+  for i in initial_viruses:
+    var pos = Vector2(randf_range(-750, 750), randf_range(-3000, -2000))
+    var rot = randf_range(0, TAU)
+    spawn_agent(virus_scene, pos, rot)
+
+func spawn_agent(scene: PackedScene, position: Vector2, rotation : float) -> Agent:
+  var agent : Agent = scene.instantiate()
+  agent.rotation = rotation
+  agent.position = position
+  add_child(agent)
+  return agent
 
 func _process(delta: float):
   # Gets the mouse position in global coordinates, based on the location
