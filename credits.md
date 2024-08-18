@@ -5,7 +5,7 @@ Licensed under Creative Commons: Attribution-ShareAlike 3.0
 https://creativecommons.org/licenses/by-sa/3.0/
 
 "Golgotha Effects Textures: lavafull" by Crack.com
-Licensed under Creative Commons: CC0 1.0 Universal
+Licensed under Creative Commons: CC0 1.0
 https://creativecommons.org/publicdomain/zero/1.0/
 https://opengameart.org/node/7734
 
@@ -14,6 +14,11 @@ from "Human Biology" by Sarah Malmquist and Kristina Prescott
 Licensed under Creative Commons: Attribution-NonCommercial 4.0 International License
 https://creativecommons.org/licenses/by-nc/4.0/
 https://open.lib.umn.edu/humanbiology
+
+"Viruses - Common Cold" by Bart Kelsey
+Licensed under Creative Commons: CC0 1.0
+https://creativecommons.org/publicdomain/zero/1.0/
+https://opengameart.org/content/viruses-cold-flu-chicken-pox
 
 # Music
 
