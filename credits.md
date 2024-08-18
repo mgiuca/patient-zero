@@ -1,3 +1,10 @@
+# Images
+
+"Golgotha Effects Textures: lavafull" by Crack.com
+Licensed under Creative Commons: CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+https://opengameart.org/node/7734
+
 # Music
 
 "Harmful or Fatal" by Kevin MacLeod (incompetech.com)
