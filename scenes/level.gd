@@ -3,6 +3,9 @@ extends Node
 ## The scene to instantiate a bot.
 @export var bot_scene : PackedScene
 
+## Number of bots to spawn at startup.
+@export var initial_bots : int
+
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
 
@@ -15,7 +18,7 @@ func _ready():
   $Music.seek(music_start_time)
 
   # Spawn a bunch of bots.
-  for i in 8:
+  for i in initial_bots:
     var pos = Vector2(randf_range(-500, 500), randf_range(-500, 500))
     var rot = randf_range(0, TAU)
     spawn_bot(pos, rot)
