@@ -1,5 +1,8 @@
 extends Node
 
+## Seek to this time (s) when starting the music.
+@export var music_start_time : float
+
 var bots : Array[Bot]
 
 # Add this much around the edge of the bots when framing the camera.
@@ -8,6 +11,8 @@ var zoom_margin : float = 150
 func _ready():
   # TODO: Dynamic bots.
   bots = [$Bot1, $Bot2, $Bot3, $Bot4, $Bot5, $Bot6]
+
+  $Music.seek(music_start_time)
 
 func _process(delta):
   # Gets the mouse position in global coordinates, based on the location
