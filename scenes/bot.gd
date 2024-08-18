@@ -14,7 +14,7 @@ class_name Bot
 func _ready():
   pass
 
-func _physics_process(delta: float):
+func _process(delta: float):
   # Attract/repel every nearby bot.
   # The TensorCollider is an Area2D with a huge radius collider (as opposed to
   # the Bot's own collider, which is just the size of the bot). This is used to
@@ -57,6 +57,3 @@ func apply_tensor(other: Bot, delta: float):
     #attraction = -resting_distance*resting_distance / (distance * distance) - 1
   var force : Vector2 = displacement.normalized() * attraction * delta
   other.apply_central_force(force)
-
-func _process(_delta: float):
-  pass
