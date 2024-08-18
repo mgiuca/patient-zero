@@ -1,18 +1,31 @@
 extends Node
 
+## The scene to instantiate a bot.
+@export var bot_scene : PackedScene
+
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
 
-var bots : Array[Bot]
+var bots : Array[Bot] = []
 
 # Add this much around the edge of the bots when framing the camera.
 var zoom_margin : float = 150
 
 func _ready():
-  # TODO: Dynamic bots.
-  bots = [$Bot1, $Bot2, $Bot3, $Bot4, $Bot5, $Bot6]
-
   $Music.seek(music_start_time)
+
+  # Spawn a bunch of bots.
+  for i in 8:
+    var pos = Vector2(randf_range(-500, 500), randf_range(-500, 500))
+    var rot = randf_range(0, TAU)
+    spawn_bot(pos, rot)
+
+func spawn_bot(position: Vector2, rotation : float):
+  var bot : Bot = bot_scene.instantiate()
+  bot.rotation = rotation
+  bot.position = position
+  bots.append(bot)
+  add_child(bot)
 
 func _process(delta):
   # Gets the mouse position in global coordinates, based on the location
