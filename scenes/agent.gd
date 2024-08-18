@@ -15,6 +15,8 @@ class_name Agent
 ## Multiplier for the repulsion force bots exert on one another.
 @export var repulsion_multiplier : float = 80
 
+@export var random_movement : float = 0
+
 ## Amount of time (s) in between being able to damage an enemy.
 @export var attack_cooldown : float = 0.5
 
@@ -39,6 +41,13 @@ func _process(delta: float):
   for other : Agent in collider.get_overlapping_bodies():
     if other != self:
       apply_tensor(other, delta)
+
+  # Apply random movement, in the form of instantaneous impulse on random ticks.
+  if random_movement > 0:
+    if randf() * delta < 0.01:
+      var impulse = Vector2(randf_range(-random_movement, random_movement),
+                            randf_range(-random_movement, random_movement))
+      self.apply_impulse(impulse)
 
 ## Applies an attraction or repulsion force on the other bot, based on
 ## proximity to this bot.
