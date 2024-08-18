@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/cursor.gd" id="1_vg3ar"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2bd18"]
-radius = 179.025
+radius = 457.395
 
 [node name="Cursor" type="Area2D"]
 modulate = Color(1, 1, 1, 0.25098)
