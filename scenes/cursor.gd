@@ -3,7 +3,7 @@ extends Area2D
 ## Color of the circle displayed under the mouse cursor.
 @export var draw_color : Color = Color('4db04d')
 ## Thickness of the line (px) drawn around the mouse cursor when inactive.
-@export var inactive_draw_thickness : float = 5
+@export var inactive_draw_thickness : float = 10
 
 ## Multiplier for the amount of force to exert on bots.
 @export var force_multiplier : float = 2.5
