@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="1_g5p31"]
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_m0dy6"]
 [ext_resource type="PackedScene" uid="uid://mclt0vsajrjb" path="res://scenes/cursor.tscn" id="3_qt3ji"]
-[ext_resource type="AudioStream" uid="uid://bsvnb8f25cfub" path="res://music/Unnatural Situation.mp3" id="4_udlw6"]
+[ext_resource type="AudioStream" uid="uid://cu6bjqlaj4ng2" path="res://music/Spacial Harvest.mp3" id="4_2qv1h"]
 
 [node name="Level" type="Node"]
 script = ExtResource("1_m0dy6")
@@ -34,7 +34,7 @@ position = Vector2(463, -116)
 position = Vector2(476, -237)
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_udlw6")
+stream = ExtResource("4_2qv1h")
 autoplay = true
 playback_type = 1
 parameters/looping = false
