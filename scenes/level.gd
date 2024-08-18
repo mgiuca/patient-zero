@@ -21,7 +21,7 @@ func _ready():
 
   # Spawn a bunch of bots.
   for i in initial_bots:
-    var pos = Vector2(randf_range(-500, 500), randf_range(-500, 500))
+    var pos = Vector2(randf_range(-750, 750), randf_range(-750, 750))
     var rot = randf_range(0, TAU)
     spawn_bot(pos, rot)
 

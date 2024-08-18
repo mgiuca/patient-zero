@@ -7,7 +7,7 @@
 radius = 63.0317
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0b7jm"]
-radius = 1122.01
+radius = 1812.0
 
 [node name="Bot" type="RigidBody2D"]
 light_mask = 4
