@@ -1,5 +1,11 @@
 # Images
 
+"Organ Systems of the Human Body"
+from "Human Biology" by Sarah Malmquist and Kristina Prescott
+Licensed under Creative Commons: Attribution-NonCommercial 4.0 International License
+https://creativecommons.org/licenses/by-nc/4.0/
+https://open.lib.umn.edu/humanbiology
+
 "Golgotha Effects Textures: lavafull" by Crack.com
 Licensed under Creative Commons: CC0 1.0 Universal
 https://creativecommons.org/publicdomain/zero/1.0/

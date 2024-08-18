@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=7 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
 [ext_resource type="PackedScene" uid="uid://mclt0vsajrjb" path="res://scenes/cursor.tscn" id="3_5i8s6"]
 [ext_resource type="AudioStream" uid="uid://cu6bjqlaj4ng2" path="res://music/Spacial Harvest.mp3" id="4_1gsof"]
 [ext_resource type="Texture2D" uid="uid://bhj3v5cib030u" path="res://images/lavafull.jpg" id="4_kcf7m"]
+[ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
 
 [node name="LvlBody" type="Node"]
 script = ExtResource("1_n3cbr")
@@ -18,14 +19,22 @@ position_smoothing_enabled = true
 [node name="Cursor" parent="." instance=ExtResource("3_5i8s6")]
 z_index = 100
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 texture_repeat = 2
-offset_left = -9615.0
-offset_top = -7203.0
-offset_right = 11894.0
-offset_bottom = 10485.0
+offset_left = -10440.0
+offset_top = -16980.0
+offset_right = 11063.0
+offset_bottom = 26506.0
 texture = ExtResource("4_kcf7m")
 stretch_mode = 1
+
+[node name="Outline" type="TextureRect" parent="."]
+z_index = 1
+offset_left = -10933.0
+offset_top = -17154.0
+offset_right = 11371.0
+offset_bottom = 26953.0
+texture = ExtResource("5_vocdv")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_1gsof")
