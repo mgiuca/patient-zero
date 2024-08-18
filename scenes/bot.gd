@@ -2,6 +2,10 @@ extends RigidBody2D
 
 class_name Bot
 
+## The maximum distance at which two bots can interact with each other (i.e.
+## the distance at which the tensor "snaps").
+@export var tensor_max_range : float = 1800
+
 ## The distance at which two bots will neither attract nor repel one another.
 @export var resting_distance : float = 200
 
@@ -12,7 +16,7 @@ class_name Bot
 @export var repulsion_multiplier : float = 80
 
 func _ready():
-  pass
+  $TensorCollider/CollisionShape2D.shape.radius = tensor_max_range
 
 func _process(delta: float):
   # Attract/repel every nearby bot.
