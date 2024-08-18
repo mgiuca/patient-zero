@@ -9,7 +9,7 @@ extends Node
 var bots : Array[Bot] = []
 
 # Add this much around the edge of the bots when framing the camera.
-var zoom_margin : float = 150
+var zoom_margin : float = 500
 
 func _ready():
   $Music.seek(music_start_time)

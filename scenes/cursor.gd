@@ -6,7 +6,7 @@ extends Area2D
 @export var inactive_draw_thickness : float = 5
 
 ## Multiplier for the amount of force to exert on bots.
-@export var force_multiplier : float = 1
+@export var force_multiplier : float = 2
 
 var active : bool = false
 
