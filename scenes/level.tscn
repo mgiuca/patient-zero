@@ -8,7 +8,7 @@
 [node name="Level" type="Node"]
 script = ExtResource("1_m0dy6")
 bot_scene = ExtResource("1_g5p31")
-initial_bots = 8
+initial_bots = 50
 music_start_time = 2.0
 
 [node name="Camera" type="Camera2D" parent="."]
