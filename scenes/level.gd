@@ -16,6 +16,10 @@ var bots : Array[Bot] = []
 # Add this much around the edge of the bots when framing the camera.
 var zoom_margin : float = 500
 
+# Current zoom level. Can be pushed out by bots moving far away. Slowly creeps
+# back in.
+var current_zoom : float = 1
+
 func _ready():
   $Music.seek(music_start_time)
 
@@ -32,16 +36,16 @@ func spawn_bot(position: Vector2, rotation : float):
   bots.append(bot)
   add_child(bot)
 
-func _process(delta):
+func _process(delta: float):
   # Gets the mouse position in global coordinates, based on the location
   # of the camera.
   var mouse_pos = $Camera.get_global_mouse_position()
   $Cursor.position = mouse_pos
 
-  update_camera()
+  update_camera(delta)
 
 ## Update the camera to capture a view of all the bots.
-func update_camera():
+func update_camera(delta: float):
   # Note that the camera position will auto-smooth, but zoom will not.
 
   # No bots; we can't update the camera so leave as-is.
@@ -72,4 +76,8 @@ func update_camera():
   # These give the zoom required to satisfy each axis. Set the camera zoom to
   # whichever will be the most zoomed out of these two.
   var zoom = min(x_zoom, y_zoom)
-  $Camera.zoom = Vector2(zoom, zoom)
+  if zoom > current_zoom:
+    current_zoom += 0.01 * delta
+  if zoom < current_zoom:
+    current_zoom = zoom
+  $Camera.zoom = Vector2(current_zoom, current_zoom)
