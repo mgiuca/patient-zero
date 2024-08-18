@@ -1,15 +1,19 @@
 # Images
 
-"Organ Systems of the Human Body"
-from "Human Biology" by Sarah Malmquist and Kristina Prescott
-Licensed under Creative Commons: Attribution-NonCommercial 4.0 International License
-https://creativecommons.org/licenses/by-nc/4.0/
-https://open.lib.umn.edu/humanbiology
+"Front view of a human heart" by Blausen Medical Communications, Inc.
+Licensed under Creative Commons: Attribution-ShareAlike 3.0
+https://creativecommons.org/licenses/by-sa/3.0/
 
 "Golgotha Effects Textures: lavafull" by Crack.com
 Licensed under Creative Commons: CC0 1.0 Universal
 https://creativecommons.org/publicdomain/zero/1.0/
 https://opengameart.org/node/7734
+
+"Organ Systems of the Human Body"
+from "Human Biology" by Sarah Malmquist and Kristina Prescott
+Licensed under Creative Commons: Attribution-NonCommercial 4.0 International License
+https://creativecommons.org/licenses/by-nc/4.0/
+https://open.lib.umn.edu/humanbiology
 
 # Music
 

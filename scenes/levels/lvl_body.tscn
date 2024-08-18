@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=9 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bhj3v5cib030u" path="res://images/lavafull.jpg" id="4_kcf7m"]
 [ext_resource type="Texture2D" uid="uid://3g4nc41agqbt" path="res://images/human-cardio.png" id="5_bmjak"]
 [ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
+[ext_resource type="Texture2D" uid="uid://b30i85d0ykdc4" path="res://images/heart.png" id="7_uyj3q"]
 
 [node name="LvlBody" type="Node"]
 script = ExtResource("1_n3cbr")
@@ -59,6 +60,22 @@ polygon = PackedVector2Array(6321.79, -4170.08, 6034.65, -4101.07, 5852.05, -399
 position = Vector2(-22829, 5892)
 scale = Vector2(3.6254, 5.31788)
 polygon = PackedVector2Array(6335.85, 408.621, 6418.05, 410.314, 6451.43, 868.956, 6456.94, 1289.8, 6507.15, 1611.92, 6473.77, 1877.25, 6507.15, 2279.11, 6568.1, 2703.71, 6584.93, 2999.32, 6584.93, 3340.62, 6607, 3503.47, 6785.18, 3689.25, 6990.68, 3787.79, 7168.87, 3727.24, 7201.97, 3605.95, 6985.16, 3476.95, 6896.34, 3295.11, 6912.89, 2916.01, 7051.91, 2563.43, 7135.49, 2047.81, 7068.74, 1604.4, 7207.76, 1073.74, 7307.61, 679.407, 7357.81, 76.7224, 7352.29, -279.623, 7196.45, -799.003, 7201.97, -1079.57, 7218.79, -1280.4, 7335.47, -1538.21, 7442.49, -1541.22, 7539.58, -1318.57, 7574.89, -945.49, 7707.29, -596.479, 8148.62, -30.8394, 8228.06, 282.068, 8404.59, 534.8, 8563.47, 607.009, 8722.35, 564.887, 8748.83, 414.451, 8669.39, 251.98, 8828.27, 179.771, 8757.66, 35.3525, 8528.17, -181.275, 8298.67, -638.601, 8016.22, -1198.22, 7927.96, -1812, 7919.13, -2407.73, 7796.11, -2582.99, 7619.58, -2715.56, 7265.96, -2828.01, 7018.54, -2880.29, 6794.84, -2956.63, 6682.85, -3137.34, 6753.46, -3354.16, 6818.28, -3530.92, 6788.77, -3723.67, 6794.84, -3932.4, 6694.44, -4085.09, 6290.34, -4170.08, 6269.1, -5143.21, 10889, -5156.38, 11007.6, 4757.72, 6465.22, 4757.72)
+
+[node name="Heart" type="StaticBody2D" parent="."]
+z_index = 5
+collision_layer = 2
+collision_mask = 0
+
+[node name="TextureRect" type="TextureRect" parent="Heart"]
+offset_left = -1090.0
+offset_top = -6632.0
+offset_right = 2112.0
+offset_bottom = -3643.0
+texture = ExtResource("7_uyj3q")
+stretch_mode = 4
+
+[node name="Heart" type="CollisionPolygon2D" parent="Heart"]
+polygon = PackedVector2Array(-910, -6133, -568, -6494, 136, -6269, 1032, -5997, 1088, -6475, 1564, -5809, 1963, -4820, 1506, -3697, 523, -3926, -204, -4247, -1005, -5105)
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_1gsof")
