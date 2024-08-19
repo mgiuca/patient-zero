@@ -2,6 +2,14 @@ extends RigidBody2D
 
 class_name Agent
 
+enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
+
+## What type of agent this is.
+# TODO: There's probably a better way to essentially get which scene this
+# object belongs to than having it stored as a separate enum. But I can't
+# figure it out in a hurry.
+@export var agent_type : AgentType = AgentType.UNKNOWN
+
 ## The maximum speed at which the agent can move. If it moves faster than this,
 ## it will be artificially slowed down.
 @export var terminal_velocity : float = 4000
@@ -29,6 +37,8 @@ class_name Agent
 var last_attack_time_ms : float
 
 func _ready():
+  assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
+
   if tensor_max_range > 0:
     # This will crash if there is no TensorCollider. (Note: some agents have
     # no TensorCollider, but they also have tensor_max_range == 0.)

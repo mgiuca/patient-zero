@@ -23,6 +23,7 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_b6s8l")
+agent_type = 1
 tensor_max_range = 400.0
 random_movement = 200.0
 
