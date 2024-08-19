@@ -109,13 +109,36 @@ func apply_tensor(other: Agent, delta: float):
   apply_central_force(force)
 
 func _on_body_entered(body: Node) -> void:
-  # Damage the other body, if cooldown allows it.
+  # Damage the other body, if cooldown and agent type allows it.
   if body is not Agent:
+    return
+
+  # WTF: body_entered seems to be emitted bidirectionally, even when the
+  # collision property is uni-directional. For example, if I have an object
+  # in layer 4 with a collision mask on 6, and the other object is on layer 6
+  # with NO collision mask on 4, it will still fire the event in both
+  # directions. I don't really understand why, and it's not helpful. But for
+  # now, we just explicitly control for this by checking the agent type (using
+  # can_hit).
+  #
+  # This also helps us change the collision logic across phases.
+  if not can_hit(agent_type, body.agent_type):
     return
 
   if last_attack_time_ms + (attack_cooldown * 1000) < Time.get_ticks_msec():
     last_attack_time_ms = Time.get_ticks_msec()
     body.kill()
+
+## Determines whether an agent of type |from| can hit an agent of type |to|.
+## Takes the game phase into account, where the rules can change.
+func can_hit(from: AgentType, to: AgentType) -> bool:
+  # TODO: Take phase into account.
+  if from == AgentType.BOT:
+    return to == AgentType.VIRUS
+  elif from == AgentType.VIRUS:
+    return to == AgentType.BOT or to == AgentType.CELL
+
+  return false
 
 ## Let self be killed (by an attack).
 func kill():
