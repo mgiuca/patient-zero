@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=19 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
 [ext_resource type="PackedScene" uid="uid://mclt0vsajrjb" path="res://scenes/cursor.tscn" id="3_5i8s6"]
 [ext_resource type="PackedScene" uid="uid://s2rhqk2m50ey" path="res://scenes/virus.tscn" id="3_wdrr7"]
 [ext_resource type="AudioStream" uid="uid://cu6bjqlaj4ng2" path="res://music/Spacial Harvest.mp3" id="4_1gsof"]
+[ext_resource type="PackedScene" uid="uid://bsgdero5ej5yb" path="res://scenes/cell.tscn" id="4_6bb0c"]
 [ext_resource type="Texture2D" uid="uid://bhj3v5cib030u" path="res://images/lavafull.jpg" id="4_kcf7m"]
 [ext_resource type="Texture2D" uid="uid://3g4nc41agqbt" path="res://images/human-cardio.png" id="5_bmjak"]
 [ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
@@ -38,8 +39,10 @@ size = Vector2(1695, 8544)
 script = ExtResource("1_n3cbr")
 bot_scene = ExtResource("2_3dgl4")
 virus_scene = ExtResource("3_wdrr7")
+cell_scene = ExtResource("4_6bb0c")
 initial_bots = 50
 initial_viruses = 50
+initial_cells = 100
 music_start_time = 2.0
 
 [node name="Camera" type="Camera2D" parent="."]

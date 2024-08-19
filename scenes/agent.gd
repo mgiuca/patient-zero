@@ -15,6 +15,7 @@ class_name Agent
 ## Multiplier for the repulsion force bots exert on one another.
 @export var repulsion_multiplier : float = 80
 
+## Maximum impulse to move in a random direction.
 @export var random_movement : float = 0
 
 ## Amount of time (s) in between being able to damage an enemy.
@@ -25,6 +26,11 @@ var last_attack_time_ms : float
 
 func _ready():
   $TensorCollider/CollisionShape2D.shape.radius = tensor_max_range
+  # Animated sprites: start on a random frame.
+  var sprite = $Sprite2D
+  if sprite is AnimatedSprite2D:
+    var num_frames = sprite.sprite_frames.get_frame_count(sprite.animation)
+    sprite.frame = randi_range(0, num_frames - 1)
 
 func _process(delta: float):
   # Attract/repel every nearby bot.

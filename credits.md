@@ -15,6 +15,10 @@ Licensed under Creative Commons: Attribution-NonCommercial 4.0 International Lic
 https://creativecommons.org/licenses/by-nc/4.0/
 https://open.lib.umn.edu/humanbiology
 
+"Red blood cells in various stages and angles" by Sarbasst Braian
+Licensed under Creative Commons: CC0 1.0
+https://creativecommons.org/publicdomain/zero/1.0/
+
 "Viruses - Common Cold" by Bart Kelsey
 Licensed under Creative Commons: CC0 1.0
 https://creativecommons.org/publicdomain/zero/1.0/

@@ -8,11 +8,17 @@ extends Node
 ## The scene to instantiate a virus.
 @export var virus_scene : PackedScene
 
+## The scene to instantiate a blood cell.
+@export var cell_scene : PackedScene
+
 ## Number of bots to spawn at startup.
 @export var initial_bots : int
 
 ## Number of viruses to spawn at startup.
 @export var initial_viruses : int
+
+## Number of blood cells to spawn at startup.
+@export var initial_cells : int
 
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
@@ -39,6 +45,12 @@ func _ready():
     var pos = pick_random_location()
     var rot = randf_range(0, TAU)
     spawn_agent(virus_scene, pos, rot)
+
+  # Spawn a bunch of cells.
+  for i in initial_cells:
+    var pos = pick_random_location()
+    var rot = randf_range(0, TAU)
+    spawn_agent(cell_scene, pos, rot)
 
 ## Picks a random valid location somewhere in the level.
 func pick_random_location() -> Vector2:
