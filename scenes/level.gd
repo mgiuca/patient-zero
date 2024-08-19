@@ -79,6 +79,10 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
   add_child(agent)
   if agent_type == Agent.AgentType.BOT:
     agent.add_to_group('bots')
+  if agent_type == Agent.AgentType.VIRUS:
+    agent.add_to_group('viruses')
+  if agent_type == Agent.AgentType.CELL:
+    agent.add_to_group('cells')
 
   return agent
 
@@ -89,6 +93,7 @@ func _process(delta: float):
   $Cursor.position = mouse_pos
 
   update_camera(delta)
+  update_hud()
 
 ## Update the camera to capture a view of all the bots.
 func update_camera(delta: float):
@@ -128,3 +133,21 @@ func update_camera(delta: float):
   if zoom < current_zoom:
     current_zoom = zoom
   $Camera.zoom = Vector2(current_zoom, current_zoom)
+
+func update_hud():
+  var num_bots = get_tree().get_nodes_in_group('bots').size()
+  $HUD/MarginContainer/LeftSide/LblBots.text = "Bots: " + str(num_bots)
+  var num_viruses = get_tree().get_nodes_in_group('viruses').size()
+  $HUD/MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(num_viruses)
+  var patient_health = calc_patient_health()
+  $HUD/MarginContainer/LeftSide/LblHealth.text = "Patient health: " + str(snappedf(patient_health * 100, 1)) + "%"
+
+  # TODO: Set quest text depending on phase.
+
+## Calculates the patient health as a percentage (0 to 1).
+func calc_patient_health() -> float:
+  # TODO: For now, just return number of cells.
+  # This should be something more complex, e.g. patient should maybe die if there
+  # are only 5 cells left and therefore be at 0.
+  var num_cells = get_tree().get_nodes_in_group('cells').size()
+  return min(num_cells / 100.0, 1)
