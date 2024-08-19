@@ -37,20 +37,19 @@ func _ready():
   for i in initial_bots:
     var pos = Vector2(randf_range(-750, 750), randf_range(-750, 750))
     var rot = randf_range(0, TAU)
-    var bot = spawn_agent(bot_scene, pos, rot)
-    bot.add_to_group('bots')
+    spawn_agent(Agent.AgentType.BOT, pos)
 
   # Spawn a bunch of viruses.
   for i in initial_viruses:
     var pos = pick_random_location()
     var rot = randf_range(0, TAU)
-    spawn_agent(virus_scene, pos, rot)
+    spawn_agent(Agent.AgentType.VIRUS, pos)
 
   # Spawn a bunch of cells.
   for i in initial_cells:
     var pos = pick_random_location()
     var rot = randf_range(0, TAU)
-    spawn_agent(cell_scene, pos, rot)
+    spawn_agent(Agent.AgentType.CELL, pos)
 
 ## Picks a random valid location somewhere in the level.
 func pick_random_location() -> Vector2:
@@ -61,11 +60,26 @@ func pick_random_location() -> Vector2:
     Vector2(randf_range(rect.position.x, rect.position.x + rect.size.x),
             randf_range(rect.position.y, rect.position.y + rect.size.y))
 
-func spawn_agent(scene: PackedScene, position: Vector2, rotation : float) -> Agent:
+func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
+  # Decide what type of scene to instantiate.
+  var scene: PackedScene
+  if agent_type == Agent.AgentType.BOT:
+    scene = bot_scene
+  elif agent_type == Agent.AgentType.VIRUS:
+    scene = virus_scene
+  elif agent_type == Agent.AgentType.CELL:
+    scene = cell_scene
+
+  # Spawn the agent.
   var agent : Agent = scene.instantiate()
-  agent.rotation = rotation
+  agent.rotation = randf_range(0, TAU)
   agent.position = position
+
+  # Add to parent and necessary groups.
   add_child(agent)
+  if agent_type == Agent.AgentType.BOT:
+    agent.add_to_group('bots')
+
   return agent
 
 func _process(delta: float):
