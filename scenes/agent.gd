@@ -55,19 +55,20 @@ func _process(delta: float):
                             randf_range(-random_movement, random_movement))
       self.apply_impulse(impulse)
 
-## Applies an attraction or repulsion force on the other bot, based on
-## proximity to this bot.
+## Applies an attraction or repulsion force on this agent, based on the
+## proximity of another agent.
 ##
-## Assumes the two bots are within the maximum tensor range (the radius of
+## Assumes the two agents are within the maximum tensor range (the radius of
 ## TensorCollider's collision circle).
 ##
+## Rule for bots (different for other types):
 ## When bots are at the resting distance, no force is applied.
 ## When bots are further than the resting distance, an attraction force is
 ## applied; further away = greater force (like a rubber band).
 ## When bots are closer than the resting distance, a repulsion force is applied;
 ## closer = greater force (like a squashed material resisting).
 func apply_tensor(other: Agent, delta: float):
-  var displacement : Vector2 = position - other.position
+  var displacement : Vector2 = other.position - position
   var distance : float = displacement.length()
   var attraction : float  # Negative attraction = repulsion
   if distance > resting_distance:
@@ -81,7 +82,7 @@ func apply_tensor(other: Agent, delta: float):
     # it a reciprocal so it goes towards infinity as they get closer).
     #attraction = -resting_distance*resting_distance / (distance * distance) - 1
   var force : Vector2 = displacement.normalized() * attraction * delta
-  other.apply_central_force(force)
+  apply_central_force(force)
 
 func _on_body_entered(body: Node) -> void:
   # Damage the other body, if cooldown allows it.

@@ -23,6 +23,7 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_b6s8l")
+tensor_max_range = 400.0
 random_movement = 200.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -34,7 +35,7 @@ shape = SubResource("CircleShape2D_vxskf")
 
 [node name="TensorCollider" type="Area2D" parent="."]
 collision_layer = 16
-collision_mask = 4
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TensorCollider"]
 visible = false
