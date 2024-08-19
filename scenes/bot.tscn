@@ -28,6 +28,7 @@ angular_damp_mode = 1
 script = ExtResource("1_h6h7t")
 agent_type = 0
 tensor_max_range = 1800.0
+resting_distance = 200.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_3fe4t")

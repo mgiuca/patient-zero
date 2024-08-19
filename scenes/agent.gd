@@ -19,7 +19,7 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 @export var tensor_max_range : float = 0
 
 ## The distance at which two bots will neither attract nor repel one another.
-@export var resting_distance : float = 200
+@export var resting_distance : float = 0
 
 ## Multiplier for the attraction force bots exert on one another.
 @export var attraction_multiplier : float = 20
@@ -92,6 +92,16 @@ func _process(delta: float):
 ## When bots are closer than the resting distance, a repulsion force is applied;
 ## closer = greater force (like a squashed material resisting).
 func apply_tensor(other: Agent, delta: float):
+  # Note: This applies to bots and viruses, not cells which have no tensor.
+  # Originally this concept (called a "tensor" because it acts like a rubber
+  # band) was meant to be how bots pull and push one another like fluid.
+  # It's also used for making viruses chase cells (they are only attracted,
+  # not repelled, due to having a 0 resting distance). This is a bit of a hack
+  # - it's weird behaviour for essentially a "chase" directive to accelerate
+  # more when you're further away. But it kind of looks cool as long as the
+  # tensor max radius is small enough (if it's too large, viruses will slingshot
+  # themselves towards cells).
+
   var displacement : Vector2 = other.position - position
   var distance : float = displacement.length()
   var attraction : float  # Negative attraction = repulsion
