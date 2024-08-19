@@ -138,6 +138,8 @@ func _on_body_entered(body: Node) -> void:
   if last_attack_time_ms + (attack_cooldown * 1000) < Time.get_ticks_msec():
     last_attack_time_ms = Time.get_ticks_msec()
     body.kill()
+    if clone_self_when_killing(agent_type, body.agent_type):
+      get_parent().spawn_agent(agent_type, body.position)
 
 ## Determines whether an agent of type |from| can hit an agent of type |to|.
 ## Takes the game phase into account, where the rules can change.
@@ -147,6 +149,16 @@ func can_hit(from: AgentType, to: AgentType) -> bool:
     return to == AgentType.VIRUS
   elif from == AgentType.VIRUS:
     return to == AgentType.BOT or to == AgentType.CELL
+
+  return false
+
+## Determines whether an agent of type |from| will spawn a clone of itself
+## after killing an agent of type |to|. (It's presumed can_hit returned true.)
+func clone_self_when_killing(from: AgentType, to: AgentType) -> bool:
+  if from == AgentType.BOT:
+    return true
+  elif from == AgentType.VIRUS:
+    return to == AgentType.CELL
 
   return false
 
