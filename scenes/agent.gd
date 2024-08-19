@@ -4,7 +4,7 @@ class_name Agent
 
 ## The maximum distance at which two bots can interact with each other (i.e.
 ## the distance at which the tensor "snaps").
-@export var tensor_max_range : float = 1800
+@export var tensor_max_range : float = 0
 
 ## The distance at which two bots will neither attract nor repel one another.
 @export var resting_distance : float = 200
@@ -25,7 +25,11 @@ class_name Agent
 var last_attack_time_ms : float
 
 func _ready():
-  $TensorCollider/CollisionShape2D.shape.radius = tensor_max_range
+  if tensor_max_range > 0:
+    # This will crash if there is no TensorCollider. (Note: some agents have
+    # no TensorCollider, but they also have tensor_max_range == 0.)
+    $TensorCollider/CollisionShape2D.shape.radius = tensor_max_range
+
   # Animated sprites: start on a random frame.
   var sprite = $Sprite2D
   if sprite is AnimatedSprite2D:
@@ -44,9 +48,10 @@ func _process(delta: float):
   # will be done by the other body on us.
 
   var collider : Area2D = $TensorCollider
-  for other : Agent in collider.get_overlapping_bodies():
-    if other != self:
-      apply_tensor(other, delta)
+  if collider != null:
+    for other : Agent in collider.get_overlapping_bodies():
+      if other != self:
+        apply_tensor(other, delta)
 
   # Apply random movement, in the form of instantaneous impulse on random ticks.
   if random_movement > 0:

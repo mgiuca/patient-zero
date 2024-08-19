@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bsgdero5ej5yb"]
+[gd_scene load_steps=10 format=3 uid="uid://bsgdero5ej5yb"]
 
 [ext_resource type="Script" path="res://scenes/agent.gd" id="1_tevsj"]
 [ext_resource type="Texture2D" uid="uid://buwl7d6jkr6k5" path="res://images/blood_cell.png" id="2_c637g"]
@@ -51,9 +51,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_vxskf"]
 radius = 95.0053
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0b7jm"]
-radius = 0.01
-
 [node name="Cell" type="RigidBody2D"]
 light_mask = 4
 visibility_layer = 4
@@ -65,7 +62,6 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_tevsj")
-tensor_max_range = 0.0
 random_movement = 50.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
@@ -75,14 +71,5 @@ autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_vxskf")
-
-[node name="TensorCollider" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TensorCollider"]
-visible = false
-shape = SubResource("CircleShape2D_0b7jm")
-debug_color = Color(0.591893, 0.687014, 0.0373291, 0.42)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
