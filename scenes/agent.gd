@@ -2,6 +2,10 @@ extends RigidBody2D
 
 class_name Agent
 
+## The maximum speed at which the agent can move. If it moves faster than this,
+## it will be artificially slowed down.
+@export var terminal_velocity : float = 4000
+
 ## The maximum distance at which two bots can interact with each other (i.e.
 ## the distance at which the tensor "snaps").
 @export var tensor_max_range : float = 0
@@ -37,6 +41,11 @@ func _ready():
     sprite.frame = randi_range(0, num_frames - 1)
 
 func _process(delta: float):
+  # Limit to terminal velocity.
+  var excess_speed = linear_velocity.length() - terminal_velocity
+  if excess_speed > 0:
+    apply_impulse(-linear_velocity.normalized() * excess_speed)
+
   # Attract/repel every nearby bot.
   # The TensorCollider is an Area2D with a huge radius collider (as opposed to
   # the Bot's own collider, which is just the size of the bot). This is used to
