@@ -29,12 +29,18 @@ extends Node
 # Add this much around the edge of the bots when framing the camera.
 var zoom_margin : float = 500
 
+# Minimum (logarithm of) user-controlled zoom.
+var min_zoom_log : float = -4
+
 # Current zoom level. Can be pushed out by bots moving far away. Slowly creeps
 # back in.
-var current_zoom : float = 1
+# Stored as a natural log of the actual zoom, so we can apply linear + and - to
+# it.
+var current_zoom_log : float = 1
 
 func _ready():
   $Music.seek(music_start_time)
+  $HUD/MarginContainer/RightSide/LblDebug.visible = debug_info
 
   # Spawn a bunch of bots.
   for i in initial_bots:
@@ -89,6 +95,16 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
 
   return agent
 
+func _input(event : InputEvent):
+  # Handle zooming.
+  if event.is_action('zoom_in'):
+    current_zoom_log += 0.1
+  elif event.is_action('zoom_out'):
+    current_zoom_log -= 0.1
+
+  if current_zoom_log < min_zoom_log:
+    current_zoom_log = min_zoom_log
+
 func _process(delta: float):
   # Gets the mouse position in global coordinates, based on the location
   # of the camera.
@@ -131,10 +147,12 @@ func update_camera(delta: float):
   # These give the zoom required to satisfy each axis. Set the camera zoom to
   # whichever will be the most zoomed out of these two.
   var zoom = min(x_zoom, y_zoom)
+  var current_zoom = exp(current_zoom_log)
   if zoom > current_zoom:
-    current_zoom += 0.01 * delta
+    current_zoom_log += 0.01 * delta
   if zoom < current_zoom:
-    current_zoom = zoom
+    current_zoom_log = log(zoom)
+  current_zoom = exp(current_zoom_log)
   $Camera.zoom = Vector2(current_zoom, current_zoom)
 
 func update_hud():
@@ -147,6 +165,7 @@ func update_hud():
   if debug_info:
     var num_cells = get_tree().get_nodes_in_group('cells').size()
     $HUD/MarginContainer/LeftSide/LblHealth.text += " (" + str(num_cells) + " cells)"
+    $HUD/MarginContainer/RightSide/LblDebug.text = "Zoom: " + str(snappedf(current_zoom_log, 0.1))
   # TODO: Set quest text depending on phase.
 
 ## Calculates the patient health as a percentage (0 to 1).

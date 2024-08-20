@@ -39,7 +39,18 @@ layout_mode = 2
 text = "Patient health:"
 label_settings = SubResource("LabelSettings_w3pep")
 
-[node name="LblQuest" type="Label" parent="MarginContainer"]
+[node name="RightSide" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="LblQuest" type="Label" parent="MarginContainer/RightSide"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Destroy all virus cells."
+label_settings = SubResource("LabelSettings_w3pep")
+
+[node name="LblDebug" type="Label" parent="MarginContainer/RightSide"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
