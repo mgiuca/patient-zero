@@ -4,19 +4,22 @@ extends CanvasLayer
 
 @export var num_bots : int:
   set(value):
+    if num_bots != value:
+      $MarginContainer/LeftSide/LblBots.text = "Bots: " + str(value)
     num_bots = value
-    $MarginContainer/LeftSide/LblBots.text = "Bots: " + str(value)
 
 @export var num_viruses : int:
   set(value):
+    if num_viruses != value:
+      $MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(value)
     num_viruses = value
-    $MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(value)
 
 @export var patient_health : float:
   set(value):
+    if patient_health != value:
+      $MarginContainer/LeftSide/LblHealth.text = "Patient health: " + \
+        str(snappedf(value * 100, 1)) + "%"
     patient_health = value
-    $MarginContainer/LeftSide/LblHealth.text = "Patient health: " + \
-      str(snappedf(value * 100, 1)) + "%"
 
 @export_group('Debug')
 
