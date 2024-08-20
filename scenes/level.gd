@@ -158,7 +158,7 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
   if agent_type == Agent.AgentType.BOT:
     agent.add_to_group('bots')
     if current_phase == Phase.FARM_VIRUS:
-      if get_tree().get_node_count_in_group('bots') >= 10:
+      if get_tree().get_node_count_in_group('bots') >= 20:
         change_phase(Phase.DESTROY_VIRUS)
   if agent_type == Agent.AgentType.VIRUS:
     agent.add_to_group('viruses')

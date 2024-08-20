@@ -74,7 +74,7 @@ func _ready():
   # Hack: In FARM_VIRUS, much longer cooldown.
   if get_parent().current_phase == Level.Phase.FARM_VIRUS:
     if agent_type == AgentType.VIRUS:
-      spawn_cd = 30
+      spawn_cd = 45
   next_feed_time_ms = Time.get_ticks_msec() + (spawn_cd * 1000)
 
   # Hack: Set collision mask for bots based on phase.
