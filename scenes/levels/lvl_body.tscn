@@ -98,8 +98,9 @@ shape = SubResource("RectangleShape2D_g8doi")
 texture_repeat = 2
 offset_left = -10440.0
 offset_top = -16980.0
-offset_right = 11063.0
-offset_bottom = 26506.0
+offset_right = -3273.0
+offset_bottom = -2485.0
+scale = Vector2(3, 3)
 texture = ExtResource("4_kcf7m")
 stretch_mode = 1
 
