@@ -294,6 +294,11 @@ func change_phase(phase: Phase) -> void:
   # Hide the bots and viruses until we get to FARM_VIRUS.
   hud.show_bots_viruses = phase > Phase.ATTACK_TUTORIAL
 
+  # Special music.
+  if phase == Phase.CONSUME_ALL:
+    $Music.stop()
+    $MusicMechan.play()
+
 func finished_move_tutorial():
   # Start zoom tutorial
   $HUD.hide_notice_text()
@@ -346,3 +351,7 @@ func _on_beep_timer_timeout() -> void:
     $SfxBeep.play()
     $BeepTimer.wait_time = heartrate
     $BeepTimer.start()
+
+
+func _on_music_mechan_finished() -> void:
+  $MusicOneOf.play()

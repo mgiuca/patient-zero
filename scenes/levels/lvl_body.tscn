@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=24 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
@@ -10,9 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://3g4nc41agqbt" path="res://images/human-cardio.png" id="5_bmjak"]
 [ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
 [ext_resource type="Texture2D" uid="uid://b30i85d0ykdc4" path="res://images/heart.png" id="7_uyj3q"]
+[ext_resource type="AudioStream" uid="uid://bo1ecsunbidsf" path="res://music/Mechanolith.mp3" id="11_844nl"]
 [ext_resource type="AudioStream" uid="uid://dhoob1tc0yil2" path="res://sounds/beep.wav" id="11_nqkvl"]
 [ext_resource type="PackedScene" uid="uid://1cbsv65rbdyc" path="res://scenes/hud.tscn" id="11_w7mwp"]
 [ext_resource type="AudioStream" uid="uid://bylwcvcxnx3ha" path="res://sounds/flatline.wav" id="12_02hj7"]
+[ext_resource type="AudioStream" uid="uid://dmgv06mfv71ee" path="res://music/One of Them.mp3" id="12_85hob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5i3e8"]
 size = Vector2(3213, 4842)
@@ -160,6 +162,15 @@ autoplay = true
 playback_type = 1
 parameters/looping = false
 
+[node name="MusicMechan" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_844nl")
+playback_type = 1
+
+[node name="MusicOneOf" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_85hob")
+playback_type = 1
+parameters/looping = false
+
 [node name="SfxBeep" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_nqkvl")
 
@@ -175,4 +186,5 @@ one_shot = true
 [connection signal="body_entered" from="Cursor" to="." method="_on_cursor_body_entered"]
 [connection signal="timeout" from="CellSpawnTimer" to="." method="_on_cell_spawn_timer_timeout"]
 [connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]
+[connection signal="finished" from="MusicMechan" to="." method="_on_music_mechan_finished"]
 [connection signal="timeout" from="TutorialTimer" to="." method="_on_tutorial_timer_timeout"]
