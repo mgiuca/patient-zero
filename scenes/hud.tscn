@@ -1,4 +1,10 @@
-[gd_scene format=3 uid="uid://1cbsv65rbdyc"]
+[gd_scene load_steps=2 format=3 uid="uid://1cbsv65rbdyc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w3pep"]
+resource_name = "HudLabel"
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.709804)
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -21,17 +27,21 @@ size_flags_vertical = 0
 [node name="LblBots" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
 text = "Bots:"
+label_settings = SubResource("LabelSettings_w3pep")
 
 [node name="LblVirus" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
 text = "Virus cells:"
+label_settings = SubResource("LabelSettings_w3pep")
 
 [node name="LblHealth" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
 text = "Patient health:"
+label_settings = SubResource("LabelSettings_w3pep")
 
 [node name="LblQuest" type="Label" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Destroy all virus cells."
+label_settings = SubResource("LabelSettings_w3pep")
