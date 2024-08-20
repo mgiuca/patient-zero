@@ -88,7 +88,9 @@ func _ready():
 
   # Change initial conditions based on debug start phase. Should not have
   # any effect in the default phase.
-  if debug_start_phase > Phase.ATTACK_TUTORIAL:
+  if debug_start_phase == Phase.FARM_VIRUS:
+    initial_bots = 2
+  elif debug_start_phase >= Phase.FARM_VIRUS:
     initial_bots = 10
   if debug_start_phase == Phase.CONSUME_ALL:
     initial_viruses = 0
@@ -153,6 +155,9 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
   add_child(agent)
   if agent_type == Agent.AgentType.BOT:
     agent.add_to_group('bots')
+    if current_phase == Phase.FARM_VIRUS:
+      if get_tree().get_node_count_in_group('bots') >= 10:
+        change_phase(Phase.DESTROY_VIRUS)
   if agent_type == Agent.AgentType.VIRUS:
     agent.add_to_group('viruses')
   if agent_type == Agent.AgentType.CELL:
