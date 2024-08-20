@@ -74,6 +74,10 @@ func _ready():
       spawn_cd = 30
   next_feed_time_ms = Time.get_ticks_msec() + (spawn_cd * 1000)
 
+  # Hack: Set collision mask for bots based on phase.
+  if agent_type == AgentType.BOT:
+    set_collision_mask_based_on_phase(get_parent().current_phase)
+
   if tensor_max_range > 0:
     # This will crash if there is no TensorCollider. (Note: some agents have
     # no TensorCollider, but they also have tensor_max_range == 0.)
@@ -133,6 +137,23 @@ func _process(delta: float):
       self.apply_impulse(impulse)
 
   $LblDebugFriends.text = str(strength())
+
+# Only for bots.
+func set_collision_mask_based_on_phase(phase: Level.Phase):
+  # Set or clear bit 3 (i.e. bitvalue 8).
+  if phase == Level.Phase.MOVE_TUTORIAL:
+    $TensorCollider.collision_mask |= 8
+  else:
+    # Note: -9 is the bitwise inverse of 8.
+    $TensorCollider.collision_mask &= -9
+
+  # In CONSUME_ALL, we need bots to be able to collide with cells.
+  # Set or clear bit 5 (i.e. bitvalue 32).
+  if phase == Level.Phase.CONSUME_ALL:
+    collision_mask |= 32
+  else:
+    # Note: -33 is the bitwise inverse of 32.
+    collision_mask &= -33
 
 ## Applies an attraction or repulsion force on this agent, based on the
 ## proximity of another agent.

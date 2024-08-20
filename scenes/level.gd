@@ -289,20 +289,7 @@ func change_phase(phase: Phase) -> void:
   # can detect to change phase). After that, it's a performance liability, so
   # turn it off.
   for bot in get_tree().get_nodes_in_group('bots'):
-    # Set or clear bit 3 (i.e. bitvalue 8).
-    if phase == Phase.MOVE_TUTORIAL:
-      bot.get_node('TensorCollider').collision_mask |= 8
-    else:
-      # Note: -9 is the bitwise inverse of 8.
-      bot.get_node('TensorCollider').collision_mask &= -9
-
-    # In CONSUME_ALL, we need bots to be able to collide with cells.
-    # Set or clear bit 5 (i.e. bitvalue 32).
-    if phase == Phase.CONSUME_ALL:
-      bot.collision_mask |= 32
-    else:
-      # Note: -33 is the bitwise inverse of 32.
-      bot.collision_mask &= -33
+    bot.set_collision_mask_based_on_phase(phase)
 
   # Hide the bots and viruses until we get to FARM_VIRUS.
   hud.show_bots_viruses = phase > Phase.ATTACK_TUTORIAL
