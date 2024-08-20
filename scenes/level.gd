@@ -2,14 +2,7 @@
 
 extends Node
 
-## The scene to instantiate a bot.
-@export var bot_scene : PackedScene
-
-## The scene to instantiate a virus.
-@export var virus_scene : PackedScene
-
-## The scene to instantiate a blood cell.
-@export var cell_scene : PackedScene
+@export_group('Gameplay')
 
 ## Number of bots to spawn at startup.
 @export var initial_bots : int
@@ -20,8 +13,23 @@ extends Node
 ## Number of blood cells to spawn at startup, and maximum number to keep alive.
 @export var max_cells : int = 100
 
+@export_group('Audio')
+
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
+
+@export_group('Scenes')
+
+## The scene to instantiate a bot.
+@export var bot_scene : PackedScene
+
+## The scene to instantiate a virus.
+@export var virus_scene : PackedScene
+
+## The scene to instantiate a blood cell.
+@export var cell_scene : PackedScene
+
+@export_group('Debug')
 
 ## Show debugging info on screen.
 @export var debug_info : bool

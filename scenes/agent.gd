@@ -46,6 +46,8 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 ## Amount of time (s) after being spawned before being able to feed on cells.
 @export var spawn_cooldown : float = 0
 
+@export_group("Debug")
+
 ## Show the friend count on the agent.
 @export var debug_show_friend_count : bool = false
 

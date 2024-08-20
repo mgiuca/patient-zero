@@ -38,12 +38,12 @@ size = Vector2(1695, 8544)
 
 [node name="LvlBody" type="Node"]
 script = ExtResource("1_n3cbr")
-bot_scene = ExtResource("2_3dgl4")
-virus_scene = ExtResource("3_wdrr7")
-cell_scene = ExtResource("4_6bb0c")
 initial_bots = 5
 initial_viruses = 5
 music_start_time = 2.0
+bot_scene = ExtResource("2_3dgl4")
+virus_scene = ExtResource("3_wdrr7")
+cell_scene = ExtResource("4_6bb0c")
 
 [node name="Camera" type="Camera2D" parent="."]
 position_smoothing_enabled = true
