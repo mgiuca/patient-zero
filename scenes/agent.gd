@@ -10,6 +10,8 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 # figure it out in a hurry.
 @export var agent_type : AgentType = AgentType.UNKNOWN
 
+@export_group("Movement")
+
 ## The maximum speed at which the agent can move. If it moves faster than this,
 ## it will be artificially slowed down.
 @export var terminal_velocity : float = 4000
@@ -29,6 +31,12 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 
 ## Maximum impulse to move in a random direction.
 @export var random_movement : float = 0
+
+@export_group("Combat")
+
+## Strength multiplier for this agent type. Determines their relative strength
+## in combat.
+@export var strength_multiplier : float = 1
 
 ## Amount of time (s) in between being able to damage an enemy.
 @export var attack_cooldown : float = 0.5
@@ -155,11 +163,26 @@ func _on_body_entered(body: Node) -> void:
   if not can_hit(agent_type, body.agent_type):
     return
 
-  if next_attack_time_ms <= Time.get_ticks_msec():
-    next_attack_time_ms = Time.get_ticks_msec() + (attack_cooldown * 1000)
-    body.kill()
-    if clone_self_when_killing(agent_type, body.agent_type):
-      get_parent().spawn_agent(agent_type, body.position)
+  # Can't attack if we're still on cooldown (either from having recently
+  # spawned, or recently attacked).
+  if next_attack_time_ms > Time.get_ticks_msec():
+    return
+
+  next_attack_time_ms = Time.get_ticks_msec() + (attack_cooldown * 1000)
+
+  # Can only attack if we are stronger than the opponent.
+  if strength() < body.strength():
+    return
+
+  body.kill()
+  if clone_self_when_killing(agent_type, body.agent_type):
+    get_parent().spawn_agent(agent_type, body.position)
+
+## Determines the combat "strength" of this agent.
+## This is based on the number of friends nearby (within tensor range),
+## multiplied by a per-type multiple, to let viruses be stronger than bots.
+func strength() -> float:
+  return (num_friends + 1) * strength_multiplier
 
 ## Determines whether an agent of type |from| should respond via a tensor to
 ## a nearby agent of type |to|.
