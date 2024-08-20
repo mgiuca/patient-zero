@@ -249,20 +249,22 @@ func calc_heartrate() -> float:
 ## Change to one of the different phases of the game.
 ## Each phase has different UI and gameplay behaviour.
 func change_phase(phase: Phase) -> void:
+  var hud = $HUD
+
   current_phase = phase
   if phase == Phase.MOVE_TUTORIAL:
-    $HUD.directive_text = 'Locate a virus cell.'
-    $HUD.set_notice_text('CLICK AND DRAG MOUSE TO PUSH')
+    hud.directive_text = 'Locate a virus cell.'
+    hud.set_notice_text('CLICK AND DRAG MOUSE TO PUSH')
   elif phase == Phase.ATTACK_TUTORIAL:
-    $HUD.directive_text = 'Locate the virus cell.'
-    $HUD.set_notice_text('COLLIDE WITH VIRUS TO CONSUME IT', 5)
+    hud.directive_text = 'Locate the virus cell.'
+    hud.set_notice_text('COLLIDE WITH VIRUS TO CONSUME IT', 5)
   elif phase == Phase.FARM_VIRUS or phase == Phase.DESTROY_VIRUS:
-    $HUD.directive_text = 'Destroy all virus cells.'
+    hud.directive_text = 'Destroy all virus cells.'
     if phase == Phase.DESTROY_VIRUS:
-      $HUD.set_notice_text('THE VIRUS HAS LEARNED TO FIGHT BACK', 5)
+      hud.set_notice_text('THE VIRUS HAS LEARNED TO FIGHT BACK', 5)
   elif phase == Phase.CONSUME_ALL:
-    $HUD.directive_text = 'Patient stable. Stand down.'
-    $HUD.set_notice_text('VIRUS ELIMINATED', 5)
+    hud.directive_text = 'Patient stable. Stand down.'
+    hud.set_notice_text('VIRUS ELIMINATED', 5)
 
 func _on_cell_spawn_timer_timeout() -> void:
   var num_cells = get_tree().get_node_count_in_group('cells')
