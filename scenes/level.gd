@@ -324,7 +324,8 @@ func _on_cell_spawn_timer_timeout() -> void:
 
   # If <= 5, patient is basically dead; let the game play out (otherwise it
   # will go on indefinitely). If max_cells, no need to spawn more.
-  if num_cells <= 5 or num_cells >= max_cells:
+  # If in CONSUME phase, don't spawn any more (too annoying)
+  if num_cells <= 5 or num_cells >= max_cells or current_phase == Phase.CONSUME_ALL:
     return
 
   var pos = pick_random_location(BodyLocation.ANYWHERE)
