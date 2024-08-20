@@ -33,11 +33,16 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 ## Amount of time (s) in between being able to damage an enemy.
 @export var attack_cooldown : float = 0.5
 
-# Time of the last attack in ms (for cooldown).
-var last_attack_time_ms : float
+## Amount of time (s) after being spawned before being able to damage an enemy.
+@export var spawn_cooldown : float = 0
+
+# Earliest time this can attack in ms-since-startup (for cooldown).
+var next_attack_time_ms : float
 
 func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
+
+  next_attack_time_ms = Time.get_ticks_msec() + (spawn_cooldown * 1000)
 
   if tensor_max_range > 0:
     # This will crash if there is no TensorCollider. (Note: some agents have
@@ -135,8 +140,8 @@ func _on_body_entered(body: Node) -> void:
   if not can_hit(agent_type, body.agent_type):
     return
 
-  if last_attack_time_ms + (attack_cooldown * 1000) < Time.get_ticks_msec():
-    last_attack_time_ms = Time.get_ticks_msec()
+  if next_attack_time_ms <= Time.get_ticks_msec():
+    next_attack_time_ms = Time.get_ticks_msec() + (attack_cooldown * 1000)
     body.kill()
     if clone_self_when_killing(agent_type, body.agent_type):
       get_parent().spawn_agent(agent_type, body.position)
