@@ -39,9 +39,11 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 @export var strength_multiplier : float = 1
 
 ## Amount of time (s) in between being able to damage an enemy.
-@export var attack_cooldown : float = 0.5
+# TODO: I don't think we need this system, it just looks wrong when things
+# bounce. Instead we have the new combat system. So I just set this to 0.
+@export var attack_cooldown : float = 0
 
-## Amount of time (s) after being spawned before being able to damage an enemy.
+## Amount of time (s) after being spawned before being able to feed on cells.
 @export var spawn_cooldown : float = 0
 
 ## Show the friend count on the agent.
@@ -50,6 +52,12 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 # Earliest time this can attack in ms-since-startup (for cooldown).
 var next_attack_time_ms : float
 
+# Earliest time this can "feed" (attack cells) in ms-since-startup (for
+# cooldown).
+# Note: This only applies for virus-cell interaction. All other kills use
+# next_attack_time_ms.
+var next_feed_time_ms : float
+
 ## The number of nearby (tensor range) agents of the same type.
 var num_friends : int
 
@@ -57,7 +65,7 @@ func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
   $LblDebugFriends.visible = debug_show_friend_count
 
-  next_attack_time_ms = Time.get_ticks_msec() + (spawn_cooldown * 1000)
+  next_feed_time_ms = Time.get_ticks_msec() + (spawn_cooldown * 1000)
 
   if tensor_max_range > 0:
     # This will crash if there is no TensorCollider. (Note: some agents have
@@ -163,12 +171,19 @@ func _on_body_entered(body: Node) -> void:
   if not can_hit(agent_type, body.agent_type):
     return
 
+  # Which timer to use? For virus-cell, use the "feed" time, which limits
+  # when viruses can feed on cells.
+  var relevant_next_time = next_attack_time_ms
+  if agent_type == AgentType.VIRUS and body.agent_type == AgentType.CELL:
+    relevant_next_time = next_feed_time_ms
+
   # Can't attack if we're still on cooldown (either from having recently
   # spawned, or recently attacked).
-  if next_attack_time_ms > Time.get_ticks_msec():
+  if relevant_next_time > Time.get_ticks_msec():
     return
 
   next_attack_time_ms = Time.get_ticks_msec() + (attack_cooldown * 1000)
+  next_feed_time_ms = Time.get_ticks_msec() + (attack_cooldown * 1000)
 
   # Can only attack if we are stronger than the opponent.
   if strength() < body.strength():
