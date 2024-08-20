@@ -76,6 +76,7 @@ var reset_active_cluster : bool
 
 var showing_move_tutorial : bool = false
 var showing_zoom_tutorial : bool = false
+var done_zoom_tutorial : bool = false
 
 # Locations where things can spawn. Left arm is special as it's the
 # "injection site" where the player enters the body.
@@ -165,8 +166,11 @@ func _input(event : InputEvent):
     current_zoom_log += 0.1
   elif event.is_action('zoom_out'):
     current_zoom_log -= 0.1
-    if showing_zoom_tutorial and current_zoom_log < -2:
-      finished_zoom_tutorial()
+    # Tutorial
+    if current_zoom_log < -2:
+      done_zoom_tutorial = true
+      if showing_zoom_tutorial:
+        finished_zoom_tutorial()
   elif event.is_action_pressed('push'):
     reset_active_cluster = true
 
@@ -285,8 +289,9 @@ func finished_move_tutorial():
   $TutorialTimer.start()
 
 func _on_tutorial_timer_timeout() -> void:
-  $HUD.set_notice_text('SCROLL MOUSE WHEEL TO ZOOM')
-  showing_zoom_tutorial = true
+  if not done_zoom_tutorial:
+    $HUD.set_notice_text('SCROLL MOUSE WHEEL TO ZOOM')
+    showing_zoom_tutorial = true
 
 func finished_zoom_tutorial():
   $HUD.hide_notice_text()
