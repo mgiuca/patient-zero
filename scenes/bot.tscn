@@ -32,7 +32,6 @@ script = ExtResource("1_h6h7t")
 agent_type = 0
 tensor_max_range = 1300.0
 resting_distance = 200.0
-debug_show_friend_count = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_3fe4t")

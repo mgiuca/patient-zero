@@ -17,11 +17,14 @@ extends Node
 ## Number of viruses to spawn at startup.
 @export var initial_viruses : int
 
-## Number of blood cells to spawn at startup.
-@export var initial_cells : int
+## Number of blood cells to spawn at startup, and maximum number to keep alive.
+@export var max_cells : int = 100
 
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
+
+## Show debugging info on screen.
+@export var debug_info : bool
 
 # Add this much around the edge of the bots when framing the camera.
 var zoom_margin : float = 500
@@ -46,7 +49,7 @@ func _ready():
     spawn_agent(Agent.AgentType.VIRUS, pos)
 
   # Spawn a bunch of cells.
-  for i in initial_cells:
+  for i in max_cells:
     var pos = pick_random_location()
     var rot = randf_range(0, TAU)
     spawn_agent(Agent.AgentType.CELL, pos)
@@ -141,13 +144,25 @@ func update_hud():
   $HUD/MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(num_viruses)
   var patient_health = calc_patient_health()
   $HUD/MarginContainer/LeftSide/LblHealth.text = "Patient health: " + str(snappedf(patient_health * 100, 1)) + "%"
-
+  if debug_info:
+    var num_cells = get_tree().get_nodes_in_group('cells').size()
+    $HUD/MarginContainer/LeftSide/LblHealth.text += " (" + str(num_cells) + " cells)"
   # TODO: Set quest text depending on phase.
 
 ## Calculates the patient health as a percentage (0 to 1).
 func calc_patient_health() -> float:
-  # TODO: For now, just return number of cells.
-  # This should be something more complex, e.g. patient should maybe die if there
-  # are only 5 cells left and therefore be at 0.
+  # Actually just return the number of cells, as a percentage of max.
   var num_cells = get_tree().get_nodes_in_group('cells').size()
-  return min(num_cells / 100.0, 1)
+  return min(float(num_cells) / float(max_cells), 1.0)
+
+func _on_cell_spawn_timer_timeout() -> void:
+  var num_cells = get_tree().get_nodes_in_group('cells').size()
+
+  # If <= 5, patient is basically dead; let the game play out (otherwise it
+  # will go on indefinitely). If max_cells, no need to spawn more.
+  if num_cells <= 5 or num_cells >= max_cells:
+    return
+
+  var pos = pick_random_location()
+  var rot = randf_range(0, TAU)
+  spawn_agent(Agent.AgentType.CELL, pos)

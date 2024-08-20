@@ -43,7 +43,6 @@ virus_scene = ExtResource("3_wdrr7")
 cell_scene = ExtResource("4_6bb0c")
 initial_bots = 5
 initial_viruses = 5
-initial_cells = 100
 music_start_time = 2.0
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -51,6 +50,9 @@ position_smoothing_enabled = true
 
 [node name="Cursor" parent="." instance=ExtResource("3_5i8s6")]
 z_index = 100
+
+[node name="CellSpawnTimer" type="Timer" parent="."]
+autostart = true
 
 [node name="SpawnAreas" type="Area2D" parent="."]
 
@@ -149,3 +151,5 @@ playback_type = 1
 parameters/looping = false
 
 [node name="HUD" parent="." instance=ExtResource("11_w7mwp")]
+
+[connection signal="timeout" from="CellSpawnTimer" to="." method="_on_cell_spawn_timer_timeout"]
