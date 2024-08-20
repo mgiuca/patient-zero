@@ -50,6 +50,7 @@ max_heartrate = 0.3
 bot_scene = ExtResource("2_3dgl4")
 virus_scene = ExtResource("3_wdrr7")
 cell_scene = ExtResource("4_6bb0c")
+debug_start_phase = 4
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(7331, 5634)
@@ -183,8 +184,13 @@ stream = ExtResource("12_02hj7")
 wait_time = 5.0
 one_shot = true
 
+[node name="SpecialDirectiveTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="body_entered" from="Cursor" to="." method="_on_cursor_body_entered"]
 [connection signal="timeout" from="CellSpawnTimer" to="." method="_on_cell_spawn_timer_timeout"]
 [connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]
 [connection signal="finished" from="MusicMechan" to="." method="_on_music_mechan_finished"]
 [connection signal="timeout" from="TutorialTimer" to="." method="_on_tutorial_timer_timeout"]
+[connection signal="timeout" from="SpecialDirectiveTimer" to="." method="_on_special_directive_timer_timeout"]

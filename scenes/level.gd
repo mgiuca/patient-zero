@@ -56,6 +56,8 @@ enum Phase {
 
 var current_phase : Phase
 
+var special_directive_id = 0
+
 # Camera-related
 
 # Add this much around the edge of the bots when framing the camera.
@@ -299,6 +301,9 @@ func change_phase(phase: Phase) -> void:
     $Music.stop()
     $MusicMechan.play()
 
+    # Special directives
+    $SpecialDirectiveTimer.start()
+
 func finished_move_tutorial():
   # Start zoom tutorial
   $HUD.hide_notice_text()
@@ -355,3 +360,25 @@ func _on_beep_timer_timeout() -> void:
 
 func _on_music_mechan_finished() -> void:
   $MusicOneOf.play()
+
+
+func _on_special_directive_timer_timeout() -> void:
+  var hud = $HUD
+  if special_directive_id == 1 or special_directive_id == 3 or special_directive_id == 5:
+    hud.directive_text = 'Patient stable. Stand down'
+    $SpecialDirectiveTimer.wait_time = 5
+  elif special_directive_id == 0:
+    hud.directive_text = '[color=red]ACQUIRE.RESOURCES[/color]'
+    $SpecialDirectiveTimer.wait_time = 2
+  elif special_directive_id == 2:
+    hud.directive_text = '[color=red]KEEP.GROWING[/color]'
+    $SpecialDirectiveTimer.wait_time = 2
+  elif special_directive_id == 4:
+    hud.directive_text = '[color=red]BUILD.TO.SCALE[/color]'
+    $SpecialDirectiveTimer.wait_time = 2
+
+  special_directive_id += 1
+  if special_directive_id == 6:
+    special_directive_id = 0
+
+  $SpecialDirectiveTimer.start()
