@@ -156,14 +156,14 @@ func update_camera(delta: float):
   $Camera.zoom = Vector2(current_zoom, current_zoom)
 
 func update_hud():
-  var num_bots = get_tree().get_nodes_in_group('bots').size()
+  var num_bots = get_tree().get_node_count_in_group('bots')
   $HUD/MarginContainer/LeftSide/LblBots.text = "Bots: " + str(num_bots)
-  var num_viruses = get_tree().get_nodes_in_group('viruses').size()
+  var num_viruses = get_tree().get_node_count_in_group('viruses')
   $HUD/MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(num_viruses)
   var patient_health = calc_patient_health()
   $HUD/MarginContainer/LeftSide/LblHealth.text = "Patient health: " + str(snappedf(patient_health * 100, 1)) + "%"
   if debug_info:
-    var num_cells = get_tree().get_nodes_in_group('cells').size()
+    var num_cells = get_tree().get_node_count_in_group('cells')
     $HUD/MarginContainer/LeftSide/LblHealth.text += " (" + str(num_cells) + " cells)"
     $HUD/MarginContainer/RightSide/LblDebug.text = "Zoom: " + str(snappedf(current_zoom_log, 0.1))
   # TODO: Set quest text depending on phase.
@@ -171,11 +171,11 @@ func update_hud():
 ## Calculates the patient health as a percentage (0 to 1).
 func calc_patient_health() -> float:
   # Actually just return the number of cells, as a percentage of max.
-  var num_cells = get_tree().get_nodes_in_group('cells').size()
+  var num_cells = get_tree().get_node_count_in_group('cells')
   return min(float(num_cells) / float(max_cells), 1.0)
 
 func _on_cell_spawn_timer_timeout() -> void:
-  var num_cells = get_tree().get_nodes_in_group('cells').size()
+  var num_cells = get_tree().get_node_count_in_group('cells')
 
   # If <= 5, patient is basically dead; let the game play out (otherwise it
   # will go on indefinitely). If max_cells, no need to spawn more.
