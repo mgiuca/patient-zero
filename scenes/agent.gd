@@ -67,7 +67,12 @@ func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
   $LblDebugFriends.visible = debug_show_friend_count
 
-  next_feed_time_ms = Time.get_ticks_msec() + (spawn_cooldown * 1000)
+  var spawn_cd = spawn_cooldown
+  # Hack: In FARM_VIRUS, much longer cooldown.
+  if get_parent().current_phase == Level.Phase.FARM_VIRUS:
+    if agent_type == AgentType.VIRUS:
+      spawn_cd = 30
+  next_feed_time_ms = Time.get_ticks_msec() + (spawn_cd * 1000)
 
   if tensor_max_range > 0:
     # This will crash if there is no TensorCollider. (Note: some agents have
