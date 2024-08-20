@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=22 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://3g4nc41agqbt" path="res://images/human-cardio.png" id="5_bmjak"]
 [ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
 [ext_resource type="Texture2D" uid="uid://b30i85d0ykdc4" path="res://images/heart.png" id="7_uyj3q"]
+[ext_resource type="AudioStream" uid="uid://dhoob1tc0yil2" path="res://sounds/beep.wav" id="11_nqkvl"]
 [ext_resource type="PackedScene" uid="uid://1cbsv65rbdyc" path="res://scenes/hud.tscn" id="11_w7mwp"]
+[ext_resource type="AudioStream" uid="uid://bylwcvcxnx3ha" path="res://sounds/flatline.wav" id="12_02hj7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5i3e8"]
 size = Vector2(3213, 4842)
@@ -41,6 +43,8 @@ script = ExtResource("1_n3cbr")
 initial_bots = 5
 initial_viruses = 5
 music_start_time = 2.0
+normal_heartrate = 3.0
+max_heartrate = 0.3
 bot_scene = ExtResource("2_3dgl4")
 virus_scene = ExtResource("3_wdrr7")
 cell_scene = ExtResource("4_6bb0c")
@@ -146,13 +150,23 @@ stretch_mode = 4
 [node name="Heart" type="CollisionPolygon2D" parent="Heart"]
 polygon = PackedVector2Array(-910, -6133, -568, -6494, 136, -6269, 1032, -5997, 1088, -6475, 1564, -5809, 1963, -4820, 1506, -3697, 523, -3926, -204, -4247, -1005, -5105)
 
+[node name="BeepTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_1gsof")
 autoplay = true
 playback_type = 1
 parameters/looping = false
 
+[node name="SfxBeep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_nqkvl")
+
+[node name="SfxFlatline" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_02hj7")
+
 [node name="HUD" parent="." instance=ExtResource("11_w7mwp")]
 
 [connection signal="body_entered" from="Cursor" to="." method="_on_cursor_body_entered"]
 [connection signal="timeout" from="CellSpawnTimer" to="." method="_on_cell_spawn_timer_timeout"]
+[connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]

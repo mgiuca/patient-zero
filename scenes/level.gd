@@ -18,6 +18,13 @@ extends Node
 ## Seek to this time (s) when starting the music.
 @export var music_start_time : float
 
+## Normal heart rate (period, in s) when at full health.
+@export var normal_heartrate : float = 1
+
+## Maximum heart rate (period, in s) when close to death.
+## (Note, this should be SMALLER than normal heart rate.)
+@export var max_heartrate : float = 0.1
+
 @export_group('Scenes')
 
 ## The scene to instantiate a bot.
@@ -76,6 +83,9 @@ func _ready():
     spawn_agent(Agent.AgentType.CELL, pos)
 
   change_phase(0)
+
+  $BeepTimer.wait_time = calc_heartrate()
+  $BeepTimer.start()
 
 ## Picks a random valid location somewhere in the level.
 func pick_random_location(location: BodyLocation) -> Vector2:
@@ -207,6 +217,15 @@ func calc_patient_health() -> float:
   var num_cells = get_tree().get_node_count_in_group('cells')
   return min(float(num_cells) / float(max_cells), 1.0)
 
+## Calculates the patient's heartrate (based on patient health).
+## Returns it as a *period* in seconds (not frequency). This gives the amount
+## of time to wait for the next beep. Returns 0 for flatline.
+func calc_heartrate() -> float:
+  var rate = calc_patient_health() * normal_heartrate
+  if rate > 0 and rate < max_heartrate:
+    rate = max_heartrate
+  return rate
+
 ## Change to one of the different phases of the game.
 ## Each phase has different UI and gameplay behaviour.
 func change_phase(phase: int) -> void:
@@ -236,3 +255,17 @@ func _on_cursor_body_entered(body: Node2D) -> void:
       reset_active_cluster = false
 
     body.add_to_group('active_cluster')
+
+func _on_beep_timer_timeout() -> void:
+  var heartrate = calc_heartrate()
+  if heartrate == 0:
+    # Flatline
+    # TODO: Ideally we'd have the flatline stream loaded and simply load it
+    # into the same Player.
+    $SfxBeep.stop()
+    $SfxFlatline.play()
+  else:
+    $SfxFlatline.stop()
+    $SfxBeep.play()
+    $BeepTimer.wait_time = heartrate
+    $BeepTimer.start()
