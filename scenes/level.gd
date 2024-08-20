@@ -74,6 +74,8 @@ func _ready():
     var rot = randf_range(0, TAU)
     spawn_agent(Agent.AgentType.CELL, pos)
 
+  change_phase(0)
+
 ## Picks a random valid location somewhere in the level.
 func pick_random_location() -> Vector2:
   var shapes = $SpawnAreas.get_children()
@@ -185,13 +187,18 @@ func update_hud():
     hud.append_num_cells(get_tree().get_node_count_in_group('cells'))
     hud.set_debug_info(current_zoom_log,
                        get_tree().get_node_count_in_group("active_cluster"))
-  # TODO: Set quest text depending on phase.
 
 ## Calculates the patient health as a percentage (0 to 1).
 func calc_patient_health() -> float:
   # Actually just return the number of cells, as a percentage of max.
   var num_cells = get_tree().get_node_count_in_group('cells')
   return min(float(num_cells) / float(max_cells), 1.0)
+
+## Change to one of the different phases of the game.
+## Each phase has different UI and gameplay behaviour.
+func change_phase(phase: int) -> void:
+  # TODO
+  $HUD.directive_text = 'Destroy all virus cells.'
 
 func _on_cell_spawn_timer_timeout() -> void:
   var num_cells = get_tree().get_node_count_in_group('cells')

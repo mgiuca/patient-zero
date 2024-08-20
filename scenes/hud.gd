@@ -21,6 +21,13 @@ extends CanvasLayer
         str(snappedf(value * 100, 1)) + "%"
     patient_health = value
 
+## The text of the "Directive" label, in BBCode format (for e.g. color).
+@export var directive_text : String:
+  set(value):
+    directive_text = value
+    $MarginContainer/RightSide/LblDirective.text = "[right]Directive: " + \
+      value + "[/right]"
+
 @export_group('Debug')
 
 @export var debug_visible : bool:

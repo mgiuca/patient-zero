@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://1cbsv65rbdyc"]
+[gd_scene load_steps=5 format=3 uid="uid://1cbsv65rbdyc"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_nixt2"]
 [ext_resource type="FontFile" uid="uid://cdwjvywxiyw6" path="res://fonts/Play-Regular.ttf" id="1_x6jqw"]
@@ -10,6 +10,12 @@ font_size = 20
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.709804)
+
+[sub_resource type="Theme" id="Theme_5aw3y"]
+default_font = ExtResource("1_x6jqw")
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0.71)
+RichTextLabel/constants/shadow_outline_size = 3
+RichTextLabel/font_sizes/normal_font_size = 20
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_nixt2")
@@ -48,17 +54,18 @@ label_settings = SubResource("LabelSettings_w3pep")
 [node name="RightSide" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="LblQuest" type="Label" parent="MarginContainer/RightSide"]
+[node name="LblDirective" type="RichTextLabel" parent="MarginContainer/RightSide"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-text = "Destroy all virus cells."
-label_settings = SubResource("LabelSettings_w3pep")
+theme = SubResource("Theme_5aw3y")
+bbcode_enabled = true
+text = "[right]Directive:[/right]"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 
 [node name="LblDebug" type="Label" parent="MarginContainer/RightSide"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-text = "Destroy all virus cells."
+text = "[Debug text]"
 label_settings = SubResource("LabelSettings_w3pep")
