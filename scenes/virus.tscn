@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://s2rhqk2m50ey"]
+[gd_scene load_steps=7 format=3 uid="uid://s2rhqk2m50ey"]
 
 [ext_resource type="Script" path="res://scenes/agent.gd" id="1_b6s8l"]
 [ext_resource type="Texture2D" uid="uid://dasu1d4v5yvek" path="res://images/virus.png" id="2_6ai8j"]
@@ -11,6 +11,9 @@ radius = 119.017
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0b7jm"]
 radius = 0.01
+
+[sub_resource type="LabelSettings" id="LabelSettings_j45a3"]
+font_size = 130
 
 [node name="Virus" type="RigidBody2D"]
 light_mask = 4
@@ -27,6 +30,7 @@ agent_type = 1
 tensor_max_range = 400.0
 random_movement = 200.0
 spawn_cooldown = 10.0
+debug_show_friend_count = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.54688, 1.54688)
@@ -37,11 +41,21 @@ shape = SubResource("CircleShape2D_vxskf")
 
 [node name="TensorCollider" type="Area2D" parent="."]
 collision_layer = 16
-collision_mask = 32
+collision_mask = 40
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TensorCollider"]
 visible = false
 shape = SubResource("CircleShape2D_0b7jm")
 debug_color = Color(0.591893, 0.687014, 0.0373291, 0.42)
+
+[node name="LblDebugFriends" type="Label" parent="."]
+visible = false
+offset_left = -118.0
+offset_top = -104.0
+offset_right = 121.0
+offset_bottom = 101.0
+label_settings = SubResource("LabelSettings_j45a3")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

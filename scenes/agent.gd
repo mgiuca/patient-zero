@@ -36,11 +36,18 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 ## Amount of time (s) after being spawned before being able to damage an enemy.
 @export var spawn_cooldown : float = 0
 
+## Show the friend count on the agent.
+@export var debug_show_friend_count : bool = false
+
 # Earliest time this can attack in ms-since-startup (for cooldown).
 var next_attack_time_ms : float
 
+## The number of nearby (tensor range) agents of the same type.
+var num_friends : int
+
 func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
+  $LblDebugFriends.visible = debug_show_friend_count
 
   next_attack_time_ms = Time.get_ticks_msec() + (spawn_cooldown * 1000)
 
@@ -61,6 +68,8 @@ func _process(delta: float):
   if excess_speed > 0:
     apply_impulse(-linear_velocity.normalized() * excess_speed)
 
+  num_friends = 0
+
   # Attract/repel every nearby bot.
   # The TensorCollider is an Area2D with a huge radius collider (as opposed to
   # the Bot's own collider, which is just the size of the bot). This is used to
@@ -75,7 +84,11 @@ func _process(delta: float):
   if collider != null:
     for other : Agent in collider.get_overlapping_bodies():
       if other != self:
-        apply_tensor(other, delta)
+        if tensor_applies(agent_type, other.agent_type):
+          apply_tensor(other, delta)
+        # Also count as a friend if the same type.
+        if other.agent_type == agent_type:
+          num_friends += 1
 
   # Apply random movement, in the form of instantaneous impulse on random ticks.
   if random_movement > 0:
@@ -83,6 +96,8 @@ func _process(delta: float):
       var impulse = Vector2(randf_range(-random_movement, random_movement),
                             randf_range(-random_movement, random_movement))
       self.apply_impulse(impulse)
+
+  $LblDebugFriends.text = str(num_friends)
 
 ## Applies an attraction or repulsion force on this agent, based on the
 ## proximity of another agent.
@@ -145,6 +160,18 @@ func _on_body_entered(body: Node) -> void:
     body.kill()
     if clone_self_when_killing(agent_type, body.agent_type):
       get_parent().spawn_agent(agent_type, body.position)
+
+## Determines whether an agent of type |from| should respond via a tensor to
+## a nearby agent of type |to|.
+## Takes the game phase into account, where the rules can change.
+func tensor_applies(from: AgentType, to: AgentType) -> bool:
+  # TODO: Take phase into account.
+  if from == AgentType.BOT:
+    return to == AgentType.BOT
+  elif from == AgentType.VIRUS:
+    return to == AgentType.VIRUS or to == AgentType.CELL
+
+  return false
 
 ## Determines whether an agent of type |from| can hit an agent of type |to|.
 ## Takes the game phase into account, where the rules can change.
