@@ -113,7 +113,7 @@ func _process(delta: float):
                             randf_range(-random_movement, random_movement))
       self.apply_impulse(impulse)
 
-  $LblDebugFriends.text = str(num_friends)
+  $LblDebugFriends.text = str(strength())
 
 ## Applies an attraction or repulsion force on this agent, based on the
 ## proximity of another agent.
