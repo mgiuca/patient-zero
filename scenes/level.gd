@@ -169,6 +169,8 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
 
 func _input(event : InputEvent):
   # Handle zooming.
+  if event.is_action('restart'):
+    get_tree().reload_current_scene()
   if event.is_action('zoom_in'):
     current_zoom_log += 0.1
   elif event.is_action('zoom_out'):

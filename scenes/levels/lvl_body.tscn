@@ -50,7 +50,6 @@ max_heartrate = 0.3
 bot_scene = ExtResource("2_3dgl4")
 virus_scene = ExtResource("3_wdrr7")
 cell_scene = ExtResource("4_6bb0c")
-debug_start_phase = 4
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(7331, 5634)
