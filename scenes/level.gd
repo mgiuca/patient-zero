@@ -2,6 +2,14 @@
 
 extends Node
 
+enum Phase {
+  MOVE_TUTORIAL,
+  ATTACK_TUTORIAL,
+  FARM_VIRUS,
+  DESTROY_VIRUS,
+  CONSUME_ALL
+}
+
 @export_group('Gameplay')
 
 ## Number of bots to spawn at startup.
@@ -41,6 +49,11 @@ extends Node
 ## Show debugging info on screen.
 @export var debug_info : bool
 
+## Phase to start in (for debugging).
+@export var debug_start_phase : Phase = Phase.MOVE_TUTORIAL
+
+var current_phase : Phase
+
 # Camera-related
 
 # Add this much around the edge of the bots when framing the camera.
@@ -67,6 +80,13 @@ func _ready():
   $Music.seek(music_start_time)
   $HUD.debug_visible = debug_info
 
+  # Change initial conditions based on debug start phase. Should not have
+  # any effect in the default phase.
+  if debug_start_phase > Phase.ATTACK_TUTORIAL:
+    initial_bots = 10
+  if debug_start_phase == Phase.CONSUME_ALL:
+    initial_viruses = 0
+
   # Spawn a bunch of bots.
   for i in initial_bots:
     var pos = pick_random_location(BodyLocation.LEFT_ARM)
@@ -82,7 +102,7 @@ func _ready():
     var pos = pick_random_location(BodyLocation.ANYWHERE)
     spawn_agent(Agent.AgentType.CELL, pos)
 
-  change_phase(0)
+  change_phase(debug_start_phase)
 
   $BeepTimer.wait_time = calc_heartrate()
   $BeepTimer.start()
@@ -228,9 +248,16 @@ func calc_heartrate() -> float:
 
 ## Change to one of the different phases of the game.
 ## Each phase has different UI and gameplay behaviour.
-func change_phase(phase: int) -> void:
-  # TODO
-  $HUD.directive_text = 'Destroy all virus cells.'
+func change_phase(phase: Phase) -> void:
+  current_phase = phase
+  if phase == Phase.MOVE_TUTORIAL:
+    $HUD.directive_text = 'Locate a virus cell.'
+  elif phase == Phase.ATTACK_TUTORIAL:
+    $HUD.directive_text = 'Locate the virus cell.'
+  elif phase == Phase.FARM_VIRUS or phase == Phase.DESTROY_VIRUS:
+    $HUD.directive_text = 'Destroy all virus cells.'
+  elif phase == Phase.CONSUME_ALL:
+    $HUD.directive_text = 'Patient stable. Stand down.'
 
 func _on_cell_spawn_timer_timeout() -> void:
   var num_cells = get_tree().get_node_count_in_group('cells')
