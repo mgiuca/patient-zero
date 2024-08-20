@@ -271,4 +271,9 @@ func kill():
   if get_parent().current_phase == Level.Phase.ATTACK_TUTORIAL:
     if agent_type == AgentType.VIRUS:
       get_parent().change_phase(Level.Phase.FARM_VIRUS)
+  elif get_parent().current_phase == Level.Phase.DESTROY_VIRUS:
+    if agent_type == AgentType.VIRUS:
+      if get_tree().get_node_count_in_group('viruses') <= 1:  # pre kill
+        get_parent().change_phase(Level.Phase.CONSUME_ALL)
+
   queue_free()
