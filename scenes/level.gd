@@ -2,6 +2,8 @@
 
 extends Node
 
+class_name Level
+
 enum Phase {
   MOVE_TUTORIAL,
   ATTACK_TUTORIAL,
@@ -71,6 +73,9 @@ var current_zoom_log : float = 1
 # This gets set when the mouse is pushed, and it means the next time a bot is
 # affected by the push force, it clears out the active cluster group.
 var reset_active_cluster : bool
+
+var showing_move_tutorial : bool = false
+var showing_zoom_tutorial : bool = false
 
 # Locations where things can spawn. Left arm is special as it's the
 # "injection site" where the player enters the body.
@@ -160,6 +165,8 @@ func _input(event : InputEvent):
     current_zoom_log += 0.1
   elif event.is_action('zoom_out'):
     current_zoom_log -= 0.1
+    if showing_zoom_tutorial and current_zoom_log < -2:
+      finished_zoom_tutorial()
   elif event.is_action_pressed('push'):
     reset_active_cluster = true
 
@@ -255,18 +262,35 @@ func change_phase(phase: Phase) -> void:
   if phase == Phase.MOVE_TUTORIAL:
     hud.directive_text = 'Locate a virus cell'
     hud.set_notice_text('CLICK AND DRAG MOUSE TO PUSH')
+    showing_move_tutorial = true
   elif phase == Phase.ATTACK_TUTORIAL:
     hud.directive_text = 'Locate the virus cell'
-    hud.set_notice_text('COLLIDE WITH VIRUS TO CONSUME IT', 5)
+    hud.set_notice_text('COLLIDE WITH A VIRUS CELL TO CONSUME IT')
   elif phase == Phase.FARM_VIRUS or phase == Phase.DESTROY_VIRUS:
     hud.directive_text = 'Destroy all virus cells'
     if phase == Phase.DESTROY_VIRUS:
       hud.set_notice_text('THE VIRUS HAS LEARNED TO FIGHT BACK', 5)
+    else:
+      hud.hide_notice_text()
   elif phase == Phase.CONSUME_ALL:
     hud.directive_text = 'Patient stable. Stand down'
-    hud.set_notice_text('VIRUS ELIMINATED', 5)
+    hud.set_notice_text('ALL VIRUS CELLS ELIMINATED', 5)
 
   hud.show_bots_viruses = phase > Phase.ATTACK_TUTORIAL
+
+func finished_move_tutorial():
+  # Start zoom tutorial
+  $HUD.hide_notice_text()
+  showing_move_tutorial = false
+  $TutorialTimer.start()
+
+func _on_tutorial_timer_timeout() -> void:
+  $HUD.set_notice_text('SCROLL MOUSE WHEEL TO ZOOM')
+  showing_zoom_tutorial = true
+
+func finished_zoom_tutorial():
+  $HUD.hide_notice_text()
+  showing_zoom_tutorial = false
 
 func _on_cell_spawn_timer_timeout() -> void:
   var num_cells = get_tree().get_node_count_in_group('cells')

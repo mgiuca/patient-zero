@@ -49,7 +49,7 @@ func set_notice_text(value: String, timeout: float = 0) -> void:
       $NoticeTimer.wait_time = timeout
       $NoticeTimer.start()
 
-func _on_notice_timer_timeout() -> void:
+func hide_notice_text() -> void:
   $LblNotice.visible = false
 
 # Debugging

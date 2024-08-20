@@ -81,6 +81,11 @@ func _ready():
     sprite.frame = randi_range(0, num_frames - 1)
 
 func _process(delta: float):
+  # Hide move tutorial prompt.
+  if get_parent().showing_move_tutorial and agent_type == AgentType.BOT:
+    if linear_velocity.length() > 1000:
+      get_parent().finished_move_tutorial()
+
   # Limit to terminal velocity.
   var excess_speed = linear_velocity.length() - terminal_velocity
   if excess_speed > 0:

@@ -168,6 +168,11 @@ stream = ExtResource("12_02hj7")
 
 [node name="HUD" parent="." instance=ExtResource("11_w7mwp")]
 
+[node name="TutorialTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="body_entered" from="Cursor" to="." method="_on_cursor_body_entered"]
 [connection signal="timeout" from="CellSpawnTimer" to="." method="_on_cell_spawn_timer_timeout"]
 [connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]
+[connection signal="timeout" from="TutorialTimer" to="." method="_on_tutorial_timer_timeout"]

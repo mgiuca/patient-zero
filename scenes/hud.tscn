@@ -86,4 +86,4 @@ horizontal_alignment = 1
 [node name="NoticeTimer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="timeout" from="NoticeTimer" to="." method="_on_notice_timer_timeout"]
+[connection signal="timeout" from="NoticeTimer" to="." method="hide_notice_text"]
