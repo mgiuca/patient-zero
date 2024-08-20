@@ -35,6 +35,17 @@ extends CanvasLayer
     debug_visible = value
     $MarginContainer/RightSide/LblDebug.visible = value
 
+## Sets the text of the screen-centered notice label, with an optional timeout.
+func set_notice_text(value: String, timeout: float = 0) -> void:
+    $LblNotice.text = value
+    $LblNotice.visible = true
+    if timeout > 0:
+      $NoticeTimer.wait_time = timeout
+      $NoticeTimer.start()
+
+func _on_notice_timer_timeout() -> void:
+  $LblNotice.visible = false
+
 # Debugging
 
 # As a debug hack, appends the number of cells to the end of the patient

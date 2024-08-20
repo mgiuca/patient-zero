@@ -69,3 +69,21 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "[Debug text]"
 label_settings = SubResource("LabelSettings_w3pep")
+
+[node name="LblNotice" type="Label" parent="."]
+visible = false
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -138.0
+offset_bottom = -114.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_w3pep")
+horizontal_alignment = 1
+
+[node name="NoticeTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="NoticeTimer" to="." method="_on_notice_timer_timeout"]
