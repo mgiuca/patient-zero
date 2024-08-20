@@ -211,10 +211,11 @@ func _on_body_entered(body: Node) -> void:
 ## This is based on the number of friends nearby (within tensor range),
 ## multiplied by a per-type multiple, to let viruses be stronger than bots.
 func strength() -> float:
-  # Viruses have strength 0 except in phase DESTROY_VIRUS.
+  # Viruses have strength 0.1 except in phase DESTROY_VIRUS.
+  # 0.1 allows them to kill cells, but not even one bot.
   if agent_type == AgentType.VIRUS:
     if get_parent().current_phase != Level.Phase.DESTROY_VIRUS:
-      return 0
+      return 0.1
 
   return (num_friends + 1) * strength_multiplier
 
@@ -262,4 +263,7 @@ func clone_self_when_killing(from: AgentType, to: AgentType) -> bool:
 
 ## Let self be killed (by an attack).
 func kill():
+  if get_parent().current_phase == Level.Phase.ATTACK_TUTORIAL:
+    if agent_type == AgentType.VIRUS:
+      get_parent().change_phase(Level.Phase.FARM_VIRUS)
   queue_free()

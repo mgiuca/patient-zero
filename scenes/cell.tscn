@@ -67,6 +67,7 @@ max_contacts_reported = 1
 script = ExtResource("1_tevsj")
 agent_type = 2
 random_movement = 50.0
+strength_multiplier = 0.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.54688, 1.54688)

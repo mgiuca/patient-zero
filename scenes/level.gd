@@ -272,10 +272,10 @@ func change_phase(phase: Phase) -> void:
     hud.set_notice_text('COLLIDE WITH A VIRUS CELL TO CONSUME IT')
   elif phase == Phase.FARM_VIRUS or phase == Phase.DESTROY_VIRUS:
     hud.directive_text = 'Destroy all virus cells'
-    if phase == Phase.DESTROY_VIRUS:
-      hud.set_notice_text('THE VIRUS HAS LEARNED TO FIGHT BACK', 5)
+    if phase == Phase.FARM_VIRUS:
+      hud.set_notice_text('SEEK AND DESTROY', 5)
     else:
-      hud.hide_notice_text()
+      hud.set_notice_text('THE VIRUS HAS LEARNED TO FIGHT BACK', 5)
   elif phase == Phase.CONSUME_ALL:
     hud.directive_text = 'Patient stable. Stand down'
     hud.set_notice_text('ALL VIRUS CELLS ELIMINATED', 5)
