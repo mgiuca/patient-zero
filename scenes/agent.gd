@@ -29,6 +29,9 @@ enum AgentType {BOT, VIRUS, CELL, UNKNOWN = -1}
 ## Multiplier for the repulsion force bots exert on one another.
 @export var repulsion_multiplier : float = 80
 
+## Maximum number of tensors to apply to each agent. 0 = no limit.
+@export var max_tensors_applied : int = 0
+
 ## Maximum impulse to move in a random direction.
 @export var random_movement : float = 0
 
@@ -114,6 +117,7 @@ func _process(delta: float):
 
   var collider : Area2D = $TensorCollider
   if collider != null:
+    var num_tensors_applied = 0
     for other : Agent in collider.get_overlapping_bodies():
       if other != self:
         if tensor_applies(agent_type, other.agent_type):
@@ -128,6 +132,10 @@ func _process(delta: float):
         if get_parent().current_phase == Level.Phase.MOVE_TUTORIAL:
           if agent_type == AgentType.BOT and other.agent_type == AgentType.VIRUS:
             get_parent().change_phase(Level.Phase.ATTACK_TUTORIAL)
+
+      num_tensors_applied += 1
+      if max_tensors_applied > 0 and num_tensors_applied >= max_tensors_applied:
+        break
 
   # Apply random movement, in the form of instantaneous impulse on random ticks.
   if random_movement > 0:

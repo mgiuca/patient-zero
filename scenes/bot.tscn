@@ -32,6 +32,7 @@ script = ExtResource("1_h6h7t")
 agent_type = 0
 tensor_max_range = 1300.0
 resting_distance = 200.0
+max_tensors_applied = 50
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
