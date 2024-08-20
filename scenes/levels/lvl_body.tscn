@@ -41,7 +41,7 @@ size = Vector2(1695, 8544)
 [node name="LvlBody" type="Node"]
 script = ExtResource("1_n3cbr")
 initial_bots = 1
-initial_viruses = 10
+initial_viruses = 11
 music_start_time = 2.0
 normal_heartrate = 3.0
 max_heartrate = 0.3
