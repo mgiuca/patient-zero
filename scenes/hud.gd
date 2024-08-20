@@ -2,19 +2,19 @@ extends CanvasLayer
 
 @export_group('Labels')
 
-@export var num_bots : int:
+@export var num_bots : int = -1:
   set(value):
     if num_bots != value:
       $MarginContainer/LeftSide/LblBots.text = "Bots: " + str(value)
     num_bots = value
 
-@export var num_viruses : int:
+@export var num_viruses : int = -1:
   set(value):
     if num_viruses != value:
       $MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(value)
     num_viruses = value
 
-@export var patient_health : float:
+@export var patient_health : float = -1:
   set(value):
     if patient_health != value:
       $MarginContainer/LeftSide/LblHealth.text = "Patient health: " + \
