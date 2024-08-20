@@ -194,6 +194,7 @@ func _process(delta: float):
 
   update_camera(delta)
   update_hud()
+  check_gameover()
 
 ## Update the camera to capture a view of all the bots.
 func update_camera(delta: float):
@@ -250,6 +251,20 @@ func update_hud():
     hud.append_num_cells(get_tree().get_node_count_in_group('cells'))
     hud.set_debug_info(current_zoom_log,
                        get_tree().get_node_count_in_group("active_cluster"))
+
+func check_gameover():
+  var hud = $HUD
+  if get_tree().get_node_count_in_group('bots') == 0:
+    # Game over: no more bots
+    hud.show_gameover('ALL BOTS LOST')
+  elif get_tree().get_node_count_in_group('cells') == 0:
+    # Game over (win or lose): no more cells
+    if current_phase == Phase.CONSUME_ALL:
+      # Win (?)
+      hud.show_gameover('ALL RESOURCES CONSUMED. EXIT PATIENT. THE SWARM MUST GROW.')
+    else:
+      # Lose
+      hud.show_gameover('THE PATIENT IS DECEASED')
 
 ## Calculates the patient health as a percentage (0 to 1).
 func calc_patient_health() -> float:
