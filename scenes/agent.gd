@@ -115,6 +115,10 @@ func _process(delta: float):
         # Also transitively extend the "active cluster".
         if is_in_group('active_cluster') and other.agent_type == AgentType.BOT:
           other.add_to_group('active_cluster')
+        # Also transition from MOVE_TUTORIAL to ATTACK_TUTORIAL phase.
+        if get_parent().current_phase == Level.Phase.MOVE_TUTORIAL:
+          if agent_type == AgentType.BOT and other.agent_type == AgentType.VIRUS:
+            get_parent().change_phase(Level.Phase.ATTACK_TUTORIAL)
 
   # Apply random movement, in the form of instantaneous impulse on random ticks.
   if random_movement > 0:

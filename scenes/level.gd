@@ -268,7 +268,7 @@ func change_phase(phase: Phase) -> void:
     hud.set_notice_text('CLICK AND DRAG MOUSE TO PUSH')
     showing_move_tutorial = true
   elif phase == Phase.ATTACK_TUTORIAL:
-    hud.directive_text = 'Locate the virus cell'
+    hud.directive_text = 'Destroy the virus cell'
     hud.set_notice_text('COLLIDE WITH A VIRUS CELL TO CONSUME IT')
   elif phase == Phase.FARM_VIRUS or phase == Phase.DESTROY_VIRUS:
     hud.directive_text = 'Destroy all virus cells'
@@ -280,6 +280,18 @@ func change_phase(phase: Phase) -> void:
     hud.directive_text = 'Patient stable. Stand down'
     hud.set_notice_text('ALL VIRUS CELLS ELIMINATED', 5)
 
+  # We need bot tensor to see viruses ONLY in the MOVE_TUTORIAL phase (so we
+  # can detect to change phase). After that, it's a performance liability, so
+  # turn it off.
+  for bot in get_tree().get_nodes_in_group('bots'):
+    # Set or clear bit 4 (i.e. bitvalue 8).
+    if phase == Phase.MOVE_TUTORIAL:
+      bot.get_node('TensorCollider').collision_mask |= 8
+    else:
+      # Note: -9 is the bitwise inverse of 8.
+      bot.get_node('TensorCollider').collision_mask &= -9
+
+  # Hide the bots and viruses until we get to FARM_VIRUS.
   hud.show_bots_viruses = phase > Phase.ATTACK_TUTORIAL
 
 func finished_move_tutorial():
