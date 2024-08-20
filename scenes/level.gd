@@ -266,6 +266,8 @@ func change_phase(phase: Phase) -> void:
     hud.directive_text = 'Patient stable. Stand down.'
     hud.set_notice_text('VIRUS ELIMINATED', 5)
 
+  hud.show_bots_viruses = phase > Phase.ATTACK_TUTORIAL
+
 func _on_cell_spawn_timer_timeout() -> void:
   var num_cells = get_tree().get_node_count_in_group('cells')
 

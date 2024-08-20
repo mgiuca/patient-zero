@@ -2,6 +2,12 @@ extends CanvasLayer
 
 @export_group('Labels')
 
+@export var show_bots_viruses : bool:
+  set(value):
+    show_bots_viruses = value
+    $MarginContainer/LeftSide/LblBots.visible = value
+    $MarginContainer/LeftSide/LblVirus.visible = value
+
 @export var num_bots : int = -1:
   set(value):
     if num_bots != value:

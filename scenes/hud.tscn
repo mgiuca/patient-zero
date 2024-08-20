@@ -36,6 +36,11 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
+[node name="LblHealth" type="Label" parent="MarginContainer/LeftSide"]
+layout_mode = 2
+text = "Patient health:"
+label_settings = SubResource("LabelSettings_w3pep")
+
 [node name="LblBots" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
 text = "Bots:"
@@ -44,11 +49,6 @@ label_settings = SubResource("LabelSettings_w3pep")
 [node name="LblVirus" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
 text = "Virus cells:"
-label_settings = SubResource("LabelSettings_w3pep")
-
-[node name="LblHealth" type="Label" parent="MarginContainer/LeftSide"]
-layout_mode = 2
-text = "Patient health:"
 label_settings = SubResource("LabelSettings_w3pep")
 
 [node name="RightSide" type="VBoxContainer" parent="MarginContainer"]
