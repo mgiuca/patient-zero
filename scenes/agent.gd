@@ -105,6 +105,9 @@ func _process(delta: float):
         # Also count as a friend if the same type.
         if other.agent_type == agent_type:
           num_friends += 1
+        # Also transitively extend the "active cluster".
+        if is_in_group('active_cluster') and other.agent_type == AgentType.BOT:
+          other.add_to_group('active_cluster')
 
   # Apply random movement, in the form of instantaneous impulse on random ticks.
   if random_movement > 0:

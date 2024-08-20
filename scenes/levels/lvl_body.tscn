@@ -47,6 +47,7 @@ music_start_time = 2.0
 
 [node name="Camera" type="Camera2D" parent="."]
 position_smoothing_enabled = true
+position_smoothing_speed = 2.0
 
 [node name="Cursor" parent="." instance=ExtResource("3_5i8s6")]
 z_index = 100
@@ -152,4 +153,5 @@ parameters/looping = false
 
 [node name="HUD" parent="." instance=ExtResource("11_w7mwp")]
 
+[connection signal="body_entered" from="Cursor" to="." method="_on_cursor_body_entered"]
 [connection signal="timeout" from="CellSpawnTimer" to="." method="_on_cell_spawn_timer_timeout"]

@@ -26,6 +26,8 @@ extends Node
 ## Show debugging info on screen.
 @export var debug_info : bool
 
+# Camera-related
+
 # Add this much around the edge of the bots when framing the camera.
 var zoom_margin : float = 500
 
@@ -37,6 +39,10 @@ var min_zoom_log : float = -4
 # Stored as a natural log of the actual zoom, so we can apply linear + and - to
 # it.
 var current_zoom_log : float = 1
+
+# This gets set when the mouse is pushed, and it means the next time a bot is
+# affected by the push force, it clears out the active cluster group.
+var reset_active_cluster : bool
 
 func _ready():
   $Music.seek(music_start_time)
@@ -101,6 +107,8 @@ func _input(event : InputEvent):
     current_zoom_log += 0.1
   elif event.is_action('zoom_out'):
     current_zoom_log -= 0.1
+  elif event.is_action_pressed('push'):
+    reset_active_cluster = true
 
   if current_zoom_log < min_zoom_log:
     current_zoom_log = min_zoom_log
@@ -118,10 +126,15 @@ func _process(delta: float):
 func update_camera(delta: float):
   # Note that the camera position will auto-smooth, but zoom will not.
 
-  # No bots; we can't update the camera so leave as-is.
-  var bots = get_tree().get_nodes_in_group('bots')
+  # Only focus the active cluster, not all bots (unless it's empty).
+  # All bots can result in a massive zoom-out where you can't see anything,
+  # because the bots spread out so far.
+  var bots = get_tree().get_nodes_in_group('active_cluster')
   if bots.is_empty():
-    return
+    bots = get_tree().get_nodes_in_group('bots')
+    if bots.is_empty():
+      # No bots; we can't update the camera so leave as-is.
+      return
 
   # First, make a rect encompassing all the bots' centre points.
   var min_x = bots[0].position.x
@@ -165,7 +178,9 @@ func update_hud():
   if debug_info:
     var num_cells = get_tree().get_node_count_in_group('cells')
     $HUD/MarginContainer/LeftSide/LblHealth.text += " (" + str(num_cells) + " cells)"
-    $HUD/MarginContainer/RightSide/LblDebug.text = "Zoom: " + str(snappedf(current_zoom_log, 0.1))
+    $HUD/MarginContainer/RightSide/LblDebug.text = \
+      "Zoom: " + str(snappedf(current_zoom_log, 0.1)) + \
+      "; Active cluster size: " + str(get_tree().get_node_count_in_group("active_cluster"))
   # TODO: Set quest text depending on phase.
 
 ## Calculates the patient health as a percentage (0 to 1).
@@ -185,3 +200,15 @@ func _on_cell_spawn_timer_timeout() -> void:
   var pos = pick_random_location()
   var rot = randf_range(0, TAU)
   spawn_agent(Agent.AgentType.CELL, pos)
+
+func _on_cursor_body_entered(body: Node2D) -> void:
+  # Technically Cursor should *only* collide with Agent of type BOT, but
+  # we don't need to assert this.
+  if $Cursor.active and body is Agent and \
+      body.agent_type == Agent.AgentType.BOT:
+    if reset_active_cluster:
+      get_tree().call_group('active_cluster', 'remove_from_group',
+                            'active_cluster')
+      reset_active_cluster = false
+
+    body.add_to_group('active_cluster')
