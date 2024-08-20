@@ -54,7 +54,7 @@ var reset_active_cluster : bool
 
 func _ready():
   $Music.seek(music_start_time)
-  $HUD/MarginContainer/RightSide/LblDebug.visible = debug_info
+  $HUD.debug_visible = debug_info
 
   # Spawn a bunch of bots.
   for i in initial_bots:
@@ -177,18 +177,14 @@ func update_camera(delta: float):
   $Camera.zoom = Vector2(current_zoom, current_zoom)
 
 func update_hud():
-  var num_bots = get_tree().get_node_count_in_group('bots')
-  $HUD/MarginContainer/LeftSide/LblBots.text = "Bots: " + str(num_bots)
-  var num_viruses = get_tree().get_node_count_in_group('viruses')
-  $HUD/MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(num_viruses)
-  var patient_health = calc_patient_health()
-  $HUD/MarginContainer/LeftSide/LblHealth.text = "Patient health: " + str(snappedf(patient_health * 100, 1)) + "%"
+  var hud = $HUD
+  hud.num_bots = get_tree().get_node_count_in_group('bots')
+  hud.num_viruses = get_tree().get_node_count_in_group('viruses')
+  hud.patient_health = calc_patient_health()
   if debug_info:
-    var num_cells = get_tree().get_node_count_in_group('cells')
-    $HUD/MarginContainer/LeftSide/LblHealth.text += " (" + str(num_cells) + " cells)"
-    $HUD/MarginContainer/RightSide/LblDebug.text = \
-      "Zoom: " + str(snappedf(current_zoom_log, 0.1)) + \
-      "; Active cluster size: " + str(get_tree().get_node_count_in_group("active_cluster"))
+    hud.append_num_cells(get_tree().get_node_count_in_group('cells'))
+    hud.set_debug_info(current_zoom_log,
+                       get_tree().get_node_count_in_group("active_cluster"))
   # TODO: Set quest text depending on phase.
 
 ## Calculates the patient health as a percentage (0 to 1).
