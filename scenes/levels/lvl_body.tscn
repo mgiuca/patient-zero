@@ -28,7 +28,7 @@ size = Vector2(1493, 11540)
 size = Vector2(1563.5, 11585)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ts1bg"]
-size = Vector2(950, 3213)
+size = Vector2(777, 2431.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6dgm3"]
 size = Vector2(1132, 1765)
@@ -46,6 +46,7 @@ virus_scene = ExtResource("3_wdrr7")
 cell_scene = ExtResource("4_6bb0c")
 
 [node name="Camera" type="Camera2D" parent="."]
+position = Vector2(7331, 5634)
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
@@ -77,8 +78,8 @@ shape = SubResource("RectangleShape2D_hcnq1")
 position = Vector2(1734.25, 13952.5)
 shape = SubResource("RectangleShape2D_6gy4a")
 
-[node name="RectShape6" type="CollisionShape2D" parent="SpawnAreas"]
-position = Vector2(6205, 2163.5)
+[node name="RectShapeLeftArm" type="CollisionShape2D" parent="SpawnAreas"]
+position = Vector2(7363.5, 5563.75)
 shape = SubResource("RectangleShape2D_ts1bg")
 
 [node name="RectShape7" type="CollisionShape2D" parent="SpawnAreas"]

@@ -52,31 +52,43 @@ var current_zoom_log : float = 1
 # affected by the push force, it clears out the active cluster group.
 var reset_active_cluster : bool
 
+# Locations where things can spawn. Left arm is special as it's the
+# "injection site" where the player enters the body.
+enum BodyLocation {ANYWHERE, LEFT_ARM, NOT_LEFT_ARM}
+
 func _ready():
   $Music.seek(music_start_time)
   $HUD.debug_visible = debug_info
 
   # Spawn a bunch of bots.
   for i in initial_bots:
-    var pos = Vector2(randf_range(-750, 750), randf_range(-750, 750))
+    var pos = pick_random_location(BodyLocation.LEFT_ARM)
     spawn_agent(Agent.AgentType.BOT, pos)
 
   # Spawn a bunch of viruses.
   for i in initial_viruses:
-    var pos = pick_random_location()
+    var pos = pick_random_location(BodyLocation.NOT_LEFT_ARM)
     spawn_agent(Agent.AgentType.VIRUS, pos)
 
   # Spawn a bunch of cells.
   for i in max_cells:
-    var pos = pick_random_location()
+    var pos = pick_random_location(BodyLocation.ANYWHERE)
     spawn_agent(Agent.AgentType.CELL, pos)
 
   change_phase(0)
 
 ## Picks a random valid location somewhere in the level.
-func pick_random_location() -> Vector2:
+func pick_random_location(location: BodyLocation) -> Vector2:
   var shapes = $SpawnAreas.get_children()
   var shape = shapes.pick_random() as CollisionShape2D
+
+  if location == BodyLocation.LEFT_ARM:
+    shape = $SpawnAreas/RectShapeLeftArm as CollisionShape2D
+  elif location == BodyLocation.NOT_LEFT_ARM:
+    # Keep picking until you spawn somewhere other than left arm.
+    while shape == $SpawnAreas/RectShapeLeftArm:
+      shape = shapes.pick_random() as CollisionShape2D
+
   # WTF: This is misleading: RectangleShape2D doesn't actually have a rect,
   # just a size. (If you call get_rect it will just return the size, centered.)
   var size = (shape.shape as RectangleShape2D).size
@@ -209,7 +221,7 @@ func _on_cell_spawn_timer_timeout() -> void:
   if num_cells <= 5 or num_cells >= max_cells:
     return
 
-  var pos = pick_random_location()
+  var pos = pick_random_location(BodyLocation.ANYWHERE)
   var rot = randf_range(0, TAU)
   spawn_agent(Agent.AgentType.CELL, pos)
 
