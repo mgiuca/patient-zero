@@ -261,7 +261,7 @@ func check_gameover():
     # Game over (win or lose): no more cells
     if current_phase == Phase.CONSUME_ALL:
       # Win (?)
-      hud.show_gameover('ALL RESOURCES CONSUMED. EXIT PATIENT. THE SWARM MUST GROW.')
+      hud.show_gameover('THE PATIENT IS DECEASED\nALL RESOURCES CONSUMED\nEXIT PATIENT - THE SWARM MUST GROW')
     else:
       # Lose
       hud.show_gameover('THE PATIENT IS DECEASED')
