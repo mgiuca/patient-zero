@@ -211,28 +211,42 @@ func _on_body_entered(body: Node) -> void:
 ## This is based on the number of friends nearby (within tensor range),
 ## multiplied by a per-type multiple, to let viruses be stronger than bots.
 func strength() -> float:
+  # Viruses have strength 0 except in phase DESTROY_VIRUS.
+  if agent_type == AgentType.VIRUS:
+    if get_parent().current_phase != Level.Phase.DESTROY_VIRUS:
+      return 0
+
   return (num_friends + 1) * strength_multiplier
 
 ## Determines whether an agent of type |from| should respond via a tensor to
 ## a nearby agent of type |to|.
 ## Takes the game phase into account, where the rules can change.
 func tensor_applies(from: AgentType, to: AgentType) -> bool:
-  # TODO: Take phase into account.
+  var phase = get_parent().current_phase
   if from == AgentType.BOT:
     return to == AgentType.BOT
   elif from == AgentType.VIRUS:
-    return to == AgentType.VIRUS or to == AgentType.CELL
+    if phase == Level.Phase.FARM_VIRUS:
+      return to == AgentType.CELL
+    elif phase == Level.Phase.DESTROY_VIRUS:
+      return to == AgentType.VIRUS or to == AgentType.CELL
 
   return false
 
 ## Determines whether an agent of type |from| can hit an agent of type |to|.
 ## Takes the game phase into account, where the rules can change.
 func can_hit(from: AgentType, to: AgentType) -> bool:
-  # TODO: Take phase into account.
+  var phase = get_parent().current_phase
   if from == AgentType.BOT:
-    return to == AgentType.VIRUS
+    if phase == Level.Phase.CONSUME_ALL:
+      return to == AgentType.CELL
+    else:
+      return to == AgentType.VIRUS
   elif from == AgentType.VIRUS:
-    return to == AgentType.BOT or to == AgentType.CELL
+    if phase == Level.Phase.FARM_VIRUS:
+      return to == AgentType.CELL
+    elif phase == Level.Phase.DESTROY_VIRUS:
+      return to == AgentType.BOT or to == AgentType.CELL
 
   return false
 
