@@ -49,3 +49,12 @@ http://creativecommons.org/licenses/by/4.0/
 "Unnatural Situation" by Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
+
+# Fonts
+
+"Play"
+Copyright (c) 2011, Jonas Hecksher, Playtypes, e-types AS (lasse@e-types.com),
+with Reserved Font Name 'Play', 'Playtype', 'Playtype Sans'.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+https://openfontlicense.org
