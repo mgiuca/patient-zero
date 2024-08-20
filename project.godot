@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Swarm"
+config/name="Patient Zero"
+config/description="Control an ever-growing swarm of nanobots fighting a virus inside a human body."
 run/main_scene="res://scenes/levels/lvl_body.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
