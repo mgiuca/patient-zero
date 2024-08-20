@@ -253,17 +253,17 @@ func change_phase(phase: Phase) -> void:
 
   current_phase = phase
   if phase == Phase.MOVE_TUTORIAL:
-    hud.directive_text = 'Locate a virus cell.'
+    hud.directive_text = 'Locate a virus cell'
     hud.set_notice_text('CLICK AND DRAG MOUSE TO PUSH')
   elif phase == Phase.ATTACK_TUTORIAL:
-    hud.directive_text = 'Locate the virus cell.'
+    hud.directive_text = 'Locate the virus cell'
     hud.set_notice_text('COLLIDE WITH VIRUS TO CONSUME IT', 5)
   elif phase == Phase.FARM_VIRUS or phase == Phase.DESTROY_VIRUS:
-    hud.directive_text = 'Destroy all virus cells.'
+    hud.directive_text = 'Destroy all virus cells'
     if phase == Phase.DESTROY_VIRUS:
       hud.set_notice_text('THE VIRUS HAS LEARNED TO FIGHT BACK', 5)
   elif phase == Phase.CONSUME_ALL:
-    hud.directive_text = 'Patient stable. Stand down.'
+    hud.directive_text = 'Patient stable. Stand down'
     hud.set_notice_text('VIRUS ELIMINATED', 5)
 
   hud.show_bots_viruses = phase > Phase.ATTACK_TUTORIAL
