@@ -59,19 +59,16 @@ func _ready():
   # Spawn a bunch of bots.
   for i in initial_bots:
     var pos = Vector2(randf_range(-750, 750), randf_range(-750, 750))
-    var rot = randf_range(0, TAU)
     spawn_agent(Agent.AgentType.BOT, pos)
 
   # Spawn a bunch of viruses.
   for i in initial_viruses:
     var pos = pick_random_location()
-    var rot = randf_range(0, TAU)
     spawn_agent(Agent.AgentType.VIRUS, pos)
 
   # Spawn a bunch of cells.
   for i in max_cells:
     var pos = pick_random_location()
-    var rot = randf_range(0, TAU)
     spawn_agent(Agent.AgentType.CELL, pos)
 
   change_phase(0)
@@ -79,8 +76,12 @@ func _ready():
 ## Picks a random valid location somewhere in the level.
 func pick_random_location() -> Vector2:
   var shapes = $SpawnAreas.get_children()
-  var shape = (shapes.pick_random().shape) as RectangleShape2D
-  var rect = shape.get_rect()
+  var shape = shapes.pick_random() as CollisionShape2D
+  # WTF: This is misleading: RectangleShape2D doesn't actually have a rect,
+  # just a size. (If you call get_rect it will just return the size, centered.)
+  var size = (shape.shape as RectangleShape2D).size
+  var pos = shape.position - size / 2
+  var rect = Rect2(pos, size)
   return \
     Vector2(randf_range(rect.position.x, rect.position.x + rect.size.x),
             randf_range(rect.position.y, rect.position.y + rect.size.y))
