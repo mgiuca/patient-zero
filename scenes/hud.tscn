@@ -64,6 +64,7 @@ scroll_active = false
 shortcut_keys_enabled = false
 
 [node name="DebugItems" type="VBoxContainer" parent="MarginContainer/RightSide"]
+visible = false
 layout_mode = 2
 
 [node name="LblPerformance" type="Label" parent="MarginContainer/RightSide/DebugItems"]
