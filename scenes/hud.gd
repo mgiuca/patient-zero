@@ -42,7 +42,7 @@ var _num_cells : int = -1
 @export var debug_visible : bool:
   set(value):
     debug_visible = value
-    $MarginContainer/RightSide/LblDebug.visible = value
+    $MarginContainer/RightSide/DebugItems.visible = value
 
 ## Sets the text of the screen-centered notice label, with an optional timeout.
 func set_notice_text(value: String, timeout: float = 0) -> void:
@@ -71,6 +71,7 @@ func set_patient_health_and_cells(value: float, num_cells: int) -> void:
     _num_cells = num_cells
 
 func set_debug_info(zoom: float, active_cluster_size: int) -> void:
-  $MarginContainer/RightSide/LblDebug.text = \
-    "Zoom: " + str(snappedf(zoom, 0.1)) + \
-    "; Active cluster size: " + str(active_cluster_size)
+  $MarginContainer/RightSide/DebugItems/LblDebugZoom.text = \
+    "Zoom: " + str(snappedf(zoom, 0.1))
+  $MarginContainer/RightSide/DebugItems/LblDebugCluster.text = \
+    "Active cluster size: " + str(active_cluster_size)
