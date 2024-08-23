@@ -256,10 +256,13 @@ func _process(delta: float):
     $Cursor.position = mouse_pos
   else:
     # Let the joy axes move the cursor position, but confine to the screen.
-    var move_vector = Vector2(Input.get_axis('cursor_left', 'cursor_right'),
-                              Input.get_axis('cursor_up', 'cursor_down')) \
-                        * delta * joy_cursor_move_rate / $Camera.zoom
-    $Cursor.position += move_vector
+    # Cursor velocity in global coordinates.
+    var velocity = Vector2(Input.get_axis('cursor_left', 'cursor_right'),
+                           Input.get_axis('cursor_up', 'cursor_down')) \
+                        * joy_cursor_move_rate / $Camera.zoom
+    $Cursor.position += velocity * delta
+    # TODO: Lock the cursor to the screen.
+    $Cursor.set_force(velocity)
 
   var zoom_continuous = Input.get_axis('zoom_out_continuous', 'zoom_in_continuous')
   if zoom_continuous != 0:

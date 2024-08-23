@@ -29,8 +29,12 @@ func _input(event):
     # This is in screen space, not global coordinates. (Which means when the
     # camera is zoomed out, the force is much lower.)
     # Bit of a hack, but fix it by dividing by camera zoom.
-    velocity = velocity / get_viewport().get_camera_2d().zoom.x
-    gravity_direction = velocity * force_multiplier
+    set_force(velocity / get_viewport().get_camera_2d().zoom.x)
+
+# Set the cursor pushing force, based on cursor velocity.
+# Velocity must be in global coordinates, not screen space.
+func set_force(velocity: Vector2):
+  gravity_direction = velocity * force_multiplier
 
 func _process(delta):
   var was_active : bool = active
