@@ -71,6 +71,9 @@ var num_friends : int
 # to enable and disable tensors per-frame.
 var tensor_collision_mask : int
 
+# Time since last tensor update for this bot.
+var tensor_delta : float
+
 func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
   $LblDebugFriends.visible = debug_show_friend_count
@@ -125,11 +128,15 @@ func _process(delta: float):
 
   var collider : Area2D = $TensorCollider
   if collider != null:
+    var collision_mask_was_on : bool = collider.collision_mask != 0
+    # Keep track of tensor delta.
+    tensor_delta += delta
+
     # Dynamically enable or disable tensor collisions for the next tick,
-    # based on the global switch (which turns on and off to regulate performance).
+    # by random probability based on the global percentage.
     # (It's too late to affect collision detection for this tick, which has
     # already been computed, so this will set up for the next tick.)
-    if get_parent().tensor_update_this_tick:
+    if randf() <= get_parent().tensor_update_percent:
       collider.collision_mask = tensor_collision_mask
     else:
       collider.collision_mask = 0
@@ -138,7 +145,7 @@ func _process(delta: float):
     for other : Agent in collider.get_overlapping_bodies():
       if other != self:
         if tensor_applies(agent_type, other.agent_type):
-          apply_tensor(other, delta)
+          apply_tensor(other, tensor_delta)
         # Also count as a friend if the same type.
         if other.agent_type == agent_type:
           num_friends += 1
@@ -153,6 +160,9 @@ func _process(delta: float):
       num_tensors_applied += 1
       if max_tensors_applied > 0 and num_tensors_applied >= max_tensors_applied:
         break
+
+    if collision_mask_was_on:
+      tensor_delta = 0
 
   # Apply random movement, in the form of instantaneous impulse on random ticks.
   if random_movement > 0:
@@ -171,9 +181,6 @@ func set_collision_mask_based_on_phase(phase: Level.Phase):
   else:
     # Note: -9 is the bitwise inverse of 8.
     tensor_collision_mask &= -9
-
-  if get_parent().tensor_update_this_tick:
-    $TensorCollider.collision_mask = tensor_collision_mask
 
   # In CONSUME_ALL, we need bots to be able to collide with cells.
   # Set or clear bit 5 (i.e. bitvalue 32).

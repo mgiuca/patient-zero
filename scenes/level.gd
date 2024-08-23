@@ -60,20 +60,10 @@ var special_directive_id = 0
 
 # Timing
 
-# Fastest tensor update rate (1/tickrate). It doesn't make sense to go
-# faster than this, even if the framerate is higher.
-const min_tensor_target_delta : float = 1.0/60.0
-
-# Dynamic target delta (1/tickrate) for tensor updates. Ideally, this is
-# equal to min_tensor_target_delta, but it will dynamically grow as the
-# framerate drops, and shrink as the framerate recovers.
-var tensor_target_delta : float = min_tensor_target_delta
-
-# Global time elapsed since the last tensor update.
-var tensor_delta : float = 0
-
-# Tell the agents when they are allowed to do a tensor update.
-var tensor_update_this_tick : bool = true
+# Each bot will perform a tensor update this % of the time. Ideally, this is
+# 100%, but it will dynamically shrink as the framerate drops, and grow as the
+# framerate recovers, to preserve performance.
+var tensor_update_percent : float = 1.0
 
 # Camera-related
 
@@ -214,14 +204,6 @@ func _process(delta: float):
   var mouse_pos = $Camera.get_global_mouse_position()
   $Cursor.position = mouse_pos
 
-  # Determine when it's time to do a tensor update.
-  tensor_delta += delta
-  if tensor_delta >= tensor_target_delta:
-    tensor_update_this_tick = true
-    tensor_delta = 0
-  else:
-    tensor_update_this_tick = false
-
   update_camera(delta)
   update_hud(delta)
   check_gameover()
@@ -283,7 +265,7 @@ func update_hud(delta: float):
     var framerate = 1 / delta
     hud.set_debug_info(current_zoom_log,
                        get_tree().get_node_count_in_group("active_cluster"),
-                       framerate)
+                       framerate, tensor_update_percent)
   else:
     hud.patient_health = calc_patient_health()
 
