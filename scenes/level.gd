@@ -193,7 +193,7 @@ func _process(delta: float):
   $Cursor.position = mouse_pos
 
   update_camera(delta)
-  update_hud()
+  update_hud(delta)
   check_gameover()
 
 ## Update the camera to capture a view of all the bots.
@@ -242,15 +242,18 @@ func update_camera(delta: float):
   current_zoom = exp(current_zoom_log)
   $Camera.zoom = Vector2(current_zoom, current_zoom)
 
-func update_hud():
+func update_hud(delta: float):
   var hud = $HUD
   hud.num_bots = get_tree().get_node_count_in_group('bots')
   hud.num_viruses = get_tree().get_node_count_in_group('viruses')
   if debug_info:
     hud.set_patient_health_and_cells(
       calc_patient_health(), get_tree().get_node_count_in_group('cells'))
+
+    var framerate = 1 / delta
     hud.set_debug_info(current_zoom_log,
-                       get_tree().get_node_count_in_group("active_cluster"))
+                       get_tree().get_node_count_in_group("active_cluster"),
+                       framerate)
   else:
     hud.patient_health = calc_patient_health()
 

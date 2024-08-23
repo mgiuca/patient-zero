@@ -66,6 +66,13 @@ shortcut_keys_enabled = false
 [node name="DebugItems" type="VBoxContainer" parent="MarginContainer/RightSide"]
 layout_mode = 2
 
+[node name="LblPerformance" type="Label" parent="MarginContainer/RightSide/DebugItems"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "[Debug text]"
+label_settings = SubResource("LabelSettings_w3pep")
+
 [node name="LblDebugZoom" type="Label" parent="MarginContainer/RightSide/DebugItems"]
 layout_mode = 2
 size_flags_horizontal = 8
