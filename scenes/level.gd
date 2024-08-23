@@ -186,9 +186,16 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
 
 func _input(event : InputEvent):
   # Handle zooming.
-  if event.is_action('restart'):
+  if event.is_action_pressed('restart'):
     get_tree().reload_current_scene()
-  if event.is_action('zoom_in'):
+  elif event.is_action_pressed('toggle_fullscreen'):
+    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+      DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
+    else:
+      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+      DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CONFINED)
+  elif event.is_action('zoom_in'):
     current_zoom_log += 0.1
   elif event.is_action('zoom_out'):
     current_zoom_log -= 0.1
