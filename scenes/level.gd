@@ -60,6 +60,11 @@ var special_directive_id = 0
 
 # Timing
 
+# Target delta; tensor update rate will be scaled to try and hit this.
+# Don't try to hit 60, aim a little lower (otherwise even good performance
+# will be punished).
+var target_delta : float = 1.0/55.0
+
 # Each bot will perform a tensor update this % of the time. Ideally, this is
 # 100%, but it will dynamically shrink as the framerate drops, and grow as the
 # framerate recovers, to preserve performance.
@@ -203,6 +208,15 @@ func _process(delta: float):
   # of the camera.
   var mouse_pos = $Camera.get_global_mouse_position()
   $Cursor.position = mouse_pos
+
+  # Adjust tensor update rate to try and hit the desired framerate.
+  if delta <= target_delta:
+    # Doing OK; increase tensor update rate to bring it back up.
+    tensor_update_percent = min(tensor_update_percent + 0.01, 1.0)
+  else:
+    # Missed the framerate target; reduce the tensor update rate.
+    # The more we missed the target, the larger the reduction in update rate.
+    tensor_update_percent = max(tensor_update_percent - 0.01 * (delta / target_delta), 0.01)
 
   update_camera(delta)
   update_hud(delta)
