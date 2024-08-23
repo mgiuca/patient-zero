@@ -210,13 +210,12 @@ func _process(delta: float):
   $Cursor.position = mouse_pos
 
   # Adjust tensor update rate to try and hit the desired framerate.
-  if delta <= target_delta:
-    # Doing OK; increase tensor update rate to bring it back up.
-    tensor_update_percent = min(tensor_update_percent + 0.01, 1.0)
-  else:
-    # Missed the framerate target; reduce the tensor update rate.
-    # The more we missed the target, the larger the reduction in update rate.
-    tensor_update_percent = max(tensor_update_percent - 0.01 * (delta / target_delta), 0.01)
+  var tensor_update_change = log(target_delta / delta) * 0.1
+  if tensor_update_change >= 0:
+    # Bonus if you hit or exceeded the target (otherwise we never improve
+    # because the misses outweigh the hits).
+    tensor_update_change += 0.1
+  tensor_update_percent = max(min(tensor_update_percent + tensor_update_change, 1.0), 0.01)
 
   update_camera(delta)
   update_hud(delta)
