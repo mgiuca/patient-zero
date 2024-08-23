@@ -14,9 +14,6 @@ enum Phase {
 
 @export_group('Gameplay')
 
-## Number of bots to spawn at startup.
-@export var initial_bots : int
-
 ## Number of viruses to spawn at startup.
 @export var initial_viruses : int
 
@@ -54,6 +51,9 @@ enum Phase {
 ## Phase to start in (for debugging).
 @export var debug_start_phase : Phase = Phase.MOVE_TUTORIAL
 
+## Number of bots to spawn at startup (0 = dependent on start scene).
+@export var debug_initial_bots : int = 0
+
 var current_phase : Phase
 
 var special_directive_id = 0
@@ -88,12 +88,17 @@ func _ready():
   $Music.seek(music_start_time)
   $HUD.debug_visible = debug_info
 
+  var initial_bots = 1  # Normal game starts with 1 bot.
+
   # Change initial conditions based on debug start phase. Should not have
   # any effect in the default phase.
-  if debug_start_phase == Phase.FARM_VIRUS:
+  if debug_initial_bots > 0:
+    initial_bots = debug_initial_bots
+  elif debug_start_phase == Phase.FARM_VIRUS:
     initial_bots = 2
   elif debug_start_phase >= Phase.FARM_VIRUS:
     initial_bots = 10
+
   if debug_start_phase == Phase.CONSUME_ALL:
     initial_viruses = 0
 
