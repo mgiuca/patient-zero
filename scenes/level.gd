@@ -58,6 +58,23 @@ var current_phase : Phase
 
 var special_directive_id = 0
 
+# Timing
+
+# Fastest tensor update rate (1/tickrate). It doesn't make sense to go
+# faster than this, even if the framerate is higher.
+const min_tensor_target_delta : float = 1.0/60.0
+
+# Dynamic target delta (1/tickrate) for tensor updates. Ideally, this is
+# equal to min_tensor_target_delta, but it will dynamically grow as the
+# framerate drops, and shrink as the framerate recovers.
+var tensor_target_delta : float = min_tensor_target_delta
+
+# Global time elapsed since the last tensor update.
+var tensor_delta : float = 0
+
+# Tell the agents when they are allowed to do a tensor update.
+var tensor_update_this_tick : bool = true
+
 # Camera-related
 
 # Add this much around the edge of the bots when framing the camera.
@@ -196,6 +213,14 @@ func _process(delta: float):
   # of the camera.
   var mouse_pos = $Camera.get_global_mouse_position()
   $Cursor.position = mouse_pos
+
+  # Determine when it's time to do a tensor update.
+  tensor_delta += delta
+  if tensor_delta >= tensor_target_delta:
+    tensor_update_this_tick = true
+    tensor_delta = 0
+  else:
+    tensor_update_this_tick = false
 
   update_camera(delta)
   update_hud(delta)

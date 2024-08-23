@@ -66,9 +66,17 @@ var next_feed_time_ms : float
 ## The number of nearby (tensor range) agents of the same type.
 var num_friends : int
 
+# Stored copy of the tensor collision mask. The real collision mask
+# ($TensorCollider/collision_mask) is constantly being turned off and on
+# to enable and disable tensors per-frame.
+var tensor_collision_mask : int
+
 func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
   $LblDebugFriends.visible = debug_show_friend_count
+
+  if $TensorCollider:
+    tensor_collision_mask = $TensorCollider.collision_mask
 
   var spawn_cd = spawn_cooldown
   # Hack: In FARM_VIRUS, much longer cooldown.
@@ -117,6 +125,15 @@ func _process(delta: float):
 
   var collider : Area2D = $TensorCollider
   if collider != null:
+    # Dynamically enable or disable tensor collisions for the next tick,
+    # based on the global switch (which turns on and off to regulate performance).
+    # (It's too late to affect collision detection for this tick, which has
+    # already been computed, so this will set up for the next tick.)
+    if get_parent().tensor_update_this_tick:
+      collider.collision_mask = tensor_collision_mask
+    else:
+      collider.collision_mask = 0
+
     var num_tensors_applied = 0
     for other : Agent in collider.get_overlapping_bodies():
       if other != self:
@@ -150,10 +167,13 @@ func _process(delta: float):
 func set_collision_mask_based_on_phase(phase: Level.Phase):
   # Set or clear bit 3 (i.e. bitvalue 8).
   if phase == Level.Phase.MOVE_TUTORIAL:
-    $TensorCollider.collision_mask |= 8
+    tensor_collision_mask |= 8
   else:
     # Note: -9 is the bitwise inverse of 8.
-    $TensorCollider.collision_mask &= -9
+    tensor_collision_mask &= -9
+
+  if get_parent().tensor_update_this_tick:
+    $TensorCollider.collision_mask = tensor_collision_mask
 
   # In CONSUME_ALL, we need bots to be able to collide with cells.
   # Set or clear bit 5 (i.e. bitvalue 32).
