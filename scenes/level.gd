@@ -70,6 +70,24 @@ var target_delta : float = 1.0/55.0
 # framerate recovers, to preserve performance.
 var tensor_update_percent : float = 1.0
 
+# Input-related
+
+enum InputMode { INPUT_MOUSE, INPUT_JOYSTICK }
+
+# Which device we last received input from.
+# Used for various things like whether to show the cursor, tutorial prompts.
+var input_mode : InputMode = InputMode.INPUT_MOUSE
+
+# Joy thumbstick cursor movement rate (at full speed) per second.
+# In screen space, not world space (moves faster when zoomed out).
+const joy_cursor_move_rate : float = 1000.0
+
+# Amount to zoom per tick of a discrete zoom button (e.g. mouse wheel).
+const zoom_tick_rate : float = 0.1
+
+# Amount to zoom per second of continuously held zoom (e.g. gamepad bumper).
+const zoom_continuous_rate : float = 3.0
+
 # Camera-related
 
 # Add this much around the edge of the bots when framing the camera.
@@ -185,36 +203,68 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
   return agent
 
 func _input(event : InputEvent):
+  if event is InputEventMouse:
+    if input_mode != InputMode.INPUT_MOUSE:
+      input_mode = InputMode.INPUT_MOUSE
+      set_mouse_mode()
+  elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+    if input_mode != InputMode.INPUT_JOYSTICK:
+      input_mode = InputMode.INPUT_JOYSTICK
+      set_mouse_mode()
+
   # Handle zooming.
   if event.is_action_pressed('restart'):
     get_tree().reload_current_scene()
   elif event.is_action_pressed('toggle_fullscreen'):
     if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
       DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-      DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
     else:
       DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-      DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CONFINED)
-  elif event.is_action('zoom_in'):
-    current_zoom_log += 0.1
-  elif event.is_action('zoom_out'):
-    current_zoom_log -= 0.1
-    # Tutorial
-    if current_zoom_log < -2:
-      done_zoom_tutorial = true
-      if showing_zoom_tutorial:
-        finished_zoom_tutorial()
+    set_mouse_mode()
+  elif event.is_action_pressed('zoom_in_tick'):
+    current_zoom_log += zoom_tick_rate
+    post_zoom_checks()
+  elif event.is_action_pressed('zoom_out_tick'):
+    current_zoom_log -= zoom_tick_rate
+    post_zoom_checks()
   elif event.is_action_pressed('push'):
     reset_active_cluster = true
 
+func post_zoom_checks():
+  # Tutorial
+  if current_zoom_log < -2:
+    done_zoom_tutorial = true
+    if showing_zoom_tutorial:
+      finished_zoom_tutorial()
   if current_zoom_log < min_zoom_log:
     current_zoom_log = min_zoom_log
 
+func set_mouse_mode():
+  if input_mode == InputMode.INPUT_MOUSE:
+    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+      DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CONFINED)
+    else:
+      DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
+  else:
+    DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
+
 func _process(delta: float):
-  # Gets the mouse position in global coordinates, based on the location
-  # of the camera.
-  var mouse_pos = $Camera.get_global_mouse_position()
-  $Cursor.position = mouse_pos
+  if input_mode == InputMode.INPUT_MOUSE:
+    # Gets the mouse position in global coordinates, based on the location
+    # of the camera.
+    var mouse_pos = $Camera.get_global_mouse_position()
+    $Cursor.position = mouse_pos
+  else:
+    # Let the joy axes move the cursor position, but confine to the screen.
+    var move_vector = Vector2(Input.get_axis('cursor_left', 'cursor_right'),
+                              Input.get_axis('cursor_up', 'cursor_down')) \
+                        * delta * joy_cursor_move_rate / $Camera.zoom
+    $Cursor.position += move_vector
+
+  var zoom_continuous = Input.get_axis('zoom_out_continuous', 'zoom_in_continuous')
+  if zoom_continuous != 0:
+    current_zoom_log += zoom_continuous * zoom_continuous_rate * delta
+    post_zoom_checks()
 
   # Adjust tensor update rate to try and hit the desired framerate.
   var tensor_update_change = log(target_delta / delta) * 0.1

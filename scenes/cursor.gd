@@ -22,6 +22,8 @@ func _draw():
              inactive_draw_thickness)
 
 func _input(event):
+  # TODO: Need to refactor and use the joystick motion data when in joystick
+  # mode.
   if event is InputEventMouseMotion and active:
     var velocity : Vector2 = event.velocity
     # This is in screen space, not global coordinates. (Which means when the
