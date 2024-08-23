@@ -20,12 +20,15 @@ extends CanvasLayer
       $MarginContainer/LeftSide/LblVirus.text = "Virus cells: " + str(value)
     num_viruses = value
 
+var _patient_health : float = -1
+var _num_cells : int = -1
+
 @export var patient_health : float = -1:
   set(value):
-    if patient_health != value:
+    if _patient_health != value:
       $MarginContainer/LeftSide/LblHealth.text = "Patient health: " + \
         str(snappedf(value * 100, 1)) + "%"
-    patient_health = value
+    _patient_health = value
 
 ## The text of the "Directive" label, in BBCode format (for e.g. color).
 @export var directive_text : String:
@@ -59,10 +62,13 @@ func show_gameover(value: String) -> void:
 
 # Debugging
 
-# As a debug hack, appends the number of cells to the end of the patient
-# health row.
-func append_num_cells(num_cells: int) -> void:
-  $MarginContainer/LeftSide/LblHealth.text += " (" + str(num_cells) + " cells)"
+# Set patient health and show the number of cells (for debugging).
+func set_patient_health_and_cells(value: float, num_cells: int) -> void:
+  if _patient_health != value or _num_cells != num_cells:
+    $MarginContainer/LeftSide/LblHealth.text = "Patient health: " + \
+      str(snappedf(value * 100, 1)) + "% (" + str(num_cells) + " cells)"
+    _patient_health = value
+    _num_cells = num_cells
 
 func set_debug_info(zoom: float, active_cluster_size: int) -> void:
   $MarginContainer/RightSide/LblDebug.text = \

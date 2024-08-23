@@ -246,11 +246,13 @@ func update_hud():
   var hud = $HUD
   hud.num_bots = get_tree().get_node_count_in_group('bots')
   hud.num_viruses = get_tree().get_node_count_in_group('viruses')
-  hud.patient_health = calc_patient_health()
   if debug_info:
-    hud.append_num_cells(get_tree().get_node_count_in_group('cells'))
+    hud.set_patient_health_and_cells(
+      calc_patient_health(), get_tree().get_node_count_in_group('cells'))
     hud.set_debug_info(current_zoom_log,
                        get_tree().get_node_count_in_group("active_cluster"))
+  else:
+    hud.patient_health = calc_patient_health()
 
 func check_gameover():
   var hud = $HUD
