@@ -338,7 +338,7 @@ func update_hud(delta: float):
     var framerate = 1 / delta
     hud.set_debug_info(current_zoom_log,
                        get_tree().get_node_count_in_group("active_cluster"),
-                       framerate, tensor_update_percent)
+                       framerate, tensor_update_percent, input_mode)
   else:
     hud.patient_health = calc_patient_health()
 

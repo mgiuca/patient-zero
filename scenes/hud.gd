@@ -71,10 +71,18 @@ func set_patient_health_and_cells(value: float, num_cells: int) -> void:
     _num_cells = num_cells
 
 func set_debug_info(zoom: float, active_cluster_size: int,
-                    framerate: float, tensor_update_percent: float) -> void:
+                    framerate: float, tensor_update_percent: float,
+                    input_mode: Level.InputMode) -> void:
   $MarginContainer/RightSide/DebugItems/LblPerformance.text = \
     "FPS: " + str(snappedf(framerate, 0.1)) + \
     "; Tensor calc: " + str(snappedf(tensor_update_percent * 100, 1)) + '%'
+  var input_mode_str
+  if input_mode == Level.InputMode.INPUT_MOUSE:
+    input_mode_str = "Mouse"
+  elif input_mode == Level.InputMode.INPUT_JOYSTICK:
+    input_mode_str = "Joystick"
+  $MarginContainer/RightSide/DebugItems/LblDebugInput.text = \
+    "Input mode: " + input_mode_str
   $MarginContainer/RightSide/DebugItems/LblDebugZoom.text = \
     "Zoom: " + str(snappedf(zoom, 0.1))
   $MarginContainer/RightSide/DebugItems/LblDebugCluster.text = \
