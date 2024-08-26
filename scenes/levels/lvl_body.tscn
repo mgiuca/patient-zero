@@ -158,16 +158,13 @@ one_shot = true
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_1gsof")
 autoplay = true
-playback_type = 1
 parameters/looping = false
 
 [node name="MusicMechan" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_844nl")
-playback_type = 1
 
 [node name="MusicOneOf" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_85hob")
-playback_type = 1
 parameters/looping = false
 
 [node name="SfxBeep" type="AudioStreamPlayer" parent="."]
