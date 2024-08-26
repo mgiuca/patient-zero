@@ -253,7 +253,7 @@ func set_mouse_mode():
     DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 
 func _process(delta: float):
-  if input_mode == InputMode.INPUT_MOUSE or input_mode == InputMode.INPUT_TOUCH:
+  if input_mode == InputMode.INPUT_MOUSE:
     # Gets the mouse position in global coordinates, based on the location
     # of the camera.
     var mouse_pos = $Camera.get_global_mouse_position()
