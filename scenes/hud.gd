@@ -79,6 +79,8 @@ func set_debug_info(zoom: float, active_cluster_size: int,
   var input_mode_str
   if input_mode == Level.InputMode.INPUT_MOUSE:
     input_mode_str = "Mouse"
+  elif input_mode == Level.InputMode.INPUT_TOUCH:
+    input_mode_str = "Touch"
   elif input_mode == Level.InputMode.INPUT_JOYSTICK:
     input_mode_str = "Joystick"
   $MarginContainer/RightSide/DebugItems/LblDebugInput.text = \

@@ -17,7 +17,7 @@ func _draw():
   var collision_radius = $CollisionShape2D.shape.radius
   if active:
     draw_circle(Vector2(0, 0), collision_radius, draw_color)
-  else:
+  elif get_parent().input_mode != Level.InputMode.INPUT_TOUCH:
     draw_arc(Vector2(0, 0), collision_radius, 0, TAU, 128, draw_color,
              inactive_draw_thickness)
 

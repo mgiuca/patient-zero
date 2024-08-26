@@ -72,7 +72,7 @@ var tensor_update_percent : float = 1.0
 
 # Input-related
 
-enum InputMode { INPUT_MOUSE, INPUT_JOYSTICK }
+enum InputMode { INPUT_MOUSE, INPUT_TOUCH, INPUT_JOYSTICK }
 
 # Which device we last received input from.
 # Used for various things like whether to show the cursor, tutorial prompts.
@@ -207,6 +207,10 @@ func _input(event : InputEvent):
     if input_mode != InputMode.INPUT_MOUSE:
       input_mode = InputMode.INPUT_MOUSE
       set_mouse_mode()
+  elif event is InputEventScreenTouch or event is InputEventScreenDrag:
+    if input_mode != InputMode.INPUT_TOUCH:
+      input_mode = InputMode.INPUT_TOUCH
+      set_mouse_mode()
   elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
     if input_mode != InputMode.INPUT_JOYSTICK:
       input_mode = InputMode.INPUT_JOYSTICK
@@ -249,12 +253,12 @@ func set_mouse_mode():
     DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 
 func _process(delta: float):
-  if input_mode == InputMode.INPUT_MOUSE:
+  if input_mode == InputMode.INPUT_MOUSE or input_mode == InputMode.INPUT_TOUCH:
     # Gets the mouse position in global coordinates, based on the location
     # of the camera.
     var mouse_pos = $Camera.get_global_mouse_position()
     $Cursor.position = mouse_pos
-  else:
+  elif input_mode == InputMode.INPUT_JOYSTICK:
     # Let the joy axes move the cursor position, but confine to the screen.
     # Cursor velocity in global coordinates.
     var velocity = Vector2(Input.get_axis('cursor_left', 'cursor_right'),
