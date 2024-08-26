@@ -3,19 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xdhst2qnjuf1"
-path="res://.godot/imported/human-outline.png-0a8776c2f94706ec93afe3a15f07d22c.ctex"
+path.s3tc="res://.godot/imported/human-outline.png-0a8776c2f94706ec93afe3a15f07d22c.s3tc.ctex"
+path.etc2="res://.godot/imported/human-outline.png-0a8776c2f94706ec93afe3a15f07d22c.etc2.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://images/human-outline.png"
-dest_files=["res://.godot/imported/human-outline.png-0a8776c2f94706ec93afe3a15f07d22c.ctex"]
+dest_files=["res://.godot/imported/human-outline.png-0a8776c2f94706ec93afe3a15f07d22c.s3tc.ctex", "res://.godot/imported/human-outline.png-0a8776c2f94706ec93afe3a15f07d22c.etc2.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
