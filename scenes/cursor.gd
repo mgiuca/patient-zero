@@ -8,7 +8,17 @@ extends Area2D
 ## Multiplier for the amount of force to exert on bots.
 @export var force_multiplier : float = 2.5
 
-var active : bool = false
+var active : bool = false:
+  set(value):
+    var was_active : bool = active
+    active = value
+    if active != was_active:
+      queue_redraw()
+
+    if active:
+      gravity_space_override = Area2D.SPACE_OVERRIDE_COMBINE
+    else:
+      gravity_space_override = Area2D.SPACE_OVERRIDE_DISABLED
 
 func _ready():
   pass # Replace with function body.
@@ -46,12 +56,4 @@ func set_force(velocity: Vector2):
   gravity_direction = velocity * force_multiplier
 
 func _process(_delta):
-  var was_active : bool = active
   active = Input.is_action_pressed("push")
-  if active != was_active:
-    queue_redraw()
-
-  if active:
-    gravity_space_override = Area2D.SPACE_OVERRIDE_COMBINE
-  else:
-    gravity_space_override = Area2D.SPACE_OVERRIDE_DISABLED
