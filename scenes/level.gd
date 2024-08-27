@@ -173,6 +173,8 @@ func pick_random_location(location: BodyLocation) -> Vector2:
     Vector2(randf_range(rect.position.x, rect.position.x + rect.size.x),
             randf_range(rect.position.y, rect.position.y + rect.size.y))
 
+## Must not be called from inside a physics event (e.g. on_body_entered).
+## Use call_deferred in that case.
 func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
   # Decide what type of scene to instantiate.
   var scene: PackedScene

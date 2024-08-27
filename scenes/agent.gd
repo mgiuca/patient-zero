@@ -266,7 +266,7 @@ func _on_body_entered(body: Node) -> void:
 
   body.kill()
   if clone_self_when_killing(agent_type, body.agent_type):
-    get_parent().spawn_agent(agent_type, body.position)
+    get_parent().call_deferred('spawn_agent', agent_type, body.position)
 
 ## Determines the combat "strength" of this agent.
 ## This is based on the number of friends nearby (within tensor range),
