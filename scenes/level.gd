@@ -78,10 +78,6 @@ enum InputMode { INPUT_MOUSE, INPUT_TOUCH, INPUT_JOYSTICK }
 # Used for various things like whether to show the cursor, tutorial prompts.
 var input_mode : InputMode = InputMode.INPUT_MOUSE
 
-# Joy thumbstick cursor movement rate (at full speed) per second.
-# In screen space, not world space (moves faster when zoomed out).
-const joy_cursor_move_rate : float = 1000.0
-
 # Amount to zoom per tick of a discrete zoom button (e.g. mouse wheel).
 const zoom_tick_rate : float = 0.1
 
@@ -265,21 +261,6 @@ func set_mouse_mode():
   $Cursor.queue_redraw()
 
 func _process(delta: float):
-  if input_mode == InputMode.INPUT_MOUSE:
-    # Gets the mouse position in global coordinates, based on the location
-    # of the camera.
-    var mouse_pos = $Camera.get_global_mouse_position()
-    $Cursor.position = mouse_pos
-  elif input_mode == InputMode.INPUT_JOYSTICK:
-    # Let the joy axes move the cursor position, but confine to the screen.
-    # Cursor velocity in global coordinates.
-    var velocity = Vector2(Input.get_axis('cursor_left', 'cursor_right'),
-                           Input.get_axis('cursor_up', 'cursor_down')) \
-                        * joy_cursor_move_rate / $Camera.zoom
-    $Cursor.position += velocity * delta
-    # TODO: Lock the cursor to the screen.
-    $Cursor.set_force(velocity)
-
   var zoom_continuous = Input.get_axis('zoom_out_continuous', 'zoom_in_continuous')
   if zoom_continuous != 0:
     current_zoom_log += zoom_continuous * zoom_continuous_rate * delta

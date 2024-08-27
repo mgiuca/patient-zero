@@ -8,6 +8,10 @@ extends Area2D
 ## Multiplier for the amount of force to exert on bots.
 @export var force_multiplier : float = 2.5
 
+## Joy thumbstick cursor movement rate (at full speed) per second.
+## In screen space, not world space (moves faster when zoomed out).
+@export var joystick_move_rate : float = 1000.0
+
 var active : bool = false:
   set(value):
     var was_active : bool = active
@@ -64,6 +68,24 @@ func _on_touch_drag(event: InputEvent) -> void:
 func set_force(velocity: Vector2):
   gravity_direction = velocity * force_multiplier
 
-func _process(_delta):
-  if get_parent().input_mode != Level.InputMode.INPUT_TOUCH:
+func _process(delta):
+  var input_mode : Level.InputMode = get_parent().input_mode
+  var camera : Camera2D = get_viewport().get_camera_2d()
+
+  if input_mode != Level.InputMode.INPUT_TOUCH:
     active = Input.is_action_pressed("push")
+
+  if input_mode == Level.InputMode.INPUT_MOUSE:
+    # Gets the mouse position in global coordinates, based on the location
+    # of the camera.
+    var mouse_pos = camera.get_global_mouse_position()
+    position = mouse_pos
+  elif input_mode == Level.InputMode.INPUT_JOYSTICK:
+    # Let the joy axes move the cursor position, but confine to the screen.
+    # Cursor velocity in global coordinates.
+    var velocity = Vector2(Input.get_axis('cursor_left', 'cursor_right'),
+                           Input.get_axis('cursor_up', 'cursor_down')) \
+                        * joystick_move_rate / camera.zoom
+    position += velocity * delta
+    # TODO: Lock the cursor to the screen.
+    set_force(velocity)
