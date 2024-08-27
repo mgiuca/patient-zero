@@ -78,7 +78,7 @@ func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
   $LblDebugFriends.visible = debug_show_friend_count
 
-  if $TensorCollider:
+  if has_node('TensorCollider'):
     tensor_collision_mask = $TensorCollider.collision_mask
 
   var spawn_cd = spawn_cooldown
@@ -126,8 +126,8 @@ func _process(delta: float):
   # Only apply the force on the other body (not to self); the inverse force
   # will be done by the other body on us.
 
-  var collider : Area2D = $TensorCollider
-  if collider != null:
+  if has_node('TensorCollider'):
+    var collider : Area2D = $TensorCollider
     var collision_mask_was_on : bool = collider.collision_mask != 0
     # Keep track of tensor delta.
     tensor_delta += delta
