@@ -42,13 +42,22 @@ func _input(event):
     set_force(velocity / get_viewport().get_camera_2d().zoom.x)
 
 func _on_touch_start_drag() -> void:
-  print('start_drag')
+  active = true
 
 func _on_touch_end_drag() -> void:
-  print('end_drag')
+  active = false
 
 func _on_touch_drag(event: InputEvent) -> void:
-  print('drag: ', event)
+  var camera = get_viewport().get_camera_2d()
+  var screen_size = get_viewport().get_visible_rect().size
+  # Convert event position to global coordinates. This feels extremely hacky.
+  # TODO: This is SLIGHTLY off and I don't know why.
+  var global_pos = camera.to_global(event.position / camera.zoom.x -
+                                    screen_size / 2)
+  print('global touch position = ', global_pos)
+  position = global_pos
+
+  set_force(event.velocity / camera.zoom.x)
 
 # Set the cursor pushing force, based on cursor velocity.
 # Velocity must be in global coordinates, not screen space.
@@ -56,4 +65,5 @@ func set_force(velocity: Vector2):
   gravity_direction = velocity * force_multiplier
 
 func _process(_delta):
-  active = Input.is_action_pressed("push")
+  if get_parent().input_mode != Level.InputMode.INPUT_TOUCH:
+    active = Input.is_action_pressed("push")
