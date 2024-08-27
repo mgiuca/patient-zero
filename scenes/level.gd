@@ -253,6 +253,7 @@ func set_mouse_mode():
       DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
   else:
     DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
+  $Cursor.queue_redraw()
 
 func _process(delta: float):
   if input_mode == InputMode.INPUT_MOUSE:
