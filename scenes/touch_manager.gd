@@ -18,9 +18,9 @@ signal start_pinch
 signal end_pinch
 ## Emitted when there is movement within a two-finger pinch.
 ## Passes the position of the other (stationary) finger, and the
-## InputEventScreenDrag event for the finger that moved. This allows you to
-## calculate the motion.
-signal pinch(other_position: Vector2, event: InputEvent)
+## previous and new positions of the moving finger.
+signal pinch(other_position: Vector2, old_position: Vector2,
+             new_position: Vector2)
 
 # Currently in a one-finger drag.
 var in_drag: bool = false
@@ -98,10 +98,12 @@ func _unhandled_input(event: InputEvent) -> void:
     if in_drag:
       drag.emit(event)
     elif in_pinch:
-      if finger_positions.size() <= event.index:
-        finger_positions.resize(event.index + 1)
+      assert(finger_positions.size() > event.index,
+             "old finger position not recorded")
+      var old_position : Vector2 = finger_positions[event.index]
+      var new_position : Vector2 = event.position
       finger_positions[event.index] = event.position
 
       var other_finger_position : Vector2 = nearest_finger_position(event.index)
 
-      pinch.emit(other_finger_position, event)
+      pinch.emit(other_finger_position, old_position, new_position)

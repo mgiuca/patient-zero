@@ -230,14 +230,19 @@ func _input(event : InputEvent):
     current_zoom_log -= zoom_tick_rate
     post_zoom_checks()
 
-func _on_touch_start_pinch() -> void:
-  print('start_pinch')
+func _on_touch_pinch(other_position: Vector2, old_position : Vector2,
+                     new_position : Vector2) -> void:
+  var old_distance : float = other_position.distance_to(old_position)
+  var new_distance : float = other_position.distance_to(new_position)
+  # Bigger is more zoomed.
+  var scale_ratio : float = new_distance / old_distance
 
-func _on_touch_end_pinch() -> void:
-  print('end_pinch')
-
-func _on_touch_pinch(other_position: Vector2, event: InputEvent) -> void:
-  print('pinch: (', other_position, ', ', event, ')')
+  # Apply on a linear scale. (Note: Zoom is stored on a log scale for ease of
+  # working with the other input modes.)
+  var current_zoom = exp(current_zoom_log)
+  current_zoom *= scale_ratio
+  current_zoom_log = log(current_zoom)
+  post_zoom_checks()
 
 func post_zoom_checks():
   # Tutorial
