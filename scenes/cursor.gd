@@ -36,7 +36,7 @@ func _input(event):
 func set_force(velocity: Vector2):
   gravity_direction = velocity * force_multiplier
 
-func _process(delta):
+func _process(_delta):
   var was_active : bool = active
   active = Input.is_action_pressed("push")
   if active != was_active:

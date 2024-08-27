@@ -442,7 +442,6 @@ func _on_cell_spawn_timer_timeout() -> void:
     return
 
   var pos = pick_random_location(BodyLocation.ANYWHERE)
-  var rot = randf_range(0, TAU)
   spawn_agent(Agent.AgentType.CELL, pos)
 
 func _on_cursor_body_entered(body: Node2D) -> void:
