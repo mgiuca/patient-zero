@@ -23,6 +23,7 @@ var active : bool = false:
       gravity_space_override = Area2D.SPACE_OVERRIDE_COMBINE
     else:
       gravity_space_override = Area2D.SPACE_OVERRIDE_DISABLED
+      set_force(Vector2.ZERO)
 
 func _ready():
   pass # Replace with function body.
@@ -45,7 +46,9 @@ func _input(event):
     # Bit of a hack, but fix it by dividing by camera zoom.
     set_force(velocity / get_viewport().get_camera_2d().zoom.x)
 
-func _on_touch_start_drag() -> void:
+func _on_touch_start_drag(event: InputEvent) -> void:
+  position = get_viewport().get_canvas_transform().affine_inverse() * event.position
+
   active = true
 
 func _on_touch_end_drag() -> void:

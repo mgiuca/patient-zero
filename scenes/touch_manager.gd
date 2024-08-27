@@ -5,7 +5,8 @@ extends Node
 # sends those out as signals.
 
 ## Emitted when a one-finger drag starts.
-signal start_drag
+## Passes the InputEventScreenTouch with the details.
+signal start_drag(event: InputEvent)
 ## Emitted when a one-finger drag ends.
 signal end_drag
 ## Emitted when there is movement within a one-finger drag.
@@ -97,7 +98,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
     # Now start new gestures that have begun to apply.
     if not in_drag and num_fingers == 1:
-      start_drag.emit()
+      start_drag.emit(event)
       in_drag = true
     if not in_pinch and num_fingers >= 2:
       start_pinch.emit()
