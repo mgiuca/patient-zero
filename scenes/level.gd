@@ -229,8 +229,6 @@ func _input(event : InputEvent):
   elif event.is_action_pressed('zoom_out_tick'):
     current_zoom_log -= zoom_tick_rate
     post_zoom_checks()
-  elif event.is_action_pressed('push'):
-    reset_active_cluster = true
 
 func _on_touch_start_pinch() -> void:
   print('start_pinch')
@@ -261,6 +259,9 @@ func set_mouse_mode():
   $Cursor.queue_redraw()
 
 func _process(delta: float):
+  if Input.is_action_just_pressed("push"):
+    reset_active_cluster = true
+
   var zoom_continuous = Input.get_axis('zoom_out_continuous', 'zoom_in_continuous')
   if zoom_continuous != 0:
     current_zoom_log += zoom_continuous * zoom_continuous_rate * delta

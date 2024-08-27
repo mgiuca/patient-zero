@@ -49,10 +49,10 @@ func _input(event):
 func _on_touch_start_drag(event: InputEvent) -> void:
   position = get_viewport().get_canvas_transform().affine_inverse() * event.position
 
-  active = true
+  Input.action_press('push')
 
 func _on_touch_end_drag() -> void:
-  active = false
+  Input.action_release('push')
 
 func _on_touch_drag(event: InputEvent) -> void:
   position = get_viewport().get_canvas_transform().affine_inverse() * event.position
@@ -68,8 +68,7 @@ func _process(delta):
   var input_mode : Level.InputMode = get_parent().input_mode
   var camera : Camera2D = get_viewport().get_camera_2d()
 
-  if input_mode != Level.InputMode.INPUT_TOUCH:
-    active = Input.is_action_pressed("push")
+  active = Input.is_action_pressed("push")
 
   if input_mode == Level.InputMode.INPUT_MOUSE:
     # Gets the mouse position in global coordinates, based on the location
