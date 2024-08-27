@@ -17,9 +17,10 @@ signal start_pinch
 ## Emitted when a two-finger pinch ends.
 signal end_pinch
 ## Emitted when there is movement within a two-finger pinch.
-## Passes the initial and current coordinates of each finger in screen space.
-signal pinch(f1_init: Vector2, f2_init: Vector2,
-             f1_current: Vector2, f2_current: Vector2)
+## Passes the position of the other (stationary) finger, and the
+## InputEventScreenDrag event for the finger that moved. This allows you to
+## calculate the motion.
+signal pinch(other_position: Vector2, event: InputEvent)
 
 # Currently in a one-finger drag.
 var in_drag: bool = false
@@ -29,10 +30,8 @@ var in_pinch: bool = false
 # Bit pattern.
 var active_fingers: int = 0
 
-# Initial coordinates of each finger when they touched down.
-var finger_init_coord: Array[Vector2]
 # Last known coordinates of each finger.
-var finger_current_coord: Array[Vector2]
+var finger_positions: Array[Vector2]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -47,44 +46,35 @@ func pop_count(x: int) -> int:
     x >>= 1
   return cnt
 
-## Gets the indices of the first two active fingers.
-## Assumes pop_count(active_fingers) >= 2.
-func get_two_finger_indices(fingers: int) -> Vector2i:
-  var i : int = 0
-  var fst : int
+## Gets the active finger position that is nearest to the given index.
+## There must be at least two active fingers.
+func nearest_finger_position(index: int) -> Vector2:
+  var this_position : Vector2 = finger_positions[index]
+  var closest_position : Vector2
+  var closest_distance : float = INF
 
-  while true:
-    if fingers == 0:
-      assert(false, 'get_two_finger_indices: no bits set')
-      return Vector2i.ZERO
-    if fingers & 1:
-      fst = i
-      fingers >>= 1
-      i += 1
-      break
-    fingers >>= 1
-    i += 1
+  for i in finger_positions.size():
+    if i != index and active_fingers & (1 << i):
+      var dist = this_position.distance_to(finger_positions[i])
+      if dist < closest_distance:
+        closest_position = finger_positions[i]
+        closest_distance = dist
 
-  while fingers != 0:
-    if fingers & 1:
-      return Vector2i(fst, i)
-    fingers >>= 1
-    i += 1
+  assert(closest_distance < INF, "nearest_finger_position: no other active fingers")
 
-  assert(false, 'get_two_finger_indices: only one bit set')
-  return Vector2i.ZERO
+  return closest_position
 
 func _unhandled_input(event: InputEvent) -> void:
   if event is InputEventScreenTouch:
     # Record which fingers are pressed and their start coordinates.
-    if finger_init_coord.size() <= event.index:
-      finger_init_coord.resize(event.index + 1)
+    if finger_positions.size() <= event.index:
+      finger_positions.resize(event.index + 1)
     if event.pressed:
       active_fingers |= 1 << event.index
-      finger_init_coord[event.index] = event.position
+      finger_positions[event.index] = event.position
     else:
       active_fingers &= ~(1 << event.index)
-      finger_init_coord[event.index] = Vector2.ZERO
+      finger_positions[event.index] = Vector2.ZERO
 
     var num_fingers = pop_count(active_fingers)
 
@@ -108,13 +98,10 @@ func _unhandled_input(event: InputEvent) -> void:
     if in_drag:
       drag.emit(event)
     elif in_pinch:
-      if finger_current_coord.size() <= event.index:
-        finger_current_coord.resize(event.index + 1)
-      finger_current_coord[event.index] = event.position
+      if finger_positions.size() <= event.index:
+        finger_positions.resize(event.index + 1)
+      finger_positions[event.index] = event.position
 
-      var indices = get_two_finger_indices(active_fingers)
-      var f1_init = finger_init_coord[indices.x]
-      var f2_init = finger_init_coord[indices.y]
-      var f1_current = finger_current_coord[indices.x]
-      var f2_current = finger_current_coord[indices.y]
-      pinch.emit(f1_init, f2_init, f1_current, f2_current)
+      var other_finger_position : Vector2 = nearest_finger_position(event.index)
+
+      pinch.emit(other_finger_position, event)

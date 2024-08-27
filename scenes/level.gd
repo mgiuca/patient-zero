@@ -236,8 +236,8 @@ func _on_touch_start_pinch() -> void:
 func _on_touch_end_pinch() -> void:
   print('end_pinch')
 
-func _on_touch_pinch(f1_init: Vector2, f2_init: Vector2, f1_current: Vector2, f2_current: Vector2) -> void:
-  print('pinch: (', f1_init, ', ', f2_init, ') to (', f1_current, ', ', f2_current, ')')
+func _on_touch_pinch(other_position: Vector2, event: InputEvent) -> void:
+  print('pinch: (', other_position, ', ', event, ')')
 
 func post_zoom_checks():
   # Tutorial
