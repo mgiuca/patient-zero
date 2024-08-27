@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b53xxb1xafaba"]
+
+[ext_resource type="Script" path="res://scenes/touch_manager.gd" id="1_psldm"]
+
+[node name="TouchManager" type="Node"]
+script = ExtResource("1_psldm")

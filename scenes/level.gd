@@ -236,6 +236,15 @@ func _input(event : InputEvent):
   elif event.is_action_pressed('push'):
     reset_active_cluster = true
 
+func _on_touch_start_pinch() -> void:
+  print('start_pinch')
+
+func _on_touch_end_pinch() -> void:
+  print('end_pinch')
+
+func _on_touch_pinch(f1_init: Vector2, f2_init: Vector2, f1_current: Vector2, f2_current: Vector2) -> void:
+  print('pinch: (', f1_init, ', ', f2_init, ') to (', f1_current, ', ', f2_current, ')')
+
 func post_zoom_checks():
   # Tutorial
   if current_zoom_log < -2:

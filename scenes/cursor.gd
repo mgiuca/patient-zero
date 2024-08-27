@@ -31,6 +31,15 @@ func _input(event):
     # Bit of a hack, but fix it by dividing by camera zoom.
     set_force(velocity / get_viewport().get_camera_2d().zoom.x)
 
+func _on_touch_start_drag() -> void:
+  print('start_drag')
+
+func _on_touch_end_drag() -> void:
+  print('end_drag')
+
+func _on_touch_drag(event: InputEvent) -> void:
+  print('drag: ', event)
+
 # Set the cursor pushing force, based on cursor velocity.
 # Velocity must be in global coordinates, not screen space.
 func set_force(velocity: Vector2):

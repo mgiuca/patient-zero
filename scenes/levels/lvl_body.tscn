@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=25 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bhj3v5cib030u" path="res://images/lavafull.jpg" id="4_kcf7m"]
 [ext_resource type="Texture2D" uid="uid://3g4nc41agqbt" path="res://images/human-cardio.png" id="5_bmjak"]
 [ext_resource type="Texture2D" uid="uid://xdhst2qnjuf1" path="res://images/human-outline.png" id="5_vocdv"]
+[ext_resource type="PackedScene" uid="uid://b53xxb1xafaba" path="res://scenes/touch_manager.tscn" id="6_f2gq3"]
 [ext_resource type="Texture2D" uid="uid://b30i85d0ykdc4" path="res://images/heart.png" id="7_uyj3q"]
 [ext_resource type="AudioStream" uid="uid://bo1ecsunbidsf" path="res://music/Mechanolith.mp3" id="11_844nl"]
 [ext_resource type="AudioStream" uid="uid://dhoob1tc0yil2" path="res://sounds/beep.wav" id="11_nqkvl"]
@@ -57,6 +58,8 @@ position_smoothing_speed = 2.0
 
 [node name="Cursor" parent="." instance=ExtResource("3_5i8s6")]
 z_index = 100
+
+[node name="TouchManager" parent="." instance=ExtResource("6_f2gq3")]
 
 [node name="CellSpawnTimer" type="Timer" parent="."]
 autostart = true
@@ -184,6 +187,12 @@ wait_time = 5.0
 one_shot = true
 
 [connection signal="body_entered" from="Cursor" to="." method="_on_cursor_body_entered"]
+[connection signal="drag" from="TouchManager" to="Cursor" method="_on_touch_drag"]
+[connection signal="end_drag" from="TouchManager" to="Cursor" method="_on_touch_end_drag"]
+[connection signal="end_pinch" from="TouchManager" to="." method="_on_touch_end_pinch"]
+[connection signal="pinch" from="TouchManager" to="." method="_on_touch_pinch"]
+[connection signal="start_drag" from="TouchManager" to="Cursor" method="_on_touch_start_drag"]
+[connection signal="start_pinch" from="TouchManager" to="." method="_on_touch_start_pinch"]
 [connection signal="timeout" from="CellSpawnTimer" to="." method="_on_cell_spawn_timer_timeout"]
 [connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]
 [connection signal="finished" from="MusicMechan" to="." method="_on_music_mechan_finished"]
