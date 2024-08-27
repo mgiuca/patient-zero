@@ -218,10 +218,10 @@ func _input(event : InputEvent):
   if event.is_action_pressed('restart'):
     get_tree().reload_current_scene()
   elif event.is_action_pressed('toggle_fullscreen'):
-    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
       DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
     else:
-      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
     set_mouse_mode()
   elif event.is_action_pressed('zoom_in_tick'):
     current_zoom_log += zoom_tick_rate
@@ -252,7 +252,7 @@ func post_zoom_checks():
 
 func set_mouse_mode():
   if input_mode == InputMode.INPUT_MOUSE:
-    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
       DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CONFINED)
     else:
       DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
