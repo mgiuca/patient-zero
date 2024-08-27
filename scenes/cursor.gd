@@ -52,16 +52,9 @@ func _on_touch_end_drag() -> void:
   active = false
 
 func _on_touch_drag(event: InputEvent) -> void:
-  var camera = get_viewport().get_camera_2d()
-  var screen_size = get_viewport().get_visible_rect().size
-  # Convert event position to global coordinates. This feels extremely hacky.
-  # TODO: This is SLIGHTLY off and I don't know why.
-  var global_pos = camera.to_global(event.position / camera.zoom.x -
-                                    screen_size / 2)
-  print('global touch position = ', global_pos)
-  position = global_pos
+  position = get_viewport().get_canvas_transform().affine_inverse() * event.position
 
-  set_force(event.velocity / camera.zoom.x)
+  set_force(event.velocity / get_viewport().get_camera_2d().zoom.x)
 
 # Set the cursor pushing force, based on cursor velocity.
 # Velocity must be in global coordinates, not screen space.
