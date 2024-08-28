@@ -24,6 +24,10 @@ Licensed under Creative Commons: CC0 1.0
 https://creativecommons.org/publicdomain/zero/1.0/
 https://opengameart.org/content/viruses-cold-flu-chicken-pox
 
+"Hamburger icon" by Timothy Miller
+Public Domain
+https://www.iconfinder.com/icons/134216/hamburger\_lines\_menu\_icon
+
 # Music
 
 "Harmful or Fatal" by Kevin MacLeod (incompetech.com)

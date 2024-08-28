@@ -89,3 +89,12 @@ func set_debug_info(zoom: float, active_cluster_size: int,
     "Zoom: " + str(snappedf(zoom, 0.1))
   $MarginContainer/RightSide/DebugItems/LblDebugCluster.text = \
     "Active cluster size: " + str(active_cluster_size)
+
+func _on_btn_menu_pressed() -> void:
+  get_parent().paused = true
+
+func _on_btn_menu_gui_input(event: InputEvent) -> void:
+  # Handle touch event on this button.
+  # See the horrible hack on the buttons in Menu for details.
+  if get_parent().get_node('Menu').event_touch_in_bounds($MarginContainer/BtnMenu, event):
+    _on_btn_menu_pressed()
