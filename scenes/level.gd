@@ -62,10 +62,9 @@ var paused : bool = false:
     $Menu.visible = value
     $Cursor.visible = not value
 
-var fullscreen : bool:
-  get():
-    return DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
+var fullscreen : bool = false:
   set(value):
+    fullscreen = value
     if value:
       DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
     else:
