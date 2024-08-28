@@ -13,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_s44q0")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -25,17 +26,14 @@ size_flags_vertical = 0
 
 [node name="LblHealth" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
-theme = ExtResource("3_s44q0")
 text = "Patient health:"
 
 [node name="LblBots" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
-theme = ExtResource("3_s44q0")
 text = "Bots:"
 
 [node name="LblVirus" type="Label" parent="MarginContainer/LeftSide"]
 layout_mode = 2
-theme = ExtResource("3_s44q0")
 text = "Virus cells:"
 
 [node name="RightSide" type="VBoxContainer" parent="MarginContainer"]
@@ -43,7 +41,6 @@ layout_mode = 2
 
 [node name="LblDirective" type="RichTextLabel" parent="MarginContainer/RightSide"]
 layout_mode = 2
-theme = ExtResource("3_s44q0")
 bbcode_enabled = true
 text = "[right]Directive:[/right]"
 fit_content = true
@@ -58,28 +55,24 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-theme = ExtResource("3_s44q0")
 text = "[Debug text]"
 
 [node name="LblDebugInput" type="Label" parent="MarginContainer/RightSide/DebugItems"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-theme = ExtResource("3_s44q0")
 text = "[Debug text]"
 
 [node name="LblDebugZoom" type="Label" parent="MarginContainer/RightSide/DebugItems"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-theme = ExtResource("3_s44q0")
 text = "[Debug text]"
 
 [node name="LblDebugCluster" type="Label" parent="MarginContainer/RightSide/DebugItems"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-theme = ExtResource("3_s44q0")
 text = "[Debug text]"
 
 [node name="BtnMenu" type="Button" parent="MarginContainer"]
