@@ -60,6 +60,8 @@ var paused : bool = false:
     paused = value
     get_tree().paused = value
     $Menu.visible = value
+    if value:
+      $Menu.open_menu()
     $Cursor.visible = not value
 
 var fullscreen : bool = false:

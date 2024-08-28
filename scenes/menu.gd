@@ -1,5 +1,11 @@
 extends CanvasLayer
 
+func _ready() -> void:
+  open_menu()
+
+func open_menu() -> void:
+  $MarginContainer/VBoxContainer/BtnResume.grab_focus()
+
 func _input(event: InputEvent) -> void:
   # Handle inputs that are meant to trigger whether the game is paused or not.
   if event.is_action_pressed('menu'):
