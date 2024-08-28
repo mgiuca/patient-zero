@@ -58,6 +58,7 @@ enum Phase {
 var paused : bool = false:
   set(value):
     paused = value
+    get_tree().paused = value
     $Menu.visible = value
 
 var fullscreen : bool:
@@ -68,6 +69,7 @@ var fullscreen : bool:
       DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
     else:
       DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+    set_mouse_mode()
 
 var current_phase : Phase
 
@@ -230,12 +232,7 @@ func _unhandled_input(event : InputEvent):
       set_mouse_mode()
 
   # Handle zooming.
-  if event.is_action_pressed('menu'):
-    paused = not paused
-  elif event.is_action_pressed('toggle_fullscreen'):
-    fullscreen = not fullscreen
-    set_mouse_mode()
-  elif event.is_action_pressed('zoom_in_tick'):
+  if event.is_action_pressed('zoom_in_tick'):
     current_zoom_log += zoom_tick_rate
     post_zoom_checks()
   elif event.is_action_pressed('zoom_out_tick'):

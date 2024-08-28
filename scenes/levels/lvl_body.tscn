@@ -160,14 +160,17 @@ polygon = PackedVector2Array(-910, -6133, -568, -6494, 136, -6269, 1032, -5997, 
 one_shot = true
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("4_1gsof")
 autoplay = true
 parameters/looping = false
 
 [node name="MusicMechan" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("11_844nl")
 
 [node name="MusicOneOf" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("12_85hob")
 parameters/looping = false
 
