@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cav6s4wk6wpbp"]
+
+[ext_resource type="FontFile" uid="uid://cdwjvywxiyw6" path="res://fonts/Play-Regular.ttf" id="1_hfqwl"]
+
+[resource]
+default_font = ExtResource("1_hfqwl")
+default_font_size = 20
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.71)
+Label/constants/shadow_outline_size = 3
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0.71)
+RichTextLabel/constants/shadow_outline_size = 3
