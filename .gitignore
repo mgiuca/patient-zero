@@ -1,3 +1,5 @@
+.*.swp
+
 # Godot 4+ specific ignores
 .godot/
 /downloads/
