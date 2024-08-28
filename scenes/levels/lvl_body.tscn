@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dtrahaov2gclc"]
+[gd_scene load_steps=26 format=3 uid="uid://dtrahaov2gclc"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_n3cbr"]
 [ext_resource type="PackedScene" uid="uid://dieb3dfblspao" path="res://scenes/bot.tscn" id="2_3dgl4"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://1cbsv65rbdyc" path="res://scenes/hud.tscn" id="11_w7mwp"]
 [ext_resource type="AudioStream" uid="uid://bylwcvcxnx3ha" path="res://sounds/flatline.wav" id="12_02hj7"]
 [ext_resource type="AudioStream" uid="uid://dmgv06mfv71ee" path="res://music/One of Them.mp3" id="12_85hob"]
+[ext_resource type="PackedScene" uid="uid://cgaefbtoudik5" path="res://scenes/menu.tscn" id="17_43jrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5i3e8"]
 size = Vector2(3213, 4842)
@@ -177,6 +178,9 @@ stream = ExtResource("11_nqkvl")
 stream = ExtResource("12_02hj7")
 
 [node name="HUD" parent="." instance=ExtResource("11_w7mwp")]
+
+[node name="Menu" parent="." instance=ExtResource("17_43jrk")]
+visible = false
 
 [node name="TutorialTimer" type="Timer" parent="."]
 wait_time = 5.0

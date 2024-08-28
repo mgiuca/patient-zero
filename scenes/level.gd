@@ -54,6 +54,21 @@ enum Phase {
 ## Number of bots to spawn at startup (0 = dependent on start scene).
 @export var debug_initial_bots : int = 0
 
+# Game is paused.
+var paused : bool = false:
+  set(value):
+    paused = value
+    $Menu.visible = value
+
+var fullscreen : bool:
+  get():
+    return DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
+  set(value):
+    if value:
+      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+    else:
+      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
 var current_phase : Phase
 
 var special_directive_id = 0
@@ -200,7 +215,7 @@ func spawn_agent(agent_type: Agent.AgentType, position: Vector2) -> Agent:
 
   return agent
 
-func _input(event : InputEvent):
+func _unhandled_input(event : InputEvent):
   if event is InputEventMouse:
     if input_mode != InputMode.INPUT_MOUSE:
       input_mode = InputMode.INPUT_MOUSE
@@ -215,13 +230,10 @@ func _input(event : InputEvent):
       set_mouse_mode()
 
   # Handle zooming.
-  if event.is_action_pressed('restart'):
-    get_tree().reload_current_scene()
+  if event.is_action_pressed('menu'):
+    paused = not paused
   elif event.is_action_pressed('toggle_fullscreen'):
-    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
-      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-    else:
-      DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+    fullscreen = not fullscreen
     set_mouse_mode()
   elif event.is_action_pressed('zoom_in_tick'):
     current_zoom_log += zoom_tick_rate
@@ -255,7 +267,7 @@ func post_zoom_checks():
 
 func set_mouse_mode():
   if input_mode == InputMode.INPUT_MOUSE:
-    if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+    if fullscreen:
       DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CONFINED)
     else:
       DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)

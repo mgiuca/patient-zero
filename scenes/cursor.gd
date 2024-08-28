@@ -36,7 +36,7 @@ func _draw():
     draw_arc(Vector2(0, 0), collision_radius, 0, TAU, 128, draw_color,
              inactive_draw_thickness)
 
-func _input(event):
+func _unhandled_input(event):
   # TODO: Need to refactor and use the joystick motion data when in joystick
   # mode.
   if event is InputEventMouseMotion and active:

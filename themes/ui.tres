@@ -5,6 +5,8 @@
 [resource]
 default_font = ExtResource("1_hfqwl")
 default_font_size = 20
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 3
 Label/colors/font_shadow_color = Color(0, 0, 0, 0.71)
 Label/constants/shadow_outline_size = 3
 RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0.71)
