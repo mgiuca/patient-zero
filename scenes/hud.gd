@@ -46,18 +46,20 @@ var _num_cells : int = -1
 
 ## Sets the text of the screen-centered notice label, with an optional timeout.
 func set_notice_text(value: String, timeout: float = 0) -> void:
-  $LblNotice.text = value
-  $LblNotice.visible = true
+  $NoticeArea.show()
+  for child in $NoticeArea.get_children():
+    child.hide()
+  $NoticeArea/LblNotice.text = value
+  $NoticeArea/LblNotice.show()
   if timeout > 0:
     $NoticeTimer.wait_time = timeout
     $NoticeTimer.start()
 
-func hide_notice_text() -> void:
-  $LblNotice.visible = false
+func hide_notice() -> void:
+  $NoticeArea/LblNotice.visible = false
 
-func show_gameover(value: String) -> void:
-  $LblNotice.text = value
-  $LblNotice.visible = true
+func show_gameover(message: String) -> void:
+  set_notice_text(message)
   $LblRestart.visible = true
 
 # Debugging

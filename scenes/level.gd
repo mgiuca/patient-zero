@@ -434,7 +434,7 @@ func change_phase(phase: Phase) -> void:
 
 func finished_move_tutorial():
   # Start zoom tutorial
-  $HUD.hide_notice_text()
+  $HUD.hide_notice()
   showing_move_tutorial = false
   $TutorialTimer.start()
 
@@ -444,7 +444,7 @@ func _on_tutorial_timer_timeout() -> void:
     showing_zoom_tutorial = true
 
 func finished_zoom_tutorial():
-  $HUD.hide_notice_text()
+  $HUD.hide_notice()
   showing_zoom_tutorial = false
 
 func _on_cell_spawn_timer_timeout() -> void:
