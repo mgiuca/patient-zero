@@ -9,6 +9,15 @@ Licensed under Creative Commons: CC0 1.0
 https://creativecommons.org/publicdomain/zero/1.0/
 https://opengameart.org/node/7734
 
+"Hamburger icon" by Timothy Miller
+Public Domain
+https://www.iconfinder.com/icons/134216/hamburger\_lines\_menu\_icon
+
+"Input Prompts" by Kenney
+Licensed under Creative Commons: CC0 1.0
+https://creativecommons.org/publicdomain/zero/1.0/
+https://kenney.nl/assets/input-prompts
+
 "Organ Systems of the Human Body"
 from "Human Biology" by Sarah Malmquist and Kristina Prescott
 Licensed under Creative Commons: Attribution-NonCommercial 4.0 International License
@@ -23,10 +32,6 @@ https://creativecommons.org/publicdomain/zero/1.0/
 Licensed under Creative Commons: CC0 1.0
 https://creativecommons.org/publicdomain/zero/1.0/
 https://opengameart.org/content/viruses-cold-flu-chicken-pox
-
-"Hamburger icon" by Timothy Miller
-Public Domain
-https://www.iconfinder.com/icons/134216/hamburger\_lines\_menu\_icon
 
 # Music
 
