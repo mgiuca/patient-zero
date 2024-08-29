@@ -291,6 +291,8 @@ func _process(delta: float):
   if Input.is_action_just_pressed("push"):
     reset_active_cluster = true
 
+  # XXX: This doesn't work on web in Godot 4.3 and earlier.
+  # See https://github.com/godotengine/godot/issues/81758 (fixed in Godot 4.4).
   var zoom_continuous = Input.get_axis('zoom_out_continuous', 'zoom_in_continuous')
   if zoom_continuous != 0:
     current_zoom_log += zoom_continuous * zoom_continuous_rate * delta
