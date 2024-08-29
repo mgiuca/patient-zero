@@ -8,7 +8,7 @@ func open_menu() -> void:
 
 func _input(event: InputEvent) -> void:
   # Handle inputs that are meant to trigger whether the game is paused or not.
-  if event.is_action_pressed('menu'):
+  if event.is_action_pressed('menu') or event.is_action_pressed('ui_cancel'):
     get_parent().paused = not get_parent().paused
   elif event.is_action_pressed('toggle_fullscreen'):
     get_parent().fullscreen = not get_parent().fullscreen
