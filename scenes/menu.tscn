@@ -78,7 +78,7 @@ layout_mode = 2
 size_flags_vertical = 4
 
 [node name="Scroll" type="ScrollContainer" parent="MarginContainer/Credits/VBox"]
-custom_minimum_size = Vector2(0, 400)
+custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 horizontal_scroll_mode = 0
 
@@ -92,14 +92,14 @@ For links to all sources, see https://mgiuca.itch.io/patient-zero.
 
 Music
 
+\"Spacial Harvest\" by Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+
 \"Mechanolith\" by Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0 License
 
 \"One of Them\" by Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0 License
-
-\"Spacial Harvest\" by Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 4.0 License
 
 Images
 
@@ -135,6 +135,7 @@ This Font Software is licensed under the SIL Open Font License, Version 1.1."
 [node name="BtnBack" type="Button" parent="MarginContainer/Credits/VBox"]
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 theme_override_font_sizes/font_size = 30
 text = "Back"
 flat = true
