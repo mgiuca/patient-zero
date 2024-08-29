@@ -26,6 +26,7 @@ alignment = 1
 
 [node name="LblPaused" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Paused"
 horizontal_alignment = 1
 
@@ -34,20 +35,24 @@ layout_mode = 2
 
 [node name="BtnResume" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Resume Game"
 flat = true
 
 [node name="ChkFullscreen" type="CheckButton" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Fullscreen"
 
 [node name="BtnRestart" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Restart Game"
 flat = true
 
 [node name="BtnQuit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Quit Game"
 flat = true
 
