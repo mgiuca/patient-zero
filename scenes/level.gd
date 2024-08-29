@@ -138,6 +138,10 @@ func _ready():
      OS.has_feature("web_ios"):
     # Set up for mobile.
     input_mode = InputMode.INPUT_TOUCH
+  if OS.has_feature('mobile') or OS.has_feature('web'):
+    # Doesn't make sense to "quit" on mobile or web.
+    # (Especially web, which just crashes.)
+    $Menu.hide_quit_button()
 
   $Music.seek(music_start_time)
   $HUD.debug_visible = debug_info

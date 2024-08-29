@@ -70,3 +70,6 @@ func _on_btn_quit_gui_input(event: InputEvent) -> void:
 func _on_btn_credits_pressed() -> void:
   $MarginContainer/VBoxContainer.hide()
   $MarginContainer/Credits.show()
+
+func hide_quit_button() -> void:
+  $MarginContainer/VBoxContainer/BtnQuit.hide()
