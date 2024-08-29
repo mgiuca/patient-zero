@@ -16,6 +16,7 @@ run/main_scene="res://scenes/levels/lvl_body.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://images/splash.png"
 config/icon="res://icon.svg"
+config/windows_native_icon="res://icon.ico"
 
 [display]
 
