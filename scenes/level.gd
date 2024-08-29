@@ -400,20 +400,20 @@ func change_phase(phase: Phase) -> void:
   current_phase = phase
   if phase == Phase.MOVE_TUTORIAL:
     hud.directive_text = 'Locate a virus cell'
-    hud.set_notice_text('CLICK AND DRAG MOUSE TO PUSH')
+    hud.set_notice_text('Click and drag mouse to push')
     showing_move_tutorial = true
   elif phase == Phase.ATTACK_TUTORIAL:
     hud.directive_text = 'Destroy the virus cell'
-    hud.set_notice_text('COLLIDE WITH A VIRUS CELL TO CONSUME IT')
+    hud.set_notice_text('Collide with a virus cell to consume it')
   elif phase == Phase.FARM_VIRUS or phase == Phase.DESTROY_VIRUS:
     hud.directive_text = 'Destroy all virus cells'
     if phase == Phase.FARM_VIRUS:
-      hud.set_notice_text('SEEK AND DESTROY', 5)
+      hud.set_notice_text('Seek and destroy', 5)
     else:
-      hud.set_notice_text('THE VIRUS HAS LEARNED TO FIGHT BACK', 5)
+      hud.set_notice_text('The virus has learned to fight back', 5)
   elif phase == Phase.CONSUME_ALL:
     hud.directive_text = 'Patient stable. Stand down'
-    hud.set_notice_text('ALL VIRUS CELLS ELIMINATED', 5)
+    hud.set_notice_text('All virus cells eliminated', 5)
 
   # We need bot tensor to see viruses ONLY in the MOVE_TUTORIAL phase (so we
   # can detect to change phase). After that, it's a performance liability, so
@@ -440,7 +440,7 @@ func finished_move_tutorial():
 
 func _on_tutorial_timer_timeout() -> void:
   if not done_zoom_tutorial:
-    $HUD.set_notice_text('SCROLL MOUSE WHEEL TO ZOOM')
+    $HUD.set_notice_text('Scroll mouse wheel to zoom')
     showing_zoom_tutorial = true
 
 func finished_zoom_tutorial():
