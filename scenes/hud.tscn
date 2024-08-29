@@ -1,8 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://1cbsv65rbdyc"]
+[gd_scene load_steps=15 format=3 uid="uid://1cbsv65rbdyc"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_nixt2"]
 [ext_resource type="Theme" uid="uid://cav6s4wk6wpbp" path="res://themes/ui.tres" id="3_s44q0"]
 [ext_resource type="Texture2D" uid="uid://dbrptaa4whu6b" path="res://images/menu.png" id="3_ttqxq"]
+[ext_resource type="Texture2D" uid="uid://dphba8axtm7vv" path="res://images/inputs/mouse_left.png" id="4_6nme6"]
+[ext_resource type="Texture2D" uid="uid://cm6kei4du7pd5" path="res://images/inputs/touch_outline.png" id="5_16lvu"]
+[ext_resource type="Texture2D" uid="uid://dtmjp03w7ixqp" path="res://images/inputs/xbox_stick_l.png" id="6_k6qsf"]
+[ext_resource type="Texture2D" uid="uid://y2jyg5jogxu3" path="res://images/inputs/xbox_stick_r.png" id="7_fsoo4"]
+[ext_resource type="Texture2D" uid="uid://dfdxaw436ihw7" path="res://images/inputs/xbox_button_color_a.png" id="8_weblx"]
+[ext_resource type="Texture2D" uid="uid://dnspwqwgkgkyq" path="res://images/inputs/xbox_lb.png" id="9_e14km"]
+[ext_resource type="Texture2D" uid="uid://bn7kv2lwveg0u" path="res://images/inputs/xbox_rb.png" id="10_mps4c"]
+[ext_resource type="Texture2D" uid="uid://dnp1l6nmrfqf3" path="res://images/inputs/mouse_scroll.png" id="11_fkpby"]
+[ext_resource type="Texture2D" uid="uid://tj4sil7r86im" path="res://images/inputs/touch_two_finger_outline.png" id="12_y4bwq"]
+[ext_resource type="Texture2D" uid="uid://dlnkjam57jn0l" path="res://images/inputs/xbox_lt.png" id="13_26442"]
+[ext_resource type="Texture2D" uid="uid://cqqxaalv0fs5l" path="res://images/inputs/xbox_rt.png" id="14_06lyf"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_nixt2")
@@ -93,12 +104,179 @@ offset_top = -138.0
 offset_bottom = -114.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_s44q0")
 
 [node name="LblNotice" type="Label" parent="NoticeArea"]
+visible = false
 layout_mode = 2
-theme = ExtResource("3_s44q0")
 text = "Text notice"
 horizontal_alignment = 1
+uppercase = true
+
+[node name="PushInstructions" type="VBoxContainer" parent="NoticeArea"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Mouse" type="HBoxContainer" parent="NoticeArea/PushInstructions"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LeftClick" type="TextureRect" parent="NoticeArea/PushInstructions/Mouse"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("4_6nme6")
+expand_mode = 3
+
+[node name="to push" type="Label" parent="NoticeArea/PushInstructions/Mouse"]
+layout_mode = 2
+text = "Click and drag to push"
+uppercase = true
+
+[node name="Touch" type="HBoxContainer" parent="NoticeArea/PushInstructions"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Touch" type="TextureRect" parent="NoticeArea/PushInstructions/Touch"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("5_16lvu")
+expand_mode = 3
+
+[node name="to push" type="Label" parent="NoticeArea/PushInstructions/Touch"]
+layout_mode = 2
+text = "Swipe to push"
+uppercase = true
+
+[node name="Joystick" type="VBoxContainer" parent="NoticeArea/PushInstructions"]
+visible = false
+layout_mode = 2
+
+[node name="Line1" type="HBoxContainer" parent="NoticeArea/PushInstructions/Joystick"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LS" type="TextureRect" parent="NoticeArea/PushInstructions/Joystick/Line1"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("6_k6qsf")
+expand_mode = 3
+
+[node name="or" type="Label" parent="NoticeArea/PushInstructions/Joystick/Line1"]
+layout_mode = 2
+text = "or"
+uppercase = true
+
+[node name="RS" type="TextureRect" parent="NoticeArea/PushInstructions/Joystick/Line1"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("7_fsoo4")
+expand_mode = 3
+
+[node name="to move cursor" type="Label" parent="NoticeArea/PushInstructions/Joystick/Line1"]
+layout_mode = 2
+text = "to move cursor"
+uppercase = true
+
+[node name="Line2" type="HBoxContainer" parent="NoticeArea/PushInstructions/Joystick"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="A" type="TextureRect" parent="NoticeArea/PushInstructions/Joystick/Line2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("8_weblx")
+expand_mode = 3
+
+[node name="or" type="Label" parent="NoticeArea/PushInstructions/Joystick/Line2"]
+layout_mode = 2
+text = "or"
+uppercase = true
+
+[node name="LB" type="TextureRect" parent="NoticeArea/PushInstructions/Joystick/Line2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("9_e14km")
+expand_mode = 3
+
+[node name="or2" type="Label" parent="NoticeArea/PushInstructions/Joystick/Line2"]
+layout_mode = 2
+text = "or"
+uppercase = true
+
+[node name="RB" type="TextureRect" parent="NoticeArea/PushInstructions/Joystick/Line2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("10_mps4c")
+expand_mode = 3
+
+[node name="to push" type="Label" parent="NoticeArea/PushInstructions/Joystick/Line2"]
+layout_mode = 2
+text = "to push"
+uppercase = true
+
+[node name="ZoomInstructions" type="VBoxContainer" parent="NoticeArea"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Mouse" type="HBoxContainer" parent="NoticeArea/ZoomInstructions"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Wheel" type="TextureRect" parent="NoticeArea/ZoomInstructions/Mouse"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("11_fkpby")
+expand_mode = 3
+
+[node name="to zoom" type="Label" parent="NoticeArea/ZoomInstructions/Mouse"]
+layout_mode = 2
+text = "to zoom"
+uppercase = true
+
+[node name="Touch" type="HBoxContainer" parent="NoticeArea/ZoomInstructions"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TwoFinger" type="TextureRect" parent="NoticeArea/ZoomInstructions/Touch"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("12_y4bwq")
+expand_mode = 3
+
+[node name="Pinch to zoom" type="Label" parent="NoticeArea/ZoomInstructions/Touch"]
+layout_mode = 2
+text = "Pinch to zoom"
+uppercase = true
+
+[node name="Joystick" type="HBoxContainer" parent="NoticeArea/ZoomInstructions"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LT" type="TextureRect" parent="NoticeArea/ZoomInstructions/Joystick"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("13_26442")
+expand_mode = 3
+
+[node name="or" type="Label" parent="NoticeArea/ZoomInstructions/Joystick"]
+layout_mode = 2
+text = "or"
+uppercase = true
+
+[node name="RT" type="TextureRect" parent="NoticeArea/ZoomInstructions/Joystick"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("14_06lyf")
+expand_mode = 3
+
+[node name="to zoom" type="Label" parent="NoticeArea/ZoomInstructions/Joystick"]
+layout_mode = 2
+text = "to zoom"
 uppercase = true
 
 [node name="BtnRestart" type="Button" parent="."]

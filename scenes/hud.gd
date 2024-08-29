@@ -55,8 +55,18 @@ func set_notice_text(value: String, timeout: float = 0) -> void:
     $NoticeTimer.wait_time = timeout
     $NoticeTimer.start()
 
+## Shows the input-mode-specific instructions, with no timeout.
+func show_instructions(type: String) -> void:
+  $NoticeArea.show()
+  for child in $NoticeArea.get_children():
+    child.hide()
+  if type == 'push':
+    $NoticeArea/PushInstructions.show()
+  elif type == 'zoom':
+    $NoticeArea/ZoomInstructions.show()
+
 func hide_notice() -> void:
-  $NoticeArea/LblNotice.visible = false
+  $NoticeArea.visible = false
 
 func show_gameover(message: String) -> void:
   set_notice_text(message)

@@ -400,7 +400,7 @@ func change_phase(phase: Phase) -> void:
   current_phase = phase
   if phase == Phase.MOVE_TUTORIAL:
     hud.directive_text = 'Locate a virus cell'
-    hud.set_notice_text('Click and drag mouse to push')
+    hud.show_instructions('push')
     showing_move_tutorial = true
   elif phase == Phase.ATTACK_TUTORIAL:
     hud.directive_text = 'Destroy the virus cell'
@@ -440,7 +440,7 @@ func finished_move_tutorial():
 
 func _on_tutorial_timer_timeout() -> void:
   if not done_zoom_tutorial:
-    $HUD.set_notice_text('Scroll mouse wheel to zoom')
+    $HUD.show_instructions('zoom')
     showing_zoom_tutorial = true
 
 func finished_zoom_tutorial():
