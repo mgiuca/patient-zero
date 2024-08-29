@@ -95,7 +95,6 @@ icon = ExtResource("3_ttqxq")
 icon_alignment = 1
 
 [node name="NoticeArea" type="VBoxContainer" parent="."]
-visible = false
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -107,14 +106,12 @@ grow_vertical = 2
 theme = ExtResource("3_s44q0")
 
 [node name="LblNotice" type="Label" parent="NoticeArea"]
-visible = false
 layout_mode = 2
 text = "Text notice"
 horizontal_alignment = 1
 uppercase = true
 
 [node name="PushInstructions" type="VBoxContainer" parent="NoticeArea"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -134,7 +131,6 @@ text = "Click and drag to push"
 uppercase = true
 
 [node name="Touch" type="HBoxContainer" parent="NoticeArea/PushInstructions"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -150,7 +146,6 @@ text = "Swipe to push"
 uppercase = true
 
 [node name="Joystick" type="VBoxContainer" parent="NoticeArea/PushInstructions"]
-visible = false
 layout_mode = 2
 
 [node name="Line1" type="HBoxContainer" parent="NoticeArea/PushInstructions/Joystick"]
@@ -217,7 +212,6 @@ text = "to push"
 uppercase = true
 
 [node name="ZoomInstructions" type="VBoxContainer" parent="NoticeArea"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -237,7 +231,6 @@ text = "to zoom"
 uppercase = true
 
 [node name="Touch" type="HBoxContainer" parent="NoticeArea/ZoomInstructions"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -253,7 +246,6 @@ text = "Pinch to zoom"
 uppercase = true
 
 [node name="Joystick" type="HBoxContainer" parent="NoticeArea/ZoomInstructions"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -263,9 +255,9 @@ layout_mode = 2
 texture = ExtResource("13_26442")
 expand_mode = 3
 
-[node name="or" type="Label" parent="NoticeArea/ZoomInstructions/Joystick"]
+[node name="and" type="Label" parent="NoticeArea/ZoomInstructions/Joystick"]
 layout_mode = 2
-text = "or"
+text = "+"
 uppercase = true
 
 [node name="RT" type="TextureRect" parent="NoticeArea/ZoomInstructions/Joystick"]

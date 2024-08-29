@@ -73,6 +73,16 @@ func show_gameover(message: String) -> void:
   $BtnRestart.visible = true
   $BtnRestart.grab_focus()
 
+func _on_input_mode_changed(new_mode: Level.InputMode) -> void:
+  show_prompts_for_input_mode($NoticeArea/PushInstructions, new_mode)
+  show_prompts_for_input_mode($NoticeArea/ZoomInstructions, new_mode)
+
+func show_prompts_for_input_mode(container: Container,
+                                 input_mode: Level.InputMode) -> void:
+  container.get_node('Mouse').visible = input_mode == Level.InputMode.INPUT_MOUSE
+  container.get_node('Touch').visible = input_mode == Level.InputMode.INPUT_TOUCH
+  container.get_node('Joystick').visible = input_mode == Level.InputMode.INPUT_JOYSTICK
+
 # Debugging
 
 # Set patient health and show the number of cells (for debugging).

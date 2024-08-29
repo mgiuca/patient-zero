@@ -95,6 +95,8 @@ var tensor_update_percent : float = 1.0
 
 enum InputMode { INPUT_MOUSE, INPUT_TOUCH, INPUT_JOYSTICK }
 
+signal input_mode_changed(new_mode: InputMode)
+
 # Which device we last received input from.
 # Used for various things like whether to show the cursor, tutorial prompts.
 var input_mode : InputMode = InputMode.INPUT_MOUSE
@@ -134,6 +136,7 @@ enum BodyLocation {ANYWHERE, LEFT_ARM, NOT_LEFT_ARM}
 func _ready():
   $Music.seek(music_start_time)
   $HUD.debug_visible = debug_info
+  $HUD._on_input_mode_changed(input_mode)
 
   var initial_bots = 1  # Normal game starts with 1 bot.
 
@@ -225,14 +228,17 @@ func _unhandled_input(event : InputEvent):
   if event is InputEventMouse:
     if input_mode != InputMode.INPUT_MOUSE:
       input_mode = InputMode.INPUT_MOUSE
+      input_mode_changed.emit(input_mode)
       set_mouse_mode()
   elif event is InputEventScreenTouch or event is InputEventScreenDrag:
     if input_mode != InputMode.INPUT_TOUCH:
       input_mode = InputMode.INPUT_TOUCH
+      input_mode_changed.emit(input_mode)
       set_mouse_mode()
   elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
     if input_mode != InputMode.INPUT_JOYSTICK:
       input_mode = InputMode.INPUT_JOYSTICK
+      input_mode_changed.emit(input_mode)
       set_mouse_mode()
 
   # Handle zooming.

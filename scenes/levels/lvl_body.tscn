@@ -193,6 +193,7 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
+[connection signal="input_mode_changed" from="." to="HUD" method="_on_input_mode_changed"]
 [connection signal="body_entered" from="Cursor" to="." method="_on_cursor_body_entered"]
 [connection signal="drag" from="TouchManager" to="Cursor" method="_on_touch_drag"]
 [connection signal="end_drag" from="TouchManager" to="Cursor" method="_on_touch_end_drag"]
