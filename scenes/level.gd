@@ -485,10 +485,8 @@ func _on_beep_timer_timeout() -> void:
     $BeepTimer.wait_time = heartrate
     $BeepTimer.start()
 
-
 func _on_music_mechan_finished() -> void:
   $MusicOneOf.play()
-
 
 func _on_special_directive_timer_timeout() -> void:
   var hud = $HUD
@@ -510,3 +508,10 @@ func _on_special_directive_timer_timeout() -> void:
     special_directive_id = 0
 
   $SpecialDirectiveTimer.start()
+
+func restart_game() -> void:
+  paused = false
+  get_tree().reload_current_scene()
+
+func quit_game() -> void:
+  get_tree().quit()

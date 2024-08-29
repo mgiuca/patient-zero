@@ -97,27 +97,33 @@ grow_vertical = 2
 [node name="LblNotice" type="Label" parent="NoticeArea"]
 layout_mode = 2
 theme = ExtResource("3_s44q0")
+text = "Text notice"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="LblRestart" type="Label" parent="."]
+[node name="BtnRestart" type="Button" parent="."]
 visible = false
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -65.5
 offset_top = 12.0
+offset_right = 65.5
 offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_s44q0")
-text = "Press Esc to restart"
-horizontal_alignment = 1
-uppercase = true
+theme_override_font_sizes/font_size = 30
+text = "Restart Game"
+flat = true
 
 [node name="NoticeTimer" type="Timer" parent="."]
 one_shot = true
 
 [connection signal="gui_input" from="MarginContainer/BtnMenu" to="." method="_on_btn_menu_gui_input"]
 [connection signal="pressed" from="MarginContainer/BtnMenu" to="." method="_on_btn_menu_pressed"]
+[connection signal="gui_input" from="BtnRestart" to="." method="_on_btn_restart_gui_input"]
+[connection signal="pressed" from="BtnRestart" to="." method="_on_btn_restart_pressed"]
 [connection signal="timeout" from="NoticeTimer" to="." method="hide_notice"]

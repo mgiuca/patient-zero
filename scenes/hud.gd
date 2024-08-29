@@ -60,7 +60,8 @@ func hide_notice() -> void:
 
 func show_gameover(message: String) -> void:
   set_notice_text(message)
-  $LblRestart.visible = true
+  $BtnRestart.visible = true
+  $BtnRestart.grab_focus()
 
 # Debugging
 
@@ -95,8 +96,17 @@ func set_debug_info(zoom: float, active_cluster_size: int,
 func _on_btn_menu_pressed() -> void:
   get_parent().paused = true
 
+func _on_btn_restart_pressed() -> void:
+  get_parent().restart_game()
+
 func _on_btn_menu_gui_input(event: InputEvent) -> void:
   # Handle touch event on this button.
   # See the horrible hack on the buttons in Menu for details.
   if get_parent().get_node('Menu').event_touch_in_bounds($MarginContainer/BtnMenu, event):
     _on_btn_menu_pressed()
+
+func _on_btn_restart_gui_input(event: InputEvent) -> void:
+  # Handle touch event on this button.
+  # See the horrible hack on the buttons in Menu for details.
+  if get_parent().get_node('Menu').event_touch_in_bounds($BtnRestart, event):
+    _on_btn_restart_pressed()

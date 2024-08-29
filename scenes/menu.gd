@@ -24,11 +24,10 @@ func _on_chk_fullscreen_toggled(toggled_on: bool) -> void:
   get_parent().fullscreen = toggled_on
 
 func _on_btn_restart_pressed() -> void:
-  get_parent().paused = false
-  get_tree().reload_current_scene()
+  get_parent().restart_game()
 
 func _on_btn_quit_pressed() -> void:
-  get_tree().quit()
+  get_parent().quit_game()
 
 func in_bounds(control: Control, position: Vector2):
   var bound_rect : Rect2 = Rect2(Vector2.ZERO, control.get_size())
