@@ -138,6 +138,7 @@ func _ready():
      OS.has_feature("web_ios"):
     # Set up for mobile.
     input_mode = InputMode.INPUT_TOUCH
+    $Menu.hide_fullscreen_button()
   if OS.has_feature('mobile') or OS.has_feature('web'):
     # Doesn't make sense to "quit" on mobile or web.
     # (Especially web, which just crashes.)

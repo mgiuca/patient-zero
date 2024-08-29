@@ -79,5 +79,8 @@ func _on_btn_credits_back_gui_input(event: InputEvent) -> void:
   if event_touch_in_bounds($MarginContainer/Credits/VBox/BtnBack, event):
     open_menu()
 
+func hide_fullscreen_button() -> void:
+  $MarginContainer/VBoxContainer/ChkFullscreen.hide()
+
 func hide_quit_button() -> void:
   $MarginContainer/VBoxContainer/BtnQuit.hide()
