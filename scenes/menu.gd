@@ -63,6 +63,10 @@ func _on_btn_restart_gui_input(event: InputEvent) -> void:
   if event_touch_in_bounds($MarginContainer/VBoxContainer/BtnRestart, event):
     _on_btn_restart_pressed()
 
+func _on_btn_credits_gui_input(event: InputEvent) -> void:
+  if event_touch_in_bounds($MarginContainer/VBoxContainer/BtnCredits, event):
+    _on_btn_credits_pressed()
+
 func _on_btn_quit_gui_input(event: InputEvent) -> void:
   if event_touch_in_bounds($MarginContainer/VBoxContainer/BtnQuit, event):
     _on_btn_quit_pressed()
@@ -70,6 +74,10 @@ func _on_btn_quit_gui_input(event: InputEvent) -> void:
 func _on_btn_credits_pressed() -> void:
   $MarginContainer/VBoxContainer.hide()
   $MarginContainer/Credits.show()
+
+func _on_btn_credits_back_gui_input(event: InputEvent) -> void:
+  if event_touch_in_bounds($MarginContainer/Credits/VBox/BtnBack, event):
+    open_menu()
 
 func hide_quit_button() -> void:
   $MarginContainer/VBoxContainer/BtnQuit.hide()
