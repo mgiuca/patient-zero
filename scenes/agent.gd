@@ -74,6 +74,10 @@ var tensor_collision_mask : int
 # Time since last tensor update for this bot.
 var tensor_delta : float
 
+# Amount of time spent contiguously colliding with a wall, or -1 if not.
+# (For deletion if it spends too long.)
+var in_wall_time : float = -1
+
 func _ready():
   assert(agent_type != AgentType.UNKNOWN, "Agent type not set")
   $LblDebugFriends.visible = debug_show_friend_count
@@ -104,6 +108,21 @@ func _ready():
     sprite.frame = randi_range(0, num_frames - 1)
 
 func _process(delta: float):
+  # Stuck-in-wall detection.
+  var in_wall : bool = false
+  for body in get_colliding_bodies():
+    if body.name == 'Walls':
+      in_wall = true
+      if in_wall_time < 0:
+        in_wall_time = 0
+      else:
+        in_wall_time += delta
+        if in_wall_time > 1.0:
+          # Inside wall for > 1 second, delete.
+          queue_free()
+  if not in_wall:
+    in_wall_time = -1
+
   # Hide move tutorial prompt.
   if get_parent().showing_move_tutorial and agent_type == AgentType.BOT:
     if linear_velocity.length() > 1000:
