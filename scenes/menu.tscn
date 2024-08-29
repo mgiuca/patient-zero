@@ -50,6 +50,12 @@ theme_override_font_sizes/font_size = 30
 text = "Restart Game"
 flat = true
 
+[node name="BtnCredits" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Credits"
+flat = true
+
 [node name="BtnQuit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -59,11 +65,89 @@ flat = true
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Credits" type="MarginContainer" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Credits"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/Credits/VBox"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/Credits/VBox/Scroll"]
+layout_mode = 2
+text = "Game design and implementation by Matt Giuca. Copyright © 2024 Matt Giuca.
+
+Made with Godot 4 for GMTK Game Jam 2024.
+
+For links to all sources, see https://mgiuca.itch.io/patient-zero.
+
+Music
+
+\"Mechanolith\" by Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+
+\"One of Them\" by Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+
+\"Spacial Harvest\" by Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+
+Images
+
+\"Front view of a human heart\" by Blausen Medical Communications, Inc.
+Licensed under Creative Commons: Attribution-ShareAlike 3.0
+
+\"Golgotha Effects Textures: lavafull\" by Crack.com
+Licensed under Creative Commons: CC0 1.0
+
+\"Hamburger icon\" by Timothy Miller
+Public Domain
+
+\"Input Prompts\" by Kenney
+Licensed under Creative Commons: CC0 1.0
+
+\"Organ Systems of the Human Body\"
+from \"Human Biology\" by Sarah Malmquist and Kristina Prescott
+Licensed under Creative Commons: Attribution-NonCommercial 4.0 International License
+
+\"Red blood cells in various stages and angles\" by Sarbasst Braian
+Licensed under Creative Commons: CC0 1.0
+
+\"Viruses - Common Cold\" by Bart Kelsey
+Licensed under Creative Commons: CC0 1.0
+
+Fonts
+
+\"Play\"
+Copyright (c) 2011, Jonas Hecksher, Playtypes, e-types AS (lasse@e-types.com),
+with Reserved Font Name 'Play', 'Playtype', 'Playtype Sans'.
+This Font Software is licensed under the SIL Open Font License, Version 1.1."
+
+[node name="BtnBack" type="Button" parent="MarginContainer/Credits/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Back"
+flat = true
+
 [connection signal="gui_input" from="MarginContainer/VBoxContainer/BtnResume" to="." method="_on_btn_resume_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BtnResume" to="." method="_on_btn_resume_pressed"]
 [connection signal="gui_input" from="MarginContainer/VBoxContainer/ChkFullscreen" to="." method="_on_chk_fullscreen_gui_input"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/ChkFullscreen" to="." method="_on_chk_fullscreen_toggled"]
 [connection signal="gui_input" from="MarginContainer/VBoxContainer/BtnRestart" to="." method="_on_btn_restart_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BtnRestart" to="." method="_on_btn_restart_pressed"]
+[connection signal="gui_input" from="MarginContainer/VBoxContainer/BtnCredits" to="." method="_on_btn_restart_gui_input"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BtnCredits" to="." method="_on_btn_credits_pressed"]
 [connection signal="gui_input" from="MarginContainer/VBoxContainer/BtnQuit" to="." method="_on_btn_quit_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BtnQuit" to="." method="_on_btn_quit_pressed"]
+[connection signal="gui_input" from="MarginContainer/Credits/VBox/BtnBack" to="." method="_on_btn_restart_gui_input"]
+[connection signal="pressed" from="MarginContainer/Credits/VBox/BtnBack" to="." method="open_menu"]

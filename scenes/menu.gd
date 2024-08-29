@@ -4,11 +4,18 @@ func _ready() -> void:
   open_menu()
 
 func open_menu() -> void:
+  $MarginContainer/VBoxContainer.show()
+  $MarginContainer/Credits.hide()
   $MarginContainer/VBoxContainer/BtnResume.grab_focus()
 
 func _input(event: InputEvent) -> void:
   # Handle inputs that are meant to trigger whether the game is paused or not.
-  if event.is_action_pressed('menu') or event.is_action_pressed('ui_cancel'):
+  if event.is_action_pressed('ui_cancel'):
+    if $MarginContainer/Credits.visible:
+      open_menu()
+    else:
+      get_parent().paused = not get_parent().paused
+  elif event.is_action_pressed('menu'):
     get_parent().paused = not get_parent().paused
   elif event.is_action_pressed('toggle_fullscreen'):
     get_parent().fullscreen = not get_parent().fullscreen
@@ -59,3 +66,8 @@ func _on_btn_restart_gui_input(event: InputEvent) -> void:
 func _on_btn_quit_gui_input(event: InputEvent) -> void:
   if event_touch_in_bounds($MarginContainer/VBoxContainer/BtnQuit, event):
     _on_btn_quit_pressed()
+
+func _on_btn_credits_pressed() -> void:
+  $MarginContainer/VBoxContainer.hide()
+  $MarginContainer/Credits.show()
+  $MarginContainer/Credits.grab_focus()
