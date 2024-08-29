@@ -134,6 +134,11 @@ var done_zoom_tutorial : bool = false
 enum BodyLocation {ANYWHERE, LEFT_ARM, NOT_LEFT_ARM}
 
 func _ready():
+  if OS.has_feature('mobile') or OS.has_feature("web_android") or \
+     OS.has_feature("web_ios"):
+    # Set up for mobile.
+    input_mode = InputMode.INPUT_TOUCH
+
   $Music.seek(music_start_time)
   $HUD.debug_visible = debug_info
   $HUD._on_input_mode_changed(input_mode)
