@@ -77,6 +77,8 @@ var current_phase : Phase
 
 var special_directive_id = 0
 
+var game_over : bool = false
+
 # Timing
 
 # Target delta; tensor update rate will be scaled to try and hit this.
@@ -357,18 +359,23 @@ func update_hud(delta: float):
     hud.patient_health = calc_patient_health()
 
 func check_gameover():
-  var hud = $HUD
   if get_tree().get_node_count_in_group('bots') == 0:
     # Game over: no more bots
-    hud.show_gameover('ALL BOTS LOST')
+    gameover('ALL BOTS LOST')
   elif get_tree().get_node_count_in_group('cells') == 0:
     # Game over (win or lose): no more cells
     if current_phase == Phase.CONSUME_ALL:
       # Win (?)
-      hud.show_gameover('THE PATIENT IS DECEASED\nALL RESOURCES CONSUMED\nEXIT PATIENT - THE SWARM MUST GROW')
+      gameover('THE PATIENT IS DECEASED\nALL RESOURCES CONSUMED\nEXIT PATIENT - THE SWARM MUST GROW')
     else:
       # Lose
-      hud.show_gameover('THE PATIENT IS DECEASED')
+      gameover('THE PATIENT IS DECEASED')
+
+func gameover(message: String) -> void:
+  $HUD.show_gameover(message)
+  game_over = true
+  $Cursor.set_force(Vector2.ZERO)
+  $Cursor.queue_redraw()
 
 ## Calculates the patient health as a percentage (0 to 1).
 func calc_patient_health() -> float:

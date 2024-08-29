@@ -29,6 +29,9 @@ func _ready():
   pass # Replace with function body.
 
 func _draw():
+  if get_parent().game_over:
+    return
+
   var collision_radius = $CollisionShape2D.shape.radius
   if active:
     draw_circle(Vector2(0, 0), collision_radius, draw_color)
@@ -62,7 +65,10 @@ func _on_touch_drag(event: InputEvent) -> void:
 # Set the cursor pushing force, based on cursor velocity.
 # Velocity must be in global coordinates, not screen space.
 func set_force(velocity: Vector2):
-  gravity_direction = velocity * force_multiplier
+  if get_parent().game_over:
+    gravity_direction = Vector2.ZERO
+  else:
+    gravity_direction = velocity * force_multiplier
 
 func _process(delta):
   var input_mode : Level.InputMode = get_parent().input_mode
